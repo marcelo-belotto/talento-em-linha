@@ -1,9 +1,9 @@
-package com.talentoemlinha;
+package com.talentoemlinha.model;
 
 import lombok.Data;
 
 @Data
 public class Funcionario {
-    private String np;
+    private int np;
     private String nome;
 }
