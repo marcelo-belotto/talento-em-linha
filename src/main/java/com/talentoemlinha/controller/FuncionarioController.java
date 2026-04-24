@@ -16,12 +16,12 @@ import com.talentoemlinha.model.Funcionario;
 public class FuncionarioController {
     List<Funcionario> funcionarios = Funcionario.getFuncionariosMocados();
 
-    @GetMapping("/api/funcionario")
+    @GetMapping("/funcionario")
     public List<Funcionario> funcionarioGet(){
         return funcionarios;
     }
 
-    @GetMapping("/api/funcionario/{id}")
+    @GetMapping("/funcionario/{id}")
     public Funcionario funcionarioGet(@PathVariable int id){
         for (Funcionario funcionario : funcionarios) {
             if (id == funcionario.getNp()) return funcionario;
@@ -29,13 +29,13 @@ public class FuncionarioController {
         return null;
     }
 
-    @PostMapping("/api/funcionario")
+    @PostMapping("/funcionario")
     public Funcionario funcionarioPost(@RequestBody Funcionario func){
         funcionarios.add(func);
         return func;
     }
 
-    @PutMapping("/api/funcionario/{id}")
+    @PutMapping("/funcionario/{id}")
     public Funcionario funcionarioPut(@PathVariable int id ,@RequestBody Funcionario func){
         for (Funcionario funcionario : funcionarios) {
             if (id == funcionario.getNp()) {
@@ -47,7 +47,7 @@ public class FuncionarioController {
         return null;
     }
 
-    @DeleteMapping("/api/funcionario/{id}")
+    @DeleteMapping("/funcionario/{id}")
     public void funcionarioDelete(@PathVariable int id){
         funcionarios.remove(funcionarioGet(id));
     }

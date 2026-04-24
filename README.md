@@ -86,9 +86,9 @@ cd talento-em-linha
 
 As migrations do Flyway serão aplicadas automaticamente na inicialização.
 
-A API estará disponível em `http://localhost:8080/api/`.
+A API estará disponível em `http://localhost:8080/api/v1`.
 
-A documentação Swagger estará em `http://localhost:8080/swagger-ui.html`.
+A documentação Swagger estará em `http://localhost:8080/api/v1/swagger-ui.html`.
 
 ---
 

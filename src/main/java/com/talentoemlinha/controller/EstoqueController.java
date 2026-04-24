@@ -1,6 +1,5 @@
 package com.talentoemlinha.controller;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +19,12 @@ import com.talentoemlinha.model.Estoque;
 public class EstoqueController {
     List<Estoque> estoqueMock = new ArrayList<>();
 
-    @GetMapping("/api/estoque")
+    @GetMapping("/estoque")
     public List<Estoque> estoqueGet() {
         return estoqueMock;
     }
 
-    @GetMapping("/api/estoque/{id}")
+    @GetMapping("/estoque/{id}")
     public Estoque estoqueGet(@PathVariable int id) {
         for (Estoque estoque : estoqueMock) {
             if (id == estoque.getId())
@@ -34,7 +33,7 @@ public class EstoqueController {
         return null;
     }
 
-    @PostMapping("/api/estoque")
+    @PostMapping("/estoque")
     public Estoque estoquePost(@RequestBody EstoqueDto estoqueDto) {
         Estoque temp = new Estoque();
         temp.setId(estoqueMock.size() + 1); // Não vou precisar depois de mapear, ja que a entidade se encarrega disso

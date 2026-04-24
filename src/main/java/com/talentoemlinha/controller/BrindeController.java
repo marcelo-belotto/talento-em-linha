@@ -15,12 +15,12 @@ import com.talentoemlinha.model.Brinde;
 public class BrindeController {
     List<Brinde> brindesMocados = Brinde.brindesMocados();
 
-    @GetMapping("/api/brinde")
+    @GetMapping("/brinde")
     public List<Brinde> brindesGet(){
         return brindesMocados;
     }
 
-    @GetMapping("/api/brinde/{id}")
+    @GetMapping("/brinde/{id}")
     public Brinde brindesGet(@PathVariable int id){
         for (Brinde brinde : brindesMocados) {
             if (brinde.getId() == id) return brinde;
@@ -28,13 +28,13 @@ public class BrindeController {
         return null;
     }
 
-    @PostMapping("/api/brinde")
+    @PostMapping("/brinde")
     public Brinde brindesPost(@RequestBody Brinde brinde){
         brindesMocados.add(brinde);
         return brinde;
     }
 
-    @DeleteMapping("/api/brinde/{id}")
+    @DeleteMapping("/brinde/{id}")
     public void brindesDelete(@PathVariable int id){
         brindesMocados.remove(brindesGet(id));
     }

@@ -1,10 +1,16 @@
 package com.talentoemlinha.model;
 
-public enum Categoria {
-    CATEGORIA_1,
-    CATEGORIA_2,
-    CATEGORIA_3,
-    CATEGORIA_4,
-    CATEGORIA_5,
-    CATEGORIA_6
+import lombok.Data;
+
+@Data
+public class Categoria {
+    private int id;
+    private String categoria;
+    private int pontos;
+    
+    public Categoria(String categoria, int pontos) {
+        this.categoria = categoria;
+        this.pontos = pontos;
+    }
+    
 }
