@@ -1,5 +1,7 @@
 package com.talentoemlinha.controller;
 
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 // import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,30 +12,37 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.talentoemlinha.dto.EstoqueDto;
+import com.talentoemlinha.model.Brinde;
 import com.talentoemlinha.model.Estoque;
-
 
 @RestController
 public class EstoqueController {
-    List<Estoque> estoqueMock = Estoque.getBrindesMockados();
+    List<Estoque> estoqueMock = new ArrayList<>();
 
     @GetMapping("/api/estoque")
-    public List<Estoque> estoqueGet(){
+    public List<Estoque> estoqueGet() {
         return estoqueMock;
     }
 
     @GetMapping("/api/estoque/{id}")
-    public Estoque estoqueGet(@PathVariable int id){
+    public Estoque estoqueGet(@PathVariable int id) {
         for (Estoque estoque : estoqueMock) {
-            if (id == estoque.getId()) return estoque;
+            if (id == estoque.getId())
+                return estoque;
         }
         return null;
     }
 
     @PostMapping("/api/estoque")
-    public Estoque estoquePost(@RequestBody Estoque estoque){
-        estoqueMock.add(estoque);
-        return estoque;
+    public Estoque estoquePost(@RequestBody EstoqueDto estoqueDto) {
+        Estoque temp = new Estoque();
+        temp.setId(estoqueMock.size() + 1); // Não vou precisar depois de mapear, ja que a entidade se encarrega disso
+        Brinde brindeTemp = Brinde.brindesMocados().get(estoqueDto.getIdBrinde()-1); //TEMPORÀRIO VAI DAR ERRO COM BRINDES NOVOS CADASTRADOS DEVIDO AO METODO STATIC
+        if (brindeTemp == null) return null; // Melhorar a resposta http
+        temp.setBrinde(brindeTemp);
+        temp.setQuantidade(estoqueDto.getQuantidade());
+        estoqueMock.add(temp);
+        return temp;
     }
-
 }
