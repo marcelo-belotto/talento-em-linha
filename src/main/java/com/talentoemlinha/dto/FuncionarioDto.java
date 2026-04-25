@@ -10,12 +10,12 @@ import lombok.Data;
 public class FuncionarioDto {
     private int np;
     private String nome;
-    private List<Categoria> pontos;
+    private List<CategoriaDto> pontos;
 
     public FuncionarioDto() {
     }
 
-    public FuncionarioDto(int np, String nome, List<Categoria> pontos){
+    public FuncionarioDto(int np, String nome, List<CategoriaDto> pontos){
         this.np = np;
         this.nome = nome;
         this.pontos = pontos;

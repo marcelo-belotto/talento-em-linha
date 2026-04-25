@@ -10,34 +10,40 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.talentoemlinha.dto.FuncionarioDto;
 import com.talentoemlinha.model.Funcionario;
 
 @RestController
 public class FuncionarioController {
-    List<Funcionario> funcionarios = Funcionario.getFuncionariosMocados();
+    List<FuncionarioDto> funcionarios = Funcionario.getFuncionariosMocados().stream().map(x -> x.toFuncionarioDto()).toList();
 
     @GetMapping("/funcionario")
-    public List<Funcionario> funcionarioGet(){
+    public List<FuncionarioDto> funcionarioGet(){
         return funcionarios;
     }
 
     @GetMapping("/funcionario/{id}")
-    public Funcionario funcionarioGet(@PathVariable int id){
-        for (Funcionario funcionario : funcionarios) {
+    public FuncionarioDto funcionarioGet(@PathVariable int id){
+        for (FuncionarioDto funcionario : funcionarios) {
             if (id == funcionario.getNp()) return funcionario;
         }
         return null;
     }
 
-    @PostMapping("/funcionario")
-    public Funcionario funcionarioPost(@RequestBody Funcionario func){
-        funcionarios.add(func);
-        return func;
-    }
+    // @PostMapping("/funcionario")
+    // public FuncionarioDto funcionarioPost(@RequestBody FuncionarioDto func) {
+    //     for (FuncionarioDto funcionarioDto : funcionarios) {
+    //         System.out.println(funcionarioDto);
+    //         if (funcionarioDto.equals(func))
+    //             return null;
+    //     }
+    //     funcionarios.add(func);
+    //     return func;
+    // }
 
     @PutMapping("/funcionario/{id}")
-    public Funcionario funcionarioPut(@PathVariable int id ,@RequestBody Funcionario func){
-        for (Funcionario funcionario : funcionarios) {
+    public FuncionarioDto funcionarioPut(@PathVariable int id ,@RequestBody Funcionario func){
+        for (FuncionarioDto funcionario : funcionarios) {
             if (id == funcionario.getNp()) {
                 funcionario.setNome(func.getNome());
                 funcionario.setNp(func.getNp());

@@ -1,5 +1,7 @@
 package com.talentoemlinha.model;
 
+import com.talentoemlinha.dto.CategoriaDto;
+
 import lombok.Data;
 
 @Data
@@ -12,5 +14,8 @@ public class Categoria {
         this.categoria = categoria;
         this.pontos = pontos;
     }
-    
+   
+    public CategoriaDto toCategoriaDto(){
+        return new CategoriaDto(this.categoria, this.pontos);
+    }
 }
