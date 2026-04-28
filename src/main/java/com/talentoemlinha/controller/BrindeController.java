@@ -2,6 +2,8 @@ package com.talentoemlinha.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,22 +18,22 @@ public class BrindeController {
     List<Brinde> brindesMocados = Brinde.brindesMocados();
 
     @GetMapping("/brinde")
-    public List<Brinde> brindesGet(){
-        return brindesMocados;
+    public ResponseEntity<List<Brinde>> brindesGet(){
+        return ResponseEntity.status(HttpStatus.OK).body(brindesMocados);
     }
 
     @GetMapping("/brinde/{id}")
-    public Brinde brindesGet(@PathVariable int id){
+    public ResponseEntity<Brinde> brindesGet(@PathVariable int id){
         for (Brinde brinde : brindesMocados) {
-            if (brinde.getId() == id) return brinde;
+            if (brinde.getId() == id) return ResponseEntity.status(HttpStatus.OK).body(brinde);
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @PostMapping("/brinde")
-    public Brinde brindesPost(@RequestBody Brinde brinde){
+    public ResponseEntity<Brinde> brindesPost(@RequestBody Brinde brinde){
         brindesMocados.add(brinde);
-        return brinde;
+        return ResponseEntity.status(HttpStatus.CREATED).body(brinde);
     }
 
     @DeleteMapping("/brinde/{id}")
