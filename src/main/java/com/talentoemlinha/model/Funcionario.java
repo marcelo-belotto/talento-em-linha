@@ -13,7 +13,8 @@ public class Funcionario {
     private String nome;
     private String login;
     private String senha;
-    private List<Categoria> pontos;
+    private int totalDePontos;
+    private String ROLE;
     private static int npControleTemp = 10000001;
 
     public static List<Funcionario> getFuncionariosMocados() {
@@ -24,7 +25,7 @@ public class Funcionario {
             tempf.setNp(npControleTemp);
             tempf.setLogin(tempf.getNome());
             tempf.setSenha(tempf.getNome() + tempf.getNp());
-            tempf.pontos = new ArrayList<Categoria>();
+            tempf.totalDePontos = 0;
             temp.add(tempf);
             npControleTemp++;
         }

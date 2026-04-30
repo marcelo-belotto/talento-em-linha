@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.talentoemlinha.model.Categoria;
 import com.talentoemlinha.model.Funcionario;
+import com.talentoemlinha.model.Ponto;
 
 @RestController
 public class FuncionarioController {
@@ -34,11 +34,11 @@ public class FuncionarioController {
     }
 
     @PostMapping("/funcionario/{id}/bonificar")
-    public ResponseEntity<Funcionario> funcionarioPost(@PathVariable int id, @RequestBody Categoria cat) {
+    public ResponseEntity<Funcionario> funcionarioPost(@PathVariable int id, @RequestBody Ponto pontos) {
         for (Funcionario funcionario : funcionarios) {
             if (funcionario.getNp() == id)
-                // funcionario.getPontos().add(cat);
-            return ResponseEntity.status(HttpStatus.CREATED).body(funcionario);
+                funcionario.setTotalDePontos(funcionario.getTotalDePontos() + pontos.getQuantidade());
+            return ResponseEntity.status(HttpStatus.OK).body(funcionario);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
@@ -66,9 +66,11 @@ public class FuncionarioController {
     }
 
     @DeleteMapping("/funcionario/{id}")
-    public ResponseEntity<Funcionario> funcionarioDelete(@PathVariable int id) {
-        funcionarios.remove(funcionarioGet(id));
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
+    public ResponseEntity<Funcionario> funcionarioDelete(@PathVariable int id){
+        if (funcionarios.remove(funcionarioGet(id))){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
 }
