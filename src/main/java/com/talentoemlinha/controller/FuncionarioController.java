@@ -2,6 +2,7 @@ package com.talentoemlinha.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,12 +13,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.talentoemlinha.dto.PontoDto;
 import com.talentoemlinha.model.Funcionario;
 import com.talentoemlinha.model.Ponto;
+import com.talentoemlinha.service.PontoService;
 
 @RestController
 public class FuncionarioController {
-    public List<Funcionario> funcionarios = Funcionario.getFuncionariosMocados();
+    private List<Funcionario> funcionarios = Funcionario.getFuncionariosMocados();
+
+    @Autowired
+    private PontoService pontoService;
 
     @GetMapping("/funcionario")
     public ResponseEntity<List<Funcionario>> funcionarioGet() {
@@ -34,13 +40,15 @@ public class FuncionarioController {
     }
 
     @PostMapping("/funcionario/{id}/bonificar")
-    public ResponseEntity<Funcionario> funcionarioPost(@PathVariable int id, @RequestBody Ponto pontos) {
+    public ResponseEntity<Ponto> funcionarioPost(@PathVariable int id, @RequestBody PontoDto pontos) {
         for (Funcionario funcionario : funcionarios) {
-            if (funcionario.getNp() == id)
+            if (funcionario.getNp() == id){
+                Ponto novoPonto = new Ponto(1,id,pontos.getQuantidade(),pontos.getMotivo());
                 funcionario.setTotalDePontos(funcionario.getTotalDePontos() + pontos.getQuantidade());
-            return ResponseEntity.status(HttpStatus.OK).body(funcionario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(pontoService.adicionarPonto(novoPonto));
+            }
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @PostMapping("/funcionario")

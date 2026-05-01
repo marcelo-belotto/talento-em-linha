@@ -14,6 +14,7 @@ public class Funcionario {
     private String login;
     private String senha;
     private int totalDePontos;
+    private int pontosUtilizados;
     private String ROLE;
     private static int npControleTemp = 10000001;
 
