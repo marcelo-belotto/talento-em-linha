@@ -12,16 +12,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.talentoemlinha.dto.PontoDto;
+import com.talentoemlinha.model.Funcionario;
 import com.talentoemlinha.model.Ponto;
+import com.talentoemlinha.service.FuncionarioService;
 import com.talentoemlinha.service.PontoService;
-
 
 @RestController
 public class PontosController {
-    
+
     @Autowired
     private PontoService pontoService;
 
+    @Autowired
+    private FuncionarioService funcService;
 
     @GetMapping("/pontos")
     public ResponseEntity<List<Ponto>> pontosGet() {
@@ -34,12 +38,15 @@ public class PontosController {
                 .body(pontoService.retornarTodosPontos().stream().filter(x -> x.getNpFuncionario() == id).toList());
     }
 
-    @PostMapping("/pontos")
-    public ResponseEntity<Ponto> pontoPost(@RequestBody Ponto ponto) {
-        if (ponto.getId() == 0 || ponto.getNpFuncionario() == 0 || ponto.getQuantidade() == 0)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        pontoService.adicionarPonto(ponto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ponto);
+    @PostMapping("bonificar/{id}")
+    public ResponseEntity<Ponto> funcionarioPost(@PathVariable int id, @RequestBody PontoDto pontos) {
+        Funcionario funcionario = funcService.retornarFuncionarioPeloId(id);
+        if (funcionario != null) {
+            int indicePonto = pontoService.retornarTodosPontos().size() + 1;
+            Ponto novoPonto = new Ponto(indicePonto, id, pontos.getQuantidade(), pontos.getMotivo());
+            return ResponseEntity.status(HttpStatus.CREATED).body(pontoService.adicionarPonto(novoPonto));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
 }

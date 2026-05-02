@@ -6,12 +6,14 @@ import java.util.List;
 // import com.talentoemlinha.dto.FuncionarioDto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Funcionario {
+    @EqualsAndHashCode.Include
     private int np;
     private String nome;
-    private String login;
     private String senha;
     private int totalDePontos;
     private int pontosUtilizados;
@@ -24,7 +26,6 @@ public class Funcionario {
             Funcionario tempf = new Funcionario();
             tempf.setNome("Funcionario-" + i);
             tempf.setNp(npControleTemp);
-            tempf.setLogin(tempf.getNome());
             tempf.setSenha(tempf.getNome() + tempf.getNp());
             tempf.totalDePontos = 0;
             temp.add(tempf);

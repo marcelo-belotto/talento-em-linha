@@ -13,71 +13,70 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.talentoemlinha.dto.PontoDto;
+// import com.talentoemlinha.dto.PontoDto;
 import com.talentoemlinha.model.Funcionario;
-import com.talentoemlinha.model.Ponto;
-import com.talentoemlinha.service.PontoService;
+// import com.talentoemlinha.model.Ponto;
+// import com.talentoemlinha.service.PontoService;
+import com.talentoemlinha.service.FuncionarioService;
 
 @RestController
 public class FuncionarioController {
-    private List<Funcionario> funcionarios = Funcionario.getFuncionariosMocados();
 
     @Autowired
-    private PontoService pontoService;
+    private FuncionarioService funcService;
+    // private PontoService pontoService;
 
     @GetMapping("/funcionario")
     public ResponseEntity<List<Funcionario>> funcionarioGet() {
-        return ResponseEntity.status(HttpStatus.OK).body(funcionarios);
+        return ResponseEntity.status(HttpStatus.OK).body(funcService.retornarTodosFuncionarios());
     }
 
     @GetMapping("/funcionario/{id}")
     public ResponseEntity<Funcionario> funcionarioGet(@PathVariable int id) {
-        for (Funcionario funcionario : funcionarios) {
-            if (id == funcionario.getNp())
-                return ResponseEntity.status(HttpStatus.OK).body(funcionario);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        Funcionario responseFunc = funcService.retornarFuncionarioPeloId(id);
+        if (responseFunc != null)
+            return ResponseEntity.status(HttpStatus.OK).body(responseFunc);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
     }
 
-    @PostMapping("/funcionario/{id}/bonificar")
-    public ResponseEntity<Ponto> funcionarioPost(@PathVariable int id, @RequestBody PontoDto pontos) {
-        for (Funcionario funcionario : funcionarios) {
-            if (funcionario.getNp() == id){
-                Ponto novoPonto = new Ponto(1,id,pontos.getQuantidade(),pontos.getMotivo());
-                funcionario.setTotalDePontos(funcionario.getTotalDePontos() + pontos.getQuantidade());
-            return ResponseEntity.status(HttpStatus.CREATED).body(pontoService.adicionarPonto(novoPonto));
-            }
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    }
+    // @PostMapping("/funcionario/{id}/bonificar")
+    // public ResponseEntity<Ponto> funcionarioPost(@PathVariable int id,
+    // @RequestBody PontoDto pontos) {
+    // for (Funcionario funcionario : funcionarios) {
+    // if (funcionario.getNp() == id){
+    // int indicePonto = pontoService.retornarTodosPontos().size()+1;
+    // Ponto novoPonto = new
+    // Ponto(indicePonto,id,pontos.getQuantidade(),pontos.getMotivo());
+    // funcionario.setTotalDePontos(funcionario.getTotalDePontos() +
+    // pontos.getQuantidade());
+    // return
+    // ResponseEntity.status(HttpStatus.CREATED).body(pontoService.adicionarPonto(novoPonto));
+    // }
+    // }
+    // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    // }
 
     @PostMapping("/funcionario")
     public ResponseEntity<Funcionario> funcionarioPost(@RequestBody Funcionario func) {
-        for (Funcionario funcionario : funcionarios) {
-            if (funcionario.equals(func))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-        funcionarios.add(func);
+        Funcionario responseFunc = funcService.adicionarFuncionario(func);
+        if (responseFunc == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         return ResponseEntity.status(HttpStatus.CREATED).body(func);
     }
 
     @PutMapping("/funcionario/{id}")
     public ResponseEntity<Funcionario> funcionarioPut(@PathVariable int id, @RequestBody Funcionario func) {
-        for (Funcionario funcionario : funcionarios) {
-            if (id == funcionario.getNp() && func != null) {
-                funcionarios.remove(funcionario);
-                funcionarios.add(func);
-                return ResponseEntity.status(HttpStatus.CREATED).body(func);
-            }
-        }
-        return null;
+        Funcionario resposeFunc = funcService.alterarFuncionario(id, func);
+        if (resposeFunc == null)
+            return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(func);
     }
 
     @DeleteMapping("/funcionario/{id}")
-    public ResponseEntity<Funcionario> funcionarioDelete(@PathVariable int id){
-        if (funcionarios.remove(funcionarioGet(id))){
+    public ResponseEntity<Funcionario> funcionarioDelete(@PathVariable int id) {
+        if (funcService.deletarFuncionario(id) != null)
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
-        }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
