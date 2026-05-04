@@ -40,9 +40,9 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(produto);
     }
 
-    // @DeleteMapping("/produto/{id}")
-    // public void produtosDelete(@PathVariable int id){
-    //     produtosMocados.remove(produtosGet(id));
-    // }
+    @DeleteMapping("/produto/{id}")
+    public void produtosDelete(@PathVariable long id){
+        prodService.removerProduto(id);
+    }
 
 }

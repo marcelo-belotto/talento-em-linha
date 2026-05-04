@@ -1,7 +1,10 @@
 package com.talentoemlinha.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.talentoemlinha.model.Estoque;
@@ -13,9 +16,11 @@ import com.talentoemlinha.repository.ProdutoRepository;
 
 @Service
 public class EstoqueService {
-
+    @Autowired
     private EstoqueRepository estoqueRepo;
+    @Autowired
     private ProdutoRepository produtoRepo;
+    @Autowired
     private MovimentacaoRepository movRepo;
 
     public Movimentacao entrada(Long produtoId, int quantidade) {
@@ -38,6 +43,10 @@ public class EstoqueService {
         estoqueRepo.save(estoque);
 
         return registrarMovimentacao(estoque.getProduto(), "SAIDA", quantidade);
+    }
+
+    public List<Estoque> consultarTodos(){
+        return estoqueRepo.findAll();
     }
 
     public Estoque consultarSaldo(Long produtoId) {

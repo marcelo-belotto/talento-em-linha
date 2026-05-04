@@ -26,4 +26,9 @@ public class ProdutoService {
     public Produto cadastrarNovoProduto(Produto produto){
         return prodRepo.save(produto);
     }
+
+    public Produto removerProduto(Long produtoId){
+        Produto produto = prodRepo.delete(produtoId);
+        return produto;
+    }
 }

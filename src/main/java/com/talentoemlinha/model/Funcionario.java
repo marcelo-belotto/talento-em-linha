@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Funcionario {
     @EqualsAndHashCode.Include
-    private int np;
+    private long np;
     private String nome;
     private String senha;
     private int totalDePontos;

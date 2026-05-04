@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode
 public class Produto {
+    @EqualsAndHashCode.Include
     private long id;
+    @EqualsAndHashCode.Include
     private String nome;
     private String descricao;
     private int pontos;

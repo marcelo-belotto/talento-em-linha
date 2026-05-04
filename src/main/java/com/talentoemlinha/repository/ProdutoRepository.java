@@ -26,4 +26,11 @@ public class ProdutoRepository {
         return produto;
     }
 
+    public Produto delete(Long produtoId){
+        Produto produto = listaProdutos.stream().filter(x -> x.getId() == produtoId).findFirst()
+            .orElseThrow(() -> new RuntimeException("Produto Não encontrado"));
+        listaProdutos.remove(produto);
+        return produto;
+    }
+
 }

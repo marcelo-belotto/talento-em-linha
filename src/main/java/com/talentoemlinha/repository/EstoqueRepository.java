@@ -1,8 +1,8 @@
 package com.talentoemlinha.repository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.springframework.stereotype.Repository;
 
@@ -11,11 +11,21 @@ import com.talentoemlinha.model.Produto;
 
 @Repository
 public class EstoqueRepository {
-    private Set<Estoque> listaEstoque = new TreeSet<Estoque>();
+    private List<Estoque> listaEstoque = new ArrayList<Estoque>();
 
     public Estoque save(Estoque estoque){
-        listaEstoque.add(estoque);
+        if (!listaEstoque.contains(estoque)){
+            listaEstoque.add(estoque);
+        }else{
+            int indice = listaEstoque.indexOf(estoque);
+            listaEstoque.remove(indice);
+            listaEstoque.add(estoque);
+        }
         return estoque;
+    }
+
+    public List<Estoque> findAll(){
+        return listaEstoque;
     }
 
     public Optional<Estoque> findByProduto(Produto produto) {

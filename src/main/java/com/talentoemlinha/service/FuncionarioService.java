@@ -14,7 +14,7 @@ public class FuncionarioService {
         return funcionarios;
     }
 
-    public Funcionario retornarFuncionarioPeloId(int id){
+    public Funcionario retornarFuncionarioPeloId(long id){
         return funcionarios.stream().filter(x -> x.getNp()==id).findFirst().orElse(null);
     }
 
@@ -25,7 +25,7 @@ public class FuncionarioService {
         return func;
     }
 
-    public Funcionario alterarFuncionario(int id, Funcionario novoFunc){
+    public Funcionario alterarFuncionario(long id, Funcionario novoFunc){
         Funcionario temp = retornarFuncionarioPeloId(id);
         if (temp == null)
             return null;
@@ -34,7 +34,7 @@ public class FuncionarioService {
         return novoFunc;
     }
 
-    public Funcionario deletarFuncionario(int id){
+    public Funcionario deletarFuncionario(long id){
         Funcionario temp = retornarFuncionarioPeloId(id);
         if (temp == null)
             return null;
