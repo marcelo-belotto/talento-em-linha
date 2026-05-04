@@ -4,12 +4,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.talentoemlinha.model.Estoque;
 import com.talentoemlinha.model.Produto;
 
-@Component
+@Repository
 public class EstoqueRepository {
     private Set<Estoque> listaEstoque = new TreeSet<Estoque>();
 

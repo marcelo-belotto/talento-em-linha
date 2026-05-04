@@ -1,17 +1,29 @@
 package com.talentoemlinha.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import com.talentoemlinha.model.Produto;
 
+@Repository
 public class ProdutoRepository {
 
-    private List<Produto> listaProdutos = new ArrayList<>();
+    private List<Produto> listaProdutos = Produto.produtosMocados();
+
+    public List<Produto> findAll() {
+        return listaProdutos;
+    }
 
     public Optional<Produto> findById(Long produtoId) {
-        return listaProdutos.stream().filter(x -> x.getId()==produtoId).findFirst();
+        return listaProdutos.stream().filter(x -> x.getId() == produtoId).findFirst();
+    }
+
+    public Produto save(Produto produto){
+        if (listaProdutos.stream().anyMatch(x -> x.equals(produto))) return null;
+        listaProdutos.add(produto);
+        return produto;
     }
 
 }
