@@ -35,8 +35,8 @@ public class EstoqueController {
         return estServ.entrada(estoqueDto.getIdProduto(), estoqueDto.getQuantidade());
     }
 
-    @PostMapping("/estoque/saida")
+    @PostMapping("/estoque/retirada")
     public Movimentacao estoqueSaidaPost(@RequestBody EstoqueDto estoqueDto) {
-        return estServ.saida(estoqueDto.getIdProduto(), estoqueDto.getQuantidade());
+        return estServ.retirada(estoqueDto.getIdProduto(), estoqueDto.getQuantidade());
     }
 }

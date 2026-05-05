@@ -23,23 +23,31 @@ public class EstoqueService {
     @Autowired
     private MovimentacaoRepository movRepo;
 
-    public Movimentacao entrada(Long produtoId, int quantidade) {
+    public Movimentacao entrada(long produtoId, int quantidade) {
         Estoque estoque = buscarOuCriarEstoque(produtoId);
 
-        estoque.setQuantidade(estoque.getQuantidade() + quantidade);
+        estoque.setQuantidadeDisponivel(estoque.getQuantidadeDisponivel() + quantidade);
         estoqueRepo.save(estoque);
 
         return registrarMovimentacao(estoque.getProduto(), "ENTRADA", quantidade);
     }
 
-    public Movimentacao saida(Long produtoId, int quantidade) {
+    public Movimentacao reservar(long idProduto,int quantidade){
+        Estoque estoque = buscarOuCriarEstoque(idProduto);
+        estoque.setQuantidadeDisponivel(estoque.getQuantidadeDisponivel() - quantidade);
+        estoque.setQuantidadeReservada(estoque.getQuantidadeReservada() + quantidade);
+        estoqueRepo.save(estoque);
+        return registrarMovimentacao(estoque.getProduto(), "RESERVADO", quantidade);
+    }
+
+    public Movimentacao retirada(long produtoId, int quantidade) {
         Estoque estoque = buscarOuCriarEstoque(produtoId);
 
-        if (estoque.getQuantidade() < quantidade) {
+        if (estoque.getQuantidadeDisponivel() < quantidade) {
             throw new RuntimeException("Estoque insuficiente");
         }
 
-        estoque.setQuantidade(estoque.getQuantidade() - quantidade);
+        estoque.setQuantidadeDisponivel(estoque.getQuantidadeDisponivel() - quantidade);
         estoqueRepo.save(estoque);
 
         return registrarMovimentacao(estoque.getProduto(), "SAIDA", quantidade);
@@ -49,16 +57,16 @@ public class EstoqueService {
         return estoqueRepo.findAll();
     }
 
-    public Estoque consultarSaldo(Long produtoId) {
+    public Estoque consultarSaldo(long produtoId) {
         return buscarOuCriarEstoque(produtoId);
     }
 
-    private Estoque buscarOuCriarEstoque(Long produtoId) {
+    private Estoque buscarOuCriarEstoque(long produtoId) {
         Produto produto = produtoRepo.findById(produtoId)
             .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
         return estoqueRepo.findByProduto(produto)
-            .orElseGet(() -> estoqueRepo.save(new Estoque(0, produto, 0)));
+            .orElseGet(() -> estoqueRepo.save(new Estoque(0,produto, 0,0)));
     }
 
     private Movimentacao registrarMovimentacao(Produto produto, String tipo, int quantidade) {

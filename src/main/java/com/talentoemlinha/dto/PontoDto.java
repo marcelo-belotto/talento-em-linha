@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PontoDto {
+    private long np;
     private int quantidade;
     private String motivo;
 }

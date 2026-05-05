@@ -15,5 +15,6 @@ public class Estoque {
     private int id;
     @EqualsAndHashCode.Include
     private Produto produto;
-    private int quantidade;
+    private int quantidadeDisponivel;
+    private int quantidadeReservada;  
 }
