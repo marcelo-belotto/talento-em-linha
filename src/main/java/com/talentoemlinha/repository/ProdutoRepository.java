@@ -16,17 +16,17 @@ public class ProdutoRepository {
         return listaProdutos;
     }
 
-    public Optional<Produto> findById(Long produtoId) {
+    public Optional<Produto> findById(long produtoId) {
         return listaProdutos.stream().filter(x -> x.getId() == produtoId).findFirst();
     }
 
     public Produto save(Produto produto){
-        if (listaProdutos.stream().anyMatch(x -> x.equals(produto))) return null;
+        if (listaProdutos.stream().anyMatch(x -> x.equals(produto))) throw new RuntimeException("Produto já existe");
         listaProdutos.add(produto);
         return produto;
     }
 
-    public Produto delete(Long produtoId){
+    public Produto delete(long produtoId){
         Produto produto = listaProdutos.stream().filter(x -> x.getId() == produtoId).findFirst()
             .orElseThrow(() -> new RuntimeException("Produto Não encontrado"));
         listaProdutos.remove(produto);

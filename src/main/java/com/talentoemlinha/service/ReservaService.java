@@ -1,5 +1,6 @@
 package com.talentoemlinha.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.talentoemlinha.model.Produto;
@@ -11,9 +12,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ReservaService {
-
+    @Autowired
     private EstoqueService estoqueService;
+    @Autowired
     private ProdutoService produtoService;
+    @Autowired
     private ReservaRepository reservaRepo;
 
     public Reserva reservar(long idProduto, long npFuncionario, int quantidade) {
@@ -24,7 +27,6 @@ public class ReservaService {
         estoqueService.reservar(idProduto, quantidade);
 
         Reserva reserva = new Reserva();
-        reserva.setId(0);
         reserva.setNpFuncionario(npFuncionario);
         reserva.setQuantidade(quantidade);
         reserva.setStatus("RESERVADO");

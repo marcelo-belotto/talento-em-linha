@@ -17,7 +17,7 @@ public class ProdutoService {
         return prodRepo.findAll();
     }
 
-    public Produto buscarProduto(Long produtoId) {
+    public Produto buscarProduto(long produtoId) {
         Produto produto = prodRepo.findById(produtoId)
             .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
         return produto;
@@ -27,7 +27,7 @@ public class ProdutoService {
         return prodRepo.save(produto);
     }
 
-    public Produto removerProduto(Long produtoId){
+    public Produto removerProduto(long produtoId){
         Produto produto = prodRepo.delete(produtoId);
         return produto;
     }

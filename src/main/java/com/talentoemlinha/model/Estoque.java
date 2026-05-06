@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class Estoque {
     @EqualsAndHashCode.Include
-    private int id;
+    private long id;
     @EqualsAndHashCode.Include
     private Produto produto;
     private int quantidadeDisponivel;

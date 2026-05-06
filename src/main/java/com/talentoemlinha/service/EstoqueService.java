@@ -34,6 +34,7 @@ public class EstoqueService {
 
     public Movimentacao reservar(long idProduto,int quantidade){
         Estoque estoque = buscarOuCriarEstoque(idProduto);
+        if (estoque.getQuantidadeDisponivel() < quantidade) throw new RuntimeException("Estoque Insuficiente");
         estoque.setQuantidadeDisponivel(estoque.getQuantidadeDisponivel() - quantidade);
         estoque.setQuantidadeReservada(estoque.getQuantidadeReservada() + quantidade);
         estoqueRepo.save(estoque);
