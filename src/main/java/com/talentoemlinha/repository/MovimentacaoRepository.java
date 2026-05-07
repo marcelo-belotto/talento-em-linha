@@ -13,6 +13,7 @@ public class MovimentacaoRepository {
     private List<Movimentacao> listaMovimentacoes = new ArrayList<>();
 
     public Movimentacao save(Movimentacao movimentacao) {
+        movimentacao.setId(listaMovimentacoes.size()+1);
         listaMovimentacoes.add(movimentacao);
         return movimentacao;
     }

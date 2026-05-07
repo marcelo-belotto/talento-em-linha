@@ -1,9 +1,12 @@
 package com.talentoemlinha.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.talentoemlinha.model.Produto;
+import com.talentoemlinha.model.Estoque;
+import com.talentoemlinha.model.Funcionario;
 import com.talentoemlinha.model.Reserva;
 import com.talentoemlinha.repository.ReservaRepository;
 
@@ -15,22 +18,29 @@ public class ReservaService {
     @Autowired
     private EstoqueService estoqueService;
     @Autowired
-    private ProdutoService produtoService;
-    @Autowired
     private ReservaRepository reservaRepo;
+    @Autowired
+    private FuncionarioService funcionarioServ;
 
     public Reserva reservar(long idProduto, long npFuncionario, int quantidade) {
-        Produto produto = produtoService.buscarProduto(idProduto);
-
-        if (produto == null) return null;
+        Estoque estoque = estoqueService.consultarSaldo(idProduto);
+        if (estoque == null) return null;
+        Funcionario funcionario = funcionarioServ.retornarFuncionarioPeloId(npFuncionario);
+        if (funcionario == null) return null;
+        if (funcionario.getTotalDePontos() < (estoque.getProduto().getPontos()*quantidade)) throw new RuntimeException("Funcionário possui pontos insuficientes!");
         
+        funcionario.setTotalDePontos(funcionario.getTotalDePontos()-estoque.getProduto().getPontos()*quantidade);
+        funcionario.setPontosUtilizados(funcionario.getPontosUtilizados()+estoque.getProduto().getPontos()*quantidade);
+        funcionarioServ.adicionarFuncionario(funcionario);
+
         estoqueService.reservar(idProduto, quantidade);
 
         Reserva reserva = new Reserva();
         reserva.setNpFuncionario(npFuncionario);
         reserva.setQuantidade(quantidade);
         reserva.setStatus("RESERVADO");
-        reserva.setProduto(produto);
+        reserva.setProduto(estoque.getProduto());
+        reserva.setDataExpiracao(LocalDateTime.now().plusDays(8));
 
         reservaRepo.save(reserva);
         /*

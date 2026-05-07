@@ -22,6 +22,7 @@ public class ProdutoRepository {
 
     public Produto save(Produto produto){
         if (listaProdutos.stream().anyMatch(x -> x.equals(produto))) throw new RuntimeException("Produto já existe");
+        produto.setId(listaProdutos.size()+1);
         listaProdutos.add(produto);
         return produto;
     }

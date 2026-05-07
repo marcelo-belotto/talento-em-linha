@@ -15,6 +15,7 @@ public class EstoqueRepository {
 
     public Estoque save(Estoque estoque){
         if (!listaEstoque.contains(estoque)){
+            estoque.setId(listaEstoque.size()+1);
             listaEstoque.add(estoque);
         }else{
             int indice = listaEstoque.indexOf(estoque);

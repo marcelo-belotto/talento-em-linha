@@ -2,36 +2,32 @@ package com.talentoemlinha.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.talentoemlinha.model.Funcionario;
+import com.talentoemlinha.repository.FuncionarioRepository;
 
 @Service
 public class FuncionarioService {
-    private List<Funcionario> funcionarios = Funcionario.getFuncionariosMocados();
+
+    @Autowired
+    private FuncionarioRepository funcionarioRepo;
 
     public List<Funcionario> retornarTodosFuncionarios(){
-        return funcionarios;
+        return funcionarioRepo.findAll();
     }
 
     public Funcionario retornarFuncionarioPeloId(long id){
-        return funcionarios.stream().filter(x -> x.getNp()==id).findFirst().orElse(null);
+        return funcionarioRepo.findById(id);
     }
 
     public Funcionario adicionarFuncionario(Funcionario func){
-        if (funcionarios.stream().anyMatch(x -> x.equals(func)))
-            return null;
-        funcionarios.add(func);
-        return func;
+        return funcionarioRepo.save(func);
     }
 
     public Funcionario alterarFuncionario(long id, Funcionario novoFunc){
-        Funcionario temp = retornarFuncionarioPeloId(id);
-        if (temp == null)
-            return null;
-        funcionarios.remove(temp);
-        funcionarios.add(novoFunc);
-        return novoFunc;
+        return funcionarioRepo.save(novoFunc);
     }
 
     public Funcionario deletarFuncionario(long id){

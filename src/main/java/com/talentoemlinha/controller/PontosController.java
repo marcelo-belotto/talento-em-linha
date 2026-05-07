@@ -41,6 +41,8 @@ public class PontosController {
     public ResponseEntity<Ponto> funcionarioPost(@PathVariable int id, @RequestBody PontoDto pontos) {
         Funcionario funcionario = funcService.retornarFuncionarioPeloId(id);
         if (funcionario != null) {
+            funcionario.setTotalDePontos(funcionario.getTotalDePontos()+pontos.getQuantidade());
+            funcService.adicionarFuncionario(funcionario);
             int indicePonto = pontoService.retornarTodosPontos().size() + 1;
             Ponto novoPonto = new Ponto(indicePonto, id, pontos.getQuantidade(), pontos.getMotivo());
             return ResponseEntity.status(HttpStatus.CREATED).body(pontoService.adicionarPonto(novoPonto));
