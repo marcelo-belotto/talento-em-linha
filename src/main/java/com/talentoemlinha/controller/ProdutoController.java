@@ -22,26 +22,26 @@ public class ProdutoController {
     private ProdutoService prodService;
 
     @GetMapping("/produto")
-    public ResponseEntity<List<Produto>> produtosGet(){
+    public ResponseEntity<List<Produto>> getProduto(){
         return ResponseEntity.status(HttpStatus.OK).body(prodService.buscarTodosOsProdutos());
     }
 
     @GetMapping("/produto/{id}")
-    public ResponseEntity<Produto> produtosGet(@PathVariable long id){
+    public ResponseEntity<Produto> getProduto(@PathVariable long id){
         Produto produto = prodService.buscarProduto(id);
         if (produto != null) return ResponseEntity.status(HttpStatus.OK).body(produto);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     @PostMapping("/produto")
-    public ResponseEntity<Produto> produtosPost(@RequestBody Produto produto){
+    public ResponseEntity<Produto> postProduto(@RequestBody Produto produto){
         if (prodService.cadastrarNovoProduto(produto) == null)
             return ResponseEntity.status(HttpStatus.CONFLICT).body(produto);
         return ResponseEntity.status(HttpStatus.CREATED).body(produto);
     }
 
     @DeleteMapping("/produto/{id}")
-    public void produtosDelete(@PathVariable long id){
+    public void deleteProduto(@PathVariable long id){
         prodService.removerProduto(id);
     }
 

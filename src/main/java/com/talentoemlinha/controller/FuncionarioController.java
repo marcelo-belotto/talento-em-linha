@@ -23,12 +23,12 @@ public class FuncionarioController {
     private FuncionarioService funcService;
 
     @GetMapping("/funcionario")
-    public ResponseEntity<List<Funcionario>> funcionarioGet() {
+    public ResponseEntity<List<Funcionario>> getFuncionario() {
         return ResponseEntity.status(HttpStatus.OK).body(funcService.retornarTodosFuncionarios());
     }
 
     @GetMapping("/funcionario/{id}")
-    public ResponseEntity<Funcionario> funcionarioGet(@PathVariable long id) {
+    public ResponseEntity<Funcionario> getFuncionario(@PathVariable long id) {
         Funcionario responseFunc = funcService.retornarFuncionarioPeloId(id);
         if (responseFunc != null)
             return ResponseEntity.status(HttpStatus.OK).body(responseFunc);
@@ -37,7 +37,7 @@ public class FuncionarioController {
     }
 
     @PostMapping("/funcionario")
-    public ResponseEntity<Funcionario> funcionarioPost(@RequestBody Funcionario func) {
+    public ResponseEntity<Funcionario> postFuncionario(@RequestBody Funcionario func) {
         Funcionario responseFunc = funcService.adicionarFuncionario(func);
         if (responseFunc == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -45,7 +45,7 @@ public class FuncionarioController {
     }
 
     @PutMapping("/funcionario/{id}")
-    public ResponseEntity<Funcionario> funcionarioPut(@PathVariable long id, @RequestBody Funcionario func) {
+    public ResponseEntity<Funcionario> putFuncionario(@PathVariable long id, @RequestBody Funcionario func) {
         Funcionario resposeFunc = funcService.alterarFuncionario(id, func);
         if (resposeFunc == null)
             return null;
@@ -53,7 +53,7 @@ public class FuncionarioController {
     }
 
     @DeleteMapping("/funcionario/{id}")
-    public ResponseEntity<Funcionario> funcionarioDelete(@PathVariable long id) {
+    public ResponseEntity<Funcionario> deleteFuncionario(@PathVariable long id) {
         if (funcService.deletarFuncionario(id) != null)
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

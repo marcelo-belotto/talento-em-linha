@@ -14,23 +14,32 @@ public class FuncionarioService {
     @Autowired
     private FuncionarioRepository funcionarioRepo;
 
-    public List<Funcionario> retornarTodosFuncionarios(){
+    public List<Funcionario> retornarTodosFuncionarios() {
         return funcionarioRepo.findAll();
     }
 
-    public Funcionario retornarFuncionarioPeloId(long id){
+    public Funcionario retornarFuncionarioPeloId(long id) {
         return funcionarioRepo.findById(id);
     }
 
-    public Funcionario adicionarFuncionario(Funcionario func){
+    public Funcionario adicionarFuncionario(Funcionario func) {
         return funcionarioRepo.save(func);
     }
 
-    public Funcionario alterarFuncionario(long id, Funcionario novoFunc){
+    public Funcionario alterarFuncionario(long id, Funcionario novoFunc) {
         return funcionarioRepo.save(novoFunc);
     }
 
-    public Funcionario deletarFuncionario(long id){
+    public boolean bonificarFuncionario(long np, int quantidade) {
+        Funcionario func = retornarFuncionarioPeloId(np);
+        if (func == null)
+            return false;
+        func.setTotalDePontos(func.getTotalDePontos() + quantidade);
+        funcionarioRepo.save(func);
+        return true;
+    }
+
+    public Funcionario deletarFuncionario(long id) {
         Funcionario temp = retornarFuncionarioPeloId(id);
         if (temp == null)
             return null;

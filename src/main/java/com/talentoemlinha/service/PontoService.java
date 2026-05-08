@@ -16,6 +16,7 @@ public class PontoService {
     }
 
     public Ponto adicionarPonto(Ponto ponto){
+        ponto.setId(pontos.size()+1);
         pontos.add(ponto);
         return ponto;
     }

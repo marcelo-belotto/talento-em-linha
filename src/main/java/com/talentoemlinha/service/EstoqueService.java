@@ -44,14 +44,10 @@ public class EstoqueService {
     public Movimentacao retirada(long produtoId, int quantidade) {
         Estoque estoque = buscarOuCriarEstoque(produtoId);
 
-        if (estoque.getQuantidadeDisponivel() < quantidade) {
-            throw new RuntimeException("Estoque insuficiente");
-        }
-
-        estoque.setQuantidadeDisponivel(estoque.getQuantidadeDisponivel() - quantidade);
+        estoque.setQuantidadeReservada(estoque.getQuantidadeReservada() - quantidade);
         estoqueRepo.save(estoque);
 
-        return registrarMovimentacao(estoque.getProduto(), "SAIDA", quantidade);
+        return registrarMovimentacao(estoque.getProduto(), "RETIRADO", quantidade);
     }
 
     public List<Estoque> consultarTodos(){

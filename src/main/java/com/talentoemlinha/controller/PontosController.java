@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.talentoemlinha.dto.PontoDto;
-import com.talentoemlinha.model.Funcionario;
 import com.talentoemlinha.model.Ponto;
 import com.talentoemlinha.service.FuncionarioService;
 import com.talentoemlinha.service.PontoService;
@@ -27,24 +26,20 @@ public class PontosController {
     private FuncionarioService funcService;
 
     @GetMapping("/pontos")
-    public ResponseEntity<List<Ponto>> pontosGet() {
+    public ResponseEntity<List<Ponto>> getPonto() {
         return ResponseEntity.status(HttpStatus.OK).body(pontoService.retornarTodosPontos());
     }
 
-    @GetMapping("/pontos/{id}")
-    public ResponseEntity<List<Ponto>> pontosGet(@PathVariable int id) {
+    @GetMapping("/pontos/{np}")
+    public ResponseEntity<List<Ponto>> getPonto(@PathVariable int np) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(pontoService.retornarTodosPontos().stream().filter(x -> x.getNpFuncionario() == id).toList());
+                .body(pontoService.retornarTodosPontos().stream().filter(x -> x.getNpFuncionario() == np).toList());
     }
 
     @PostMapping("bonificar/{id}")
-    public ResponseEntity<Ponto> funcionarioPost(@PathVariable int id, @RequestBody PontoDto pontos) {
-        Funcionario funcionario = funcService.retornarFuncionarioPeloId(id);
-        if (funcionario != null) {
-            funcionario.setTotalDePontos(funcionario.getTotalDePontos()+pontos.getQuantidade());
-            funcService.adicionarFuncionario(funcionario);
-            int indicePonto = pontoService.retornarTodosPontos().size() + 1;
-            Ponto novoPonto = new Ponto(indicePonto, id, pontos.getQuantidade(), pontos.getMotivo());
+    public ResponseEntity<Ponto> postPonto(@PathVariable int id, @RequestBody PontoDto pontos) {
+        if (funcService.bonificarFuncionario(id, pontos.getQuantidade())) {
+            Ponto novoPonto = new Ponto(0, id, pontos.getQuantidade(), pontos.getMotivo());
             return ResponseEntity.status(HttpStatus.CREATED).body(pontoService.adicionarPonto(novoPonto));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

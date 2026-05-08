@@ -21,22 +21,22 @@ public class EstoqueController {
     private EstoqueService estServ;
 
     @GetMapping("/estoque")
-    public List<Estoque> estoqueGet() {
+    public List<Estoque> getEstoque() {
         return estServ.consultarTodos();
     }
 
     @GetMapping("/estoque/{id}")
-    public Estoque estoqueGet(@PathVariable long id) {
+    public Estoque getEstoque(@PathVariable long id) {
         return estServ.consultarSaldo(id);
     }
 
     @PostMapping("/estoque/entrada")
-    public Movimentacao estoqueEntradaPost(@RequestBody EstoqueDto estoqueDto) {
+    public Movimentacao postEstoqueEntrada(@RequestBody EstoqueDto estoqueDto) {
         return estServ.entrada(estoqueDto.getIdProduto(), estoqueDto.getQuantidade());
     }
 
     @PostMapping("/estoque/retirada")
-    public Movimentacao estoqueSaidaPost(@RequestBody EstoqueDto estoqueDto) {
+    public Movimentacao postEstoqueRetirada(@RequestBody EstoqueDto estoqueDto) {
         return estServ.retirada(estoqueDto.getIdProduto(), estoqueDto.getQuantidade());
     }
 }
