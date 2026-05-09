@@ -53,9 +53,7 @@ public class ReservaService {
         reserva.setProduto(estoque.getProduto());
         reserva.setDataExpiracao(LocalDateTime.now().plusDays(8));
 
-        reservaRepo.save(reserva);
-        return reserva;
-
+        return reservaRepo.save(reserva);
     }
 
     public List<Reserva> retirar(long npFuncionario) {
@@ -69,12 +67,6 @@ public class ReservaService {
             }
 
         }
-        /*
-         * TO-DO:
-         * Buscar uma reserva ativa e confirmar retirada (novo metodo em estoqueService)
-         * Salvar no repositorio de reservas que foi retirado
-         */
-
         return reservas;
 
     }

@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.talentoemlinha.dto.ReservaDto;
 import com.talentoemlinha.model.Reserva;
-import com.talentoemlinha.repository.ReservaRepository;
 import com.talentoemlinha.service.ReservaService;
 
 @RestController
 public class ReservaController {
 
-    @Autowired
-    private ReservaRepository reservaRepo;
     @Autowired
     private ReservaService reservaServ;
 

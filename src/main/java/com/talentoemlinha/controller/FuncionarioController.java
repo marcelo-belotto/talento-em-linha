@@ -30,10 +30,9 @@ public class FuncionarioController {
     @GetMapping("/funcionario/{id}")
     public ResponseEntity<Funcionario> getFuncionario(@PathVariable long id) {
         Funcionario responseFunc = funcService.retornarFuncionarioPeloId(id);
-        if (responseFunc != null)
-            return ResponseEntity.status(HttpStatus.OK).body(responseFunc);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-
+        if (responseFunc == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(responseFunc);
     }
 
     @PostMapping("/funcionario")
@@ -48,15 +47,15 @@ public class FuncionarioController {
     public ResponseEntity<Funcionario> putFuncionario(@PathVariable long id, @RequestBody Funcionario func) {
         Funcionario resposeFunc = funcService.alterarFuncionario(id, func);
         if (resposeFunc == null)
-            return null;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.status(HttpStatus.CREATED).body(func);
     }
 
     @DeleteMapping("/funcionario/{id}")
     public ResponseEntity<Funcionario> deleteFuncionario(@PathVariable long id) {
-        if (funcService.deletarFuncionario(id) != null)
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        if (funcService.deletarFuncionario(id) == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
     }
 
 }
