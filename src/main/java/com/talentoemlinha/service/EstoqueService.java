@@ -2,7 +2,6 @@ package com.talentoemlinha.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ import com.talentoemlinha.repository.ProdutoRepository;
 @Service
 public class EstoqueService {
     @Autowired
-    private EstoqueRepository estoqueRepo;
+    private  EstoqueRepository estoqueRepo;
     @Autowired
     private ProdutoRepository produtoRepo;
     @Autowired

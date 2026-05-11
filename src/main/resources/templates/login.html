@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/login.css">
+  <title>Login — Talento em Linha</title>
+</head>
+<body>
+  <div class="cabecalho">
+    <img src="./images/talento-logo.png">
+  </div>
+
+  <div class="loginContainerDireito">
+    <h2>Acesse sua conta</h2>
+    <form action="./index.html" method="GET">
+      <fieldset class="container-login-area">
+        <legend>Credenciais de acesso</legend>
+        <div>
+          <label for="usuario">Matrícula</label><br>
+          <input type="text" class="input-box" id="usuario" name="usuario" placeholder="Ex: 00123" autocomplete="username" required>
+        </div>
+        <div>
+          <label for="senha">Senha</label><br>
+          <input type="password" class="input-box" id="senha" name="senha" placeholder="Digite sua senha" autocomplete="current-password" required>
+        </div>
+  
+          <button type="submit" class="button-login">Entrar</button>
+  
+      </fieldset>
+    </form>
+  
+    <p>
+      <a href="#">Esqueci minha senha</a>
+    </p>
+
+    <small>Talento em Linha &copy; 2026 - Todos os direitos reservados</small>
+  </div>
+
+
+
+</body>
+</html>

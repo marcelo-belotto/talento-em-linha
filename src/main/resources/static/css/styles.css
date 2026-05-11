@@ -1,0 +1,184 @@
+:root {
+    --cor-primaria: #0a0a0a;
+    --cor-secundaria: #111111;
+    --cor-terciaria: #181818;
+    --branco: #FFFFFF;
+    --azul-claro: #4D7FCC;
+    --azul-claro-2: #E6EEF8;
+    --texto-primario: #1C2E5B;
+    --texto-secondario: #4A5A7A;
+    --hover: #002F73;
+    --activo: #001F4D;
+    --borda: #242424;
+    --atencao: #d4f542;
+    --concluido: #42f5a7;
+    --perigo: #f54242;
+    --espaco-conteudo: 200px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: var(--cor-primaria);
+    color: var(--branco);
+    margin-bottom: 30px;
+}
+
+.sidebar {
+    width: var(--espaco-conteudo);
+    height: 100vh;
+    color: var(--branco);
+    background-color: var(--cor-primaria);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    border-right: 2px solid var(--borda);
+}
+
+.container-logomarca {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--borda);
+}
+
+.logomarca {
+    width: 50%;
+}
+
+.navegacao {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-transform: uppercase;
+}
+
+.nav-titulo {
+    font-size: 1.2em;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.nav-item {
+    color: var(--branco);
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.nav-item:hover {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--azul-claro);
+}
+
+.container-conteudo {
+    margin-left: var(--espaco-conteudo);
+    padding-left: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.rodape {
+    height: 10vh;
+    padding-left: 20px;
+    margin-left: var(--espaco-conteudo);
+    display: flex;
+    align-items: center;
+}
+
+table, td, th {
+    border: 1px solid white;
+}
+
+td,
+th {
+    padding: 5px;
+}
+
+a {
+    color: var(--branco);
+}
+
+@media (max-width: 600px) {
+
+    .container-logomarca {
+        display: none;
+    }
+    .sidebar {
+        position: relative;
+        height: 60px;
+        width: 100%;
+        justify-content: center;
+        background-color: var(--cor-terciaria);
+        border: 1px solid var(--borda);
+    }
+
+    .navegacao {
+        font-size: 0.8em;
+        margin-top: 10px;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .container-conteudo {
+        margin-left: 0px;
+        padding-left: 10px;
+        padding-right: 10px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .rodape {
+        height: 10vh;
+        padding-left: 20px;
+        margin-left: 0px;
+        display: block;
+    }
+
+    .table-wrapper { overflow-x: visible; }
+
+      table, thead, tbody, tr, th, td {
+        display: block;
+        border: none;
+      }
+
+      thead, tfoot { display: none; }
+
+      tr {
+        margin-bottom: 16px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      td {
+        display: flex;
+        justify-content: space-between;
+        border: none;
+        border-bottom: 1px solid #eee;
+        white-space: normal;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        margin-right: 12px;
+        flex-shrink: 0;
+      }
+
+      .rodape{
+        display: none;
+      }
+}

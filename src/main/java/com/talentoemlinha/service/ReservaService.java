@@ -1,13 +1,14 @@
 package com.talentoemlinha.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.talentoemlinha.model.Estoque;
-import com.talentoemlinha.model.Funcionario;
+import com.talentoemlinha.dto.ReservaDto;
+import com.talentoemlinha.model.Produto;
 import com.talentoemlinha.model.Reserva;
 import com.talentoemlinha.repository.ReservaRepository;
 
@@ -27,33 +28,25 @@ public class ReservaService {
         return reservaRepo.findAll();
     }
 
-    public Reserva reservar(long idProduto, long npFuncionario, int quantidade) {
-        Estoque estoque = estoqueService.consultarSaldo(idProduto);
-        if (estoque == null)
-            return null;
-        System.out.println(estoque);
-        Funcionario funcionario = funcionarioServ.retornarFuncionarioPeloId(npFuncionario);
-        if (funcionario == null)
-            return null;
-        System.out.println(funcionario);
-        if (funcionario.getTotalDePontos() < (estoque.getProduto().getPontos() * quantidade))
-            throw new RuntimeException("Funcionário possui pontos insuficientes!");
+    public List<Reserva> reservar(long np, List<ReservaDto> listaReservasDto) {
+        List<Reserva> reservasConfirmadas = new ArrayList<>();
+        for (ReservaDto reservaDto : listaReservasDto) {
+            Produto produto = estoqueService.consultarSaldo(reservaDto.getIdProduto()).getProduto();
 
-        funcionario.setTotalDePontos(funcionario.getTotalDePontos() - estoque.getProduto().getPontos() * quantidade);
-        funcionario
-                .setPontosUtilizados(funcionario.getPontosUtilizados() + estoque.getProduto().getPontos() * quantidade);
-        funcionarioServ.adicionarFuncionario(funcionario);
-
-        estoqueService.reservar(idProduto, quantidade);
-
-        Reserva reserva = new Reserva();
-        reserva.setNpFuncionario(npFuncionario);
-        reserva.setQuantidade(quantidade);
-        reserva.setStatus("RESERVADO");
-        reserva.setProduto(estoque.getProduto());
-        reserva.setDataExpiracao(LocalDateTime.now().plusDays(8));
-
-        return reservaRepo.save(reserva);
+            if (funcionarioServ.descontarPontosReserva(np,produto.getPontos() * reservaDto.getQuantidade())){
+                estoqueService.reservar(reservaDto.getIdProduto(), reservaDto.getQuantidade());
+        
+                Reserva reserva = new Reserva();
+                reserva.setNpFuncionario(np);
+                reserva.setQuantidade(reservaDto.getQuantidade());
+                reserva.setStatus("RESERVADO");
+                reserva.setProduto(produto);
+                reserva.setDataExpiracao(LocalDateTime.now().plusDays(8));
+                reservasConfirmadas.add(reserva);
+                reservaRepo.save(reserva);
+            }
+        }
+        return reservasConfirmadas;
     }
 
     public List<Reserva> retirar(long npFuncionario) {

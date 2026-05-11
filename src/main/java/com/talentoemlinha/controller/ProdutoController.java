@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.talentoemlinha.model.Produto;
 import com.talentoemlinha.service.ProdutoService;
 
 @RestController
+@RequestMapping("/api/v1")
 public class ProdutoController {
 
     @Autowired
@@ -41,8 +43,8 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/produto/{id}")
-    public void deleteProduto(@PathVariable long id){
-        prodService.removerProduto(id);
+    public ResponseEntity<?> deleteProduto(@PathVariable long id){
+        return ResponseEntity.status(HttpStatus.OK).body(prodService.removerProduto(id));
     }
 
 }

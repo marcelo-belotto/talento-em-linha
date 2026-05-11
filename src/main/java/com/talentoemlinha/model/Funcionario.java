@@ -17,7 +17,7 @@ public class Funcionario {
     private String senha;
     private int totalDePontos;
     private int pontosUtilizados;
-    private String ROLE;
+    // private String ROLE;
     private static int npControleTemp = 10000001;
 
     public static List<Funcionario> getFuncionariosMocados() {

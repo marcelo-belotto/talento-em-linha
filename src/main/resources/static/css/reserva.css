@@ -1,0 +1,59 @@
+.container-cabecalho,
+.container-reserva,
+.container-brindes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container-brindes {
+    width: 80%;
+    min-width: 900px;
+}
+
+.container-brindes table {
+    text-align: center;
+}
+
+.container-brindes table td input {
+    width: 70%;
+}
+
+.container-reserva {
+    max-width: 900px;
+    width: 70%;
+}
+
+.button-reserva {
+    padding: 10px;
+    font-size: 1.0em;
+    text-transform: uppercase;
+    background-color: var(--branco);
+    border: none;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.button-reserva:hover {
+    background-color: var(--azul-claro);
+    color: var(--texto-primario);
+    font-weight: bold;
+}
+
+table {
+    background-color: var(--cor-primaria);
+}
+
+@media (max-width:500px) {
+    .descricao {
+        display: none;
+    }
+
+    .container-reserva, 
+    .container-brindes,
+    .container-cabecalho {
+        min-width: auto;
+        max-width: auto;
+        width: auto;
+    }
+}

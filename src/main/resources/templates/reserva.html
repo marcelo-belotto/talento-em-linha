@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/reserva.css">
+  <title>Brindes — Talento em Linha</title>
+</head>
+
+<body>
+  <header class="sidebar">
+    <nav class="navegacao">
+      <div class="container-logomarca">
+        <img src="./images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
+      </div>
+      <a class="nav-item" href="index.html">Inicio</a>
+      <a class="nav-item" href="reserva.html">Brindes</a>
+      <a class="nav-item" href="pontos-categoria.html">Categorias</a>
+      <a class="nav-item" href="meus-dados.html">Meus Dados</a>
+    </nav>
+  </header>
+
+  <main class="container-conteudo">
+
+    <div class="container-cabecalho">
+      <h2>Catalogo de Brindes</h2>
+      <p>Seu saldo atual: <strong>20 pontos</strong></p>
+      <p>Selecione os brindes desejados clicando em <em>Reservar</em>.</p>
+    </div>
+    
+    <div class="container-brindes">
+      <div class="table-wrapper">
+        <h3>Brindes Disponiveis</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Brinde</th>
+              <th>Descricao</th>
+              <th>Pontos</th>
+              <th>Estoque</th>
+              <th>Reservar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Brinde">Fone Bluetooth Pro</td>
+              <td data-label="Descrição">Fone over-ear com cancelamento de ruido e 30h de bateria.</td>
+              <td data-label="Pontos">50 pts</td>
+              <td data-label="Estoque">12 disponiveis</td>
+              <td><input type="button" value="Reservar" name="sel_fone" id="sel_fone"></td>
+            </tr>
+            
+            <tr>
+              <td data-label="Brinde">Kit Cafe Especial</td>
+              <td data-label="Descrição">Kit com 3 pacotes de cafe selecionado, caneca e coador.</td>
+              <td data-label="Pontos">20 pts</td>
+              <td data-label="Estoque">30 disponiveis</td>
+              <td><input type="button" value="Reservar" name="sel_cafe" id="sel_cafe"></td>
+            </tr>
+            
+            <tr>
+              <td data-label="Brinde">Camiseta Exclusiva</td>
+              <td data-label="Descrição">Camiseta 100% algodao com bordado exclusivo da empresa.</td>
+              <td data-label="Pontos">15 pts</td>
+              <td data-label="Estoque">4 disponiveis</td>
+              <td>
+                <input type="button" value="Reservar" name="sel_camiseta" id="sel_camiseta">
+              </td>
+            </tr>
+            
+            <tr>
+              <td data-label="Brinde">Voucher Livraria</td>
+              <td data-label="Descrição">Credito de R$ 50,00 para usar em qualquer livraria parceira.</td>
+              <td data-label="Pontos">30 pts</td>
+              <td data-label="Estoque">20 disponiveis</td>
+              <td>
+                <input type="button" value="Reservar" name="sel_livro" id="sel_livro">
+              </td>
+            </tr>
+            
+            <tr>
+              <td data-label="Brinde">Mouse Sem Fio</td>
+              <td data-label="Descrição">Mouse ergonomico wireless com receptor USB nano.</td>
+              <td data-label="Pontos">38 pts</td>
+              <td data-label="Estoque">8 disponiveis</td>
+              <td>
+                <input type="button" value="Reservar" name="sel_mouse" id="sel_mouse">
+              </td>
+            </tr>
+            
+            <tr>
+              <td data-label="Brinde">Gift Card Games</td>
+              <td data-label="Descrição">Cartao presente de R$ 30,00 para plataformas digitais de jogos.</td>
+              <td data-label="Pontos">15 pts</td>
+              <td data-label="Estoque">3 disponiveis</td>
+              <td>
+                <input type="button" value="Reservar" name="sel_gift" id="sel_gift">
+              </td>
+            </tr>
+            
+            <tr>
+              <td data-label="Brinde">Vale Refeicao</td>
+              <td data-label="Descrição">Voucher de R$ 30,00 em restaurantes e lanchonetes parceiras.</td>
+              <td data-label="Pontos">10 pts</td>
+              <td data-label="Estoque">50 disponiveis</td>
+              <td>
+                <input type="button" value="Reservar" name="sel_refeicao" id="sel_refeicao">
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    
+    
+    <form action="index.html" method="get" class="container-reserva">
+      <h3>Carrinho de Reserva</h3>
+      <p>Após selecionar os brindes clique em <em>Confirmar Reserva</em>.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Brinde</th>
+            <th>Quantidade</th>
+            <th>Pts / unidade</th>
+            <th>Total de pontos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <td data-label="Brinde"></td>
+          <td data-label="Quantidade"></td>
+          <td data-label="Pontos"></td>
+          <td data-label="Total de pontos"></td>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3"><strong>Total a debitar</strong></td>
+            <td><strong>0 pts</strong></td>
+          </tr>
+          <tr>
+            <td colspan="3">Saldo apos reserva</td>
+            <td>20 pts</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <button type="submit" class="button-reserva">Confirmar Reserva</button>
+
+    </form>
+
+  </main>
+
+  <footer class="rodape">
+    <small>Talento em Linha &copy; 2026 - Todos os direitos reservados</small>
+  </footer>
+
+</body>
+
+</html>
