@@ -1,22 +1,10 @@
+/* ── CATEGORIAS PAGE ── */
 table {
-    background-color: var(--cor-primaria);
-    min-width: 900px;
-    width: 80%;
-    text-align: center;
+    background: transparent;
+    min-width: unset;
+    width: 100%;
 }
 
-.container-conteudo {
-    justify-content: flex-start;
-    gap: 10%;
-}
-
-.container-conteudo h2 {
-    margin-top: 40px;
-}
-
-@media (max-width:600px) {
-    table {
-        min-width: auto;
-        width: 100%;
-    }
+@media (max-width: 768px) {
+    table { min-width: auto; width: 100%; }
 }

@@ -1,42 +1,88 @@
+/* ── INDEX PAGE ── */
+.saudacao h2 {
+    margin-bottom: 6px;
+}
+
+.container-resumo h3 {
+    margin-bottom: 4px;
+}
+
+/* Points summary cards */
 .container-cards-pontos {
-    width: 70%;
-    display: flex;
-    gap: 50px;
-    flex-wrap: nowrap;
-    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 4px;
 }
 
 .card-ponto {
-    min-width: 120px;
-    width: 120px;
-    min-height: 120px;
-    height: 120px;
-    border: 1px solid var(--borda);
-    border-radius: 5px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 18px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background-color: var(--cor-terciaria);
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
 }
+
+.card-ponto::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+}
+
+.card-ponto:nth-child(1)::before { background: var(--accent2); }
+.card-ponto:nth-child(2)::before { background: var(--accent3); }
+.card-ponto:nth-child(3)::before { background: var(--accent); }
+
+.card-ponto:hover {
+    border-color: #333;
+    transform: translateY(-2px);
+}
+
+.card-ponto p:first-child {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted2);
+}
+
+.card-ponto p:last-child {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+}
+
+.card-ponto:nth-child(1) p:last-child { color: var(--accent2); }
+.card-ponto:nth-child(2) p:last-child { color: var(--accent3); }
+.card-ponto:nth-child(3) p:last-child { color: var(--accent); }
 
 table {
-    text-align: center;
-    width: 80%;
-    background-color: var(--cor-primaria)
+    background-color: transparent;
+    width: 100%;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 768px) {
     .container-cards-pontos {
-        width: 100vw;
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
-    table{
-        width: 100%;
+
+    .card-ponto {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+    }
+
+    .card-ponto p:last-child {
+        font-size: 1.3rem;
     }
 }

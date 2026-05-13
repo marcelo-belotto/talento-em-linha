@@ -1,95 +1,113 @@
-* {
-    padding: 0;
-    margin: 0;
-}
-
+/* ── LOGIN PAGE ── */
 body {
     min-height: 100vh;
-    min-width: 100vw;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
-    text-transform: uppercase;
+    align-items: stretch;
 }
 
 .cabecalho {
+    width: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 50%;
+    justify-content: center;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cabecalho::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(212,245,66,0.06) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .cabecalho img {
-    max-width: 50%;
-}
-
-.container-login-area {
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    gap: 15px;
-    border-radius: 5px;
+    max-width: 55%;
+    filter: brightness(0) invert(1);
+    position: relative;
+    z-index: 1;
 }
 
 .loginContainerDireito {
-    box-sizing: border-box;
-    min-height: 100%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 60px 48px;
+}
+
+.loginContainerDireito h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    align-self: flex-start;
+}
+
+.container-login-area {
+    width: 100%;
+    max-width: 360px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
+    border-radius: 8px;
+    border-color: var(--border);
 }
 
-.input-box {
-    padding: 5px;
-    font-size: 1em;
+.container-login-area > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-.button-login {
-    padding: 10px;
-    font-size: 1.0em;
-    text-transform: uppercase;
-    background-color: var(--branco);
-    border: none;
-    border-radius: 5px;
+.loginContainerDireito > p {
+    font-size: 0.8rem;
+    align-self: flex-start;
+    max-width: 360px;
 }
 
-.button-login:hover {
-    background-color: var(--azul-claro);
-    color: var(--texto-primario);
-    font-weight: bold;
+.loginContainerDireito small {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.5px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
     body {
         flex-direction: column;
-        justify-content: space-evenly;
-        gap: 30px;
     }
 
     .cabecalho {
-        width: 80%;
+        width: 100%;
+        min-height: 180px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 30px;
     }
 
-    .cabecalho img {
-        max-width: 100%;
-    }
-
-    .container-login-area{
-        gap: 30px;
-    }
+    .cabecalho img { max-width: 45%; }
 
     .loginContainerDireito {
-        gap: 50px;
+        width: 100%;
+        padding: 32px 20px;
+        align-items: stretch;
     }
 
-    small {
-        margin-top: 30px;
-        font-size: 12px;
-    }
+    .loginContainerDireito h2 { font-size: 1.2rem; }
+
+    .container-login-area { max-width: 100%; }
 }

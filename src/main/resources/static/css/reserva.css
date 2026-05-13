@@ -1,59 +1,37 @@
-.container-cabecalho,
-.container-reserva,
-.container-brindes {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+/* ── RESERVA PAGE ── */
+.container-cabecalho p strong {
+    color: var(--accent2);
 }
 
 .container-brindes {
-    width: 80%;
-    min-width: 900px;
+    min-width: unset;
+    width: 100%;
 }
 
-.container-brindes table {
-    text-align: center;
-}
-
-.container-brindes table td input {
-    width: 70%;
+.container-brindes table td input[type="button"] {
+    padding: 6px 14px;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
 }
 
 .container-reserva {
-    max-width: 900px;
-    width: 70%;
+    max-width: 100%;
+    width: 100%;
 }
 
 .button-reserva {
-    padding: 10px;
-    font-size: 1.0em;
-    text-transform: uppercase;
-    background-color: var(--branco);
-    border: none;
-    border-radius: 5px;
-    width: 200px;
+    align-self: flex-start;
+    min-width: 180px;
 }
 
-.button-reserva:hover {
-    background-color: var(--azul-claro);
-    color: var(--texto-primario);
-    font-weight: bold;
-}
+table { background: transparent; }
 
-table {
-    background-color: var(--cor-primaria);
-}
-
-@media (max-width:500px) {
-    .descricao {
-        display: none;
-    }
-
-    .container-reserva, 
+@media (max-width: 768px) {
     .container-brindes,
-    .container-cabecalho {
+    .container-reserva {
         min-width: auto;
-        max-width: auto;
         width: auto;
     }
+
+    td[data-label="Descrição"] { display: none; }
 }

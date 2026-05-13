@@ -1,22 +1,74 @@
+/* ── MEUS DADOS PAGE ── */
 table {
-    background-color: var(--cor-primaria);
-    min-width: 900px;
-    width: 80%;
-    text-align: center;
+    background: transparent;
+    min-width: unset;
+    width: 100%;
 }
 
-@media (max-width: 600px){
-    table{
-        min-width: auto;
-        width: auto;
+.container-conteudo > table,
+.container-conteudo > h3 {
+    /* wrap each section in its own surface */
+}
+
+/* Group each section visually */
+.container-conteudo h3 {
+    margin-top: 8px;
+}
+
+table th[scope="row"] {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted2);
+    font-weight: 400;
+    width: 220px;
+    background: transparent;
+    text-align: left;
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+tbody tr:last-child th[scope="row"] {
+    border-bottom: none;
+}
+
+.rodape {
+    margin-left: 0;
+}
+
+@media (max-width: 768px) {
+    table { min-width: auto; width: 100%; }
+
+    tbody tr {
+        display: block;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        padding: 4px 0;
     }
 
-    tr {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    th[scope="row"],
     td {
-        border: none;
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid var(--border);
     }
+
+    tbody tr:last-child th[scope="row"],
+    tbody tr td:last-child {
+        border-bottom: none;
+    }
+
+    th[scope="row"] {
+        font-size: 0.65rem;
+        padding: 10px 14px 4px;
+    }
+
+    td {
+        padding: 4px 14px 10px;
+    }
+
+    td::before { display: none; }
 }
