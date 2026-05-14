@@ -1,5 +1,6 @@
 package com.talentoemlinha.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +36,14 @@ public class PontosController {
     @GetMapping("/pontos/{np}")
     public ResponseEntity<List<Ponto>> getPonto(@PathVariable int np) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(pontoService.retornarTodosPontos().stream().filter(x -> x.getNpFuncionario() == np).toList());
+                .body(pontoService.retornarPontosPeloNp(np));
     }
 
-    @PostMapping("bonificar/{id}")
-    public ResponseEntity<Ponto> postPonto(@PathVariable int id, @RequestBody PontoDto pontos) {
-        if (funcService.bonificarFuncionario(id, pontos.getQuantidade())) {
-            Ponto novoPonto = new Ponto(0, id, pontos.getQuantidade(), pontos.getMotivo());
-            return ResponseEntity.status(HttpStatus.CREATED).body(pontoService.adicionarPonto(novoPonto));
+    @PostMapping("/bonificar/{np}")
+    public ResponseEntity<Ponto> postPonto(@PathVariable long np, @RequestBody PontoDto pontos) {
+        if (funcService.bonificarFuncionario(np, pontos.getQuantidade())) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(pontoService
+                    .adicionarPonto(new Ponto(0, np, pontos.getQuantidade(), pontos.getMotivo(), LocalDateTime.now())));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }

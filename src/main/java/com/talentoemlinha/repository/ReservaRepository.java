@@ -12,9 +12,9 @@ public class ReservaRepository {
     private List<Reserva> listaReservas = new ArrayList<>();
 
     public Reserva save(Reserva reserva) {
-        if (listaReservas.contains(reserva)){
+        if (listaReservas.contains(reserva)) {
             listaReservas.remove(reserva);
-        }else{
+        } else {
             reserva.setId(listaReservas.size() + 1);
         }
         listaReservas.add(reserva);

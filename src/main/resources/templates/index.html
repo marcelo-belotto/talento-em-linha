@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" >
 
 <head>
   <meta charset="UTF-8">
@@ -36,25 +36,19 @@
           <p>
             Total de pontos disponiveis:
           </p>
-          <p>
-            20 pontos
-          </p>
+          <p id="pontos-disponiveis" th:text="${total - usados}"></p>
         </div>
         <div class="card-ponto">
           <p>
             Total de pontos gastos com brindes:
           </p>
-          <p>
-            50 pontos
-          </p>
+          <p id="pontos-utilizados" th:text="${usados}"></p>
         </div>
         <div class="card-ponto">
           <p>
             Total de pontos acumulados desde o inicio: 
           </p>
-          <p>
-            70 pontos
-          </p>
+          <p id="total-pontos-acumulados" th:text="${total}"></p>
         </div>
       </div>
     </div>
