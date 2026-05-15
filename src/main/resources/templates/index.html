@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" >
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -65,7 +65,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr th:each="ponto : ${pontos}">
+          <td data-label="Data" th:text="${ponto.dataAtribuicao}"></td>
+          <td data-label="Descrição" th:text="${ponto.descricao}"></td>
+          <td data-label="Categoria" th:text="${ponto.motivo}"></td>
+          <td data-label="Pontos" th:text="${ponto.quantidade}"></td>
+        </tr>
+        <!-- <tr>
           <td data-label="Data">22/03/2026</td>
           <td data-label="Descrição">Participacao em treinamento</td>
           <td data-label="Categoria">Categoria 1</td>
@@ -76,7 +82,7 @@
           <td data-label="Descrição">Meta mensal atingida</td>
           <td data-label="Categoria">Categoria 3</td>
           <td data-label="Pontos">+30 pts</td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
     </div>
@@ -89,20 +95,27 @@
           <th>Data</th>
           <th>Brinde</th>
           <th>Pontos debitados</th>
+          <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>20/03/2026</td>
-          <td>Fone Bluetooth Pro</td>
-          <td>-50 pts</td>
+        <tr th:each="brinde : ${brindes}">
+          <td data-label="Data" th:text="${brinde.dataExpiracao.toLocalDate()}"></td>
+          <td data-label="Brinde" th:text="${brinde.produto.descricao}"></td>
+          <td data-label="Pontos debitados" th:text="${brinde.produto.pontos}"></td>
+          <td data-label="Status" th:text="${brinde.status}"></td>
         </tr>
+        <!-- <tr>
+          <td data-label="Data">20/03/2026</td>
+          <td data-label="Brinde">Fone Bluetooth Pro</td>
+          <td data-label="Pontos debitados">-50 pts</td>
+        </tr> -->
         
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="2"><strong>Total gasto</strong></td>
-          <td><strong>-50 pts</strong></td>
+          <td colspan="2" ><strong>Total gasto</strong></td>
+          <td data-label="Total gasto"><strong th:text="${usados}"></strong></td>
         </tr>
       </tfoot>
     </table>

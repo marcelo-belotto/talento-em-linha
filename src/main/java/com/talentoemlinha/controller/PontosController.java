@@ -43,7 +43,7 @@ public class PontosController {
     public ResponseEntity<Ponto> postPonto(@PathVariable long np, @RequestBody PontoDto pontos) {
         if (funcService.bonificarFuncionario(np, pontos.getQuantidade())) {
             return ResponseEntity.status(HttpStatus.CREATED).body(pontoService
-                    .adicionarPonto(new Ponto(0, np, pontos.getQuantidade(), pontos.getMotivo(), LocalDateTime.now())));
+                    .adicionarPonto(new Ponto(0, np, pontos.getQuantidade(), pontos.getMotivo(),pontos.getDescricao(), LocalDateTime.now().toLocalDate())));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }

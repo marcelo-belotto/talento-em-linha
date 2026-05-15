@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -28,12 +28,11 @@
 
     <div class="container-cabecalho">
       <h2>Catalogo de Brindes</h2>
-      <p>Seu saldo atual: <strong>20 pontos</strong></p>
+      <p>Seu saldo atual: <strong th:text="${disponivel}"></strong> Pontos</p>
       <p>Selecione os brindes desejados clicando em <em>Reservar</em>.</p>
     </div>
     
-    <div class="container-brindes">
-      <div class="table-wrapper">
+    <div class="container-brindes table-wrapper">
         <h3>Brindes Disponiveis</h3>
         <table>
           <thead>
@@ -46,80 +45,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td data-label="Brinde">Fone Bluetooth Pro</td>
-              <td data-label="Descrição">Fone over-ear com cancelamento de ruido e 30h de bateria.</td>
-              <td data-label="Pontos">50 pts</td>
-              <td data-label="Estoque">12 disponiveis</td>
+            <tr th:each="estoque : ${listaEstoque}">
+              <td data-label="Brinde" th:text="${estoque.produto.nome}"></td>
+              <td data-label="Descrição" th:text="${estoque.produto.descricao}"></td>
+              <td data-label="Pontos" th:text="${estoque.produto.pontos}"></td>
+              <td data-label="Estoque" th:text="${estoque.quantidadeDisponivel}"></td>
               <td><input type="button" value="Reservar" name="sel_fone" id="sel_fone"></td>
-            </tr>
-            
-            <tr>
-              <td data-label="Brinde">Kit Cafe Especial</td>
-              <td data-label="Descrição">Kit com 3 pacotes de cafe selecionado, caneca e coador.</td>
-              <td data-label="Pontos">20 pts</td>
-              <td data-label="Estoque">30 disponiveis</td>
-              <td><input type="button" value="Reservar" name="sel_cafe" id="sel_cafe"></td>
-            </tr>
-            
-            <tr>
-              <td data-label="Brinde">Camiseta Exclusiva</td>
-              <td data-label="Descrição">Camiseta 100% algodao com bordado exclusivo da empresa.</td>
-              <td data-label="Pontos">15 pts</td>
-              <td data-label="Estoque">4 disponiveis</td>
-              <td>
-                <input type="button" value="Reservar" name="sel_camiseta" id="sel_camiseta">
-              </td>
-            </tr>
-            
-            <tr>
-              <td data-label="Brinde">Voucher Livraria</td>
-              <td data-label="Descrição">Credito de R$ 50,00 para usar em qualquer livraria parceira.</td>
-              <td data-label="Pontos">30 pts</td>
-              <td data-label="Estoque">20 disponiveis</td>
-              <td>
-                <input type="button" value="Reservar" name="sel_livro" id="sel_livro">
-              </td>
-            </tr>
-            
-            <tr>
-              <td data-label="Brinde">Mouse Sem Fio</td>
-              <td data-label="Descrição">Mouse ergonomico wireless com receptor USB nano.</td>
-              <td data-label="Pontos">38 pts</td>
-              <td data-label="Estoque">8 disponiveis</td>
-              <td>
-                <input type="button" value="Reservar" name="sel_mouse" id="sel_mouse">
-              </td>
-            </tr>
-            
-            <tr>
-              <td data-label="Brinde">Gift Card Games</td>
-              <td data-label="Descrição">Cartao presente de R$ 30,00 para plataformas digitais de jogos.</td>
-              <td data-label="Pontos">15 pts</td>
-              <td data-label="Estoque">3 disponiveis</td>
-              <td>
-                <input type="button" value="Reservar" name="sel_gift" id="sel_gift">
-              </td>
-            </tr>
-            
-            <tr>
-              <td data-label="Brinde">Vale Refeicao</td>
-              <td data-label="Descrição">Voucher de R$ 30,00 em restaurantes e lanchonetes parceiras.</td>
-              <td data-label="Pontos">10 pts</td>
-              <td data-label="Estoque">50 disponiveis</td>
-              <td>
-                <input type="button" value="Reservar" name="sel_refeicao" id="sel_refeicao">
-              </td>
             </tr>
             
           </tbody>
         </table>
-      </div>
     </div>
     
     
     
-    <form action="index" method="get" class="container-reserva">
+    <form action="index" method="get" class="table-wrapper">
       <h3>Carrinho de Reserva</h3>
       <p>Após selecionar os brindes clique em <em>Confirmar Reserva</em>.</p>
       <table>
@@ -127,24 +67,22 @@
           <tr>
             <th>Brinde</th>
             <th>Quantidade</th>
-            <th>Pts / unidade</th>
-            <th>Total de pontos</th>
+            <th>Pontos</th>
           </tr>
         </thead>
         <tbody>
           <td data-label="Brinde"></td>
           <td data-label="Quantidade"></td>
           <td data-label="Pontos"></td>
-          <td data-label="Total de pontos"></td>
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="3"><strong>Total a debitar</strong></td>
+            <td colspan="2"><strong>Total a debitar</strong></td>
             <td><strong>0 pts</strong></td>
           </tr>
           <tr>
-            <td colspan="3">Saldo apos reserva</td>
-            <td>20 pts</td>
+            <td colspan="2">Saldo apos reserva</td>
+            <td>0 pts</td>
           </tr>
         </tfoot>
       </table>

@@ -26,6 +26,10 @@ public class PontoService {
         return pontos.stream().filter(x -> x.getNpFuncionario() == np).toList();
     }
 
+    public int retornarPontosDisponiveis(long np){
+        return retornarTotalDePontos(np)-retornarTotalDePontosUtilizados(np);
+    }
+
     public int retornarTotalDePontos(long np){
         var pontos = retornarPontosPeloNp(np);
         int totalDePontos = 0;

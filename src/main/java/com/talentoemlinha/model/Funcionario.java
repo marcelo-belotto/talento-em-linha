@@ -26,7 +26,7 @@ public class Funcionario {
             Funcionario tempf = new Funcionario();
             tempf.setNome("Funcionario-" + i);
             tempf.setNp(npControleTemp);
-            tempf.setSenha(tempf.getNome() + tempf.getNp());
+            tempf.setSenha("123");
             tempf.totalDePontos = 0;
             temp.add(tempf);
             npControleTemp++;

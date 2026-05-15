@@ -1,6 +1,6 @@
 package com.talentoemlinha.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,5 +14,6 @@ public class Ponto {
     private long npFuncionario;
     private int quantidade;
     private String motivo;
-    private LocalDateTime dataAtribuicao;
+    private String descricao;
+    private LocalDate dataAtribuicao;
 }
