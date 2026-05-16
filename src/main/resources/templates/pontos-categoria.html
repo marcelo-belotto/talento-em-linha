@@ -41,7 +41,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr th:each="entrada : ${pontosPorPeriodo}">
+            <td data-label="Periodo" th:text="${entrada.key}">Janeiro 2026</td>
+            <td data-label="Treinamento" th:text="${entrada.value['Treinamento']} ?: 0">0</td>
+            <td data-label="Desempenho" th:text="${entrada.value['Desempenho']} ?: 0">0</td>
+            <td data-label="Metas" th:text="${entrada.value['Metas']} ?: 0">0</td>
+            <td data-label="Engajamento" th:text="${entrada.value['Engajamento']} ?: 0">0</td>
+            <td data-label="Indicacao" th:text="${entrada.value['Indicacao']} ?: 0">0</td>
+            <td data-label="Projetos" th:text="${entrada.value['Projetos']} ?: 0">0</td>
+          </tr>
+          <!-- <tr>
             <td data-label="Periodo">Janeiro 2026</td>
             <td data-label="Treinamento"></td>
             <td data-label="Desempenho"></td>
@@ -49,7 +58,7 @@
             <td data-label="Engajamento"></td>
             <td data-label="Indicacao"></td>
             <td data-label="Projetos"></td>
-          </tr>
+          </tr> -->
         </tbody>
         <tfoot>
           <tr>
