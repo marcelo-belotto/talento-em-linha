@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/almo-styles.css">
+  <title>Entrada de Estoque — Almoxarifado</title>
+</head>
+<body>
+  <header class="sidebar">
+    <nav class="navegacao">
+      <div class="container-logomarca">
+        <img src="../images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
+      </div>
+      <div class="nav-titulo">Almoxarifado</div>
+      <a class="nav-item" href="index">Inicio</a>
+      <a class="nav-item" href="cadastro-produto">Cadastro de Produtos</a>
+      <a class="nav-item active" href="estoque">Estoque</a>
+      <a class="nav-item" href="disponibilidade">Disponibilidade</a>
+      <a class="nav-item" href="reservas">Reservas</a>
+      <a class="nav-item" href="retirada">Retirada</a>
+    </nav>
+    <div class="sidebar-footer">Talento em Linha · v1.0</div>
+  </header>
+
+  <main class="container-conteudo">
+
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="page-title">Entrada de Estoque</div>
+        <div class="page-subtitle">Adicione unidades a produtos já cadastrados</div>
+      </div>
+      <a href="index" class="btn btn-ghost btn-sm">← Voltar ao painel</a>
+    </div>
+
+    <!-- ENTRADA FORM -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Registrar Entrada</span>
+      </div>
+      <div class="panel-body">
+        <form action="#" method="get">
+          <div class="form-grid" style="gap:18px;">
+
+            <div class="form-group">
+              <label class="form-label" for="produto-sel">Produto *</label>
+              <select class="form-select" id="produto-sel" name="produto" required>
+                <option value="">— Selecione o produto —</option>
+                <option value="001">001 — Fone Bluetooth Pro (estoque: 12)</option>
+                <option value="002">002 — Kit Café Especial (estoque: 30)</option>
+                <option value="003">003 — Camiseta Exclusiva (estoque: 4) ⚠ Baixo</option>
+                <option value="004">004 — Voucher Livraria (estoque: 20)</option>
+                <option value="005">005 — Mouse Sem Fio (estoque: 8)</option>
+                <option value="006">006 — Gift Card Games (estoque: 3) ⚠ Crítico</option>
+                <option value="007">007 — Vale Refeição (estoque: 50)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="qtd-entrada">Quantidade a Adicionar *</label>
+              <input type="number" class="form-input" id="qtd-entrada" name="quantidade" min="1" placeholder="Ex: 20" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="data-entrada">Data da Entrada</label>
+              <input type="date" class="form-input" id="data-entrada" name="data">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="responsavel">Responsável pelo Recebimento</label>
+              <input type="text" class="form-input" id="responsavel" name="responsavel" placeholder="Nome do almoxarife">
+            </div>
+
+            <div class="form-group span-2">
+              <label class="form-label" for="obs-entrada">Observações</label>
+              <textarea class="form-textarea" id="obs-entrada" name="obs" placeholder="Nota fiscal, fornecedor, lote..." style="min-height:70px;"></textarea>
+            </div>
+
+          </div>
+
+          <div class="divider" style="margin-top:24px;"></div>
+
+          <div class="form-actions" style="margin-top:20px;">
+            <button type="submit" class="btn btn-success">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+              Confirmar Entrada
+            </button>
+            <button type="reset" class="btn btn-ghost">Limpar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- HISTÓRICO DE ENTRADAS -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Histórico de Entradas</span>
+        <span class="page-badge">Maio 2026</span>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Produto</th>
+              <th>Qtd. Adicionada</th>
+              <th>Estoque Após</th>
+              <th>Responsável</th>
+              <th>Observações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">05/05/2026</span></td>
+              <td>Vale Refeição</td>
+              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+30</span></td>
+              <td><span style="font-family:'Space Mono',monospace;">50</span></td>
+              <td>João Ferreira</td>
+              <td style="color:var(--muted2);font-size:0.8rem;">NF 00412 — Voucher Express</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">02/05/2026</span></td>
+              <td>Kit Café Especial</td>
+              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+20</span></td>
+              <td><span style="font-family:'Space Mono',monospace;">30</span></td>
+              <td>João Ferreira</td>
+              <td style="color:var(--muted2);font-size:0.8rem;">Reposição mensal</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">28/04/2026</span></td>
+              <td>Mouse Sem Fio</td>
+              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+10</span></td>
+              <td><span style="font-family:'Space Mono',monospace;">8</span></td>
+              <td>Maria Oliveira</td>
+              <td style="color:var(--muted2);font-size:0.8rem;">NF 00389 — TechStore</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">20/04/2026</span></td>
+              <td>Voucher Livraria</td>
+              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+20</span></td>
+              <td><span style="font-family:'Space Mono',monospace;">20</span></td>
+              <td>João Ferreira</td>
+              <td style="color:var(--muted2);font-size:0.8rem;">—</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">15/04/2026</span></td>
+              <td>Fone Bluetooth Pro</td>
+              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+5</span></td>
+              <td><span style="font-family:'Space Mono',monospace;">12</span></td>
+              <td>Maria Oliveira</td>
+              <td style="color:var(--muted2);font-size:0.8rem;">NF 00341 — AudioPlus</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>

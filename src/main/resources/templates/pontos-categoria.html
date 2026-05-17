@@ -63,12 +63,18 @@
         <tfoot>
           <tr>
             <td><strong>Total de pontos</strong></td>
-            <td data-label="Treinamento"><strong>0</strong></td>
+            <td data-label="Treinamento" th:text="${totaisPorMotivo['Treinamento']}">0</td>
+            <td data-label="Desempenho" th:text="${totaisPorMotivo['Desempenho']}">0</td>
+            <td data-label="Metas" th:text="${totaisPorMotivo['Metas']}">0</td>
+            <td data-label="Engajamento" th:text="${totaisPorMotivo['Engajamento']}">0</td>
+            <td data-label="Indicacao" th:text="${totaisPorMotivo['Indicacao']}">0</td>
+            <td data-label="Projetos" th:text="${totaisPorMotivo['Projetos']}">0</td>
+            <!-- <td data-label="Treinamento"><strong>0</strong></td>
             <td data-label="Desempenho"><strong>0</strong></td>
             <td data-label="Metas"><strong>0</strong></td>
             <td data-label="Engajamento"><strong>0</strong></td>
             <td data-label="Indicacao"><strong>0</strong></td>
-            <td data-label="Projetos"><strong>0</strong></td>
+            <td data-label="Projetos"><strong>0</strong></td> -->
           </tr>
         </tfoot>
       </table>
@@ -87,27 +93,27 @@
         <tbody>
           <tr>
             <td data-label="Descrição">Treinamento</td>
-            <td data-label="Total de pontos">0 pontos</td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Treinamento']}">0 <strong>pontos</strong></td>
           </tr>
           <tr>
             <td data-label="Descrição">Desempenho</td>
-            <td data-label="Total de pontos">0 pontos</td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Desempenho']}">0 <strong>pontos</strong></td>
           </tr>
           <tr>
             <td data-label="Descrição">Metas</td>
-            <td data-label="Total de pontos">0 pontos</td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Metas']}">0 <strong>pontos</strong></td>
           </tr>
           <tr>
             <td data-label="Descrição">Engajamento</td>
-            <td data-label="Total de pontos">0 pontos</td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Engajamento']}">0 <strong>pontos</strong></td>
           </tr>
           <tr>
             <td data-label="Descrição">Indicacao</td>
-            <td data-label="Total de pontos">0 pontos</td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Indicacao']}">0 <strong>pontos</strong></td>
           </tr>
           <tr>
             <td data-label="Descrição">Projetos</td>
-            <td data-label="Total de pontos">0 pontos</td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Projetos']}">0 <strong>pontos</strong></td>
           </tr>
         </tbody>
         <tfoot>

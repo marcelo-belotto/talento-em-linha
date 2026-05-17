@@ -2,6 +2,7 @@ package com.talentoemlinha.controller;
 
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -59,8 +60,19 @@ public class HomeController {
                     .computeIfAbsent(periodo, k -> new LinkedHashMap<>())
                     .merge(motivo, ponto.getQuantidade(), Integer::sum);
         }
+        
+        Map<String, Integer> totaisPorMotivo = new LinkedHashMap<>();
+        List<String> motivos = List.of("Treinamento", "Desempenho", "Metas", "Engajamento", "Indicacao", "Projetos");
+
+        for (String motivo : motivos) {
+            int total = pontosPorPeriodo.values().stream()
+                    .mapToInt(m -> m.getOrDefault(motivo, 0))
+                    .sum();
+            totaisPorMotivo.put(motivo, total);
+        }
 
         model.addAttribute("pontosPorPeriodo", pontosPorPeriodo);
+        model.addAttribute("totaisPorMotivo", totaisPorMotivo);
         return "pontos-categoria";
     }
 
