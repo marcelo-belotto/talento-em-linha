@@ -1,33 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/styles.css">
-  <link rel="stylesheet" href="./css/categorias.css">
-  <title>Categorias — Talento em Linha</title>
-</head>
-
-<body>
-  <header class="sidebar">
-    <nav class="navegacao">
-      <div class="container-logomarca">
-        <img src="./images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
-      </div>
-      <div class="nav-titulo">Menu</div>
-      <a class="nav-item" href="index">Inicio</a>
-      <a class="nav-item" href="reserva">Brindes</a>
-      <a class="nav-item active" href="pontos-categoria">Categorias</a>
-      <a class="nav-item" href="meus-dados">Meus Dados</a>
-    </nav>
-    <div class="sidebar-footer">Talento em Linha · v1.0</div>
-  </header>
-  <main class="container-conteudo">
+<div layout:fragment="content">
+   <div class="container-conteudo">
     <h2>Pontos por Categoria</h2>
+
     <div class="container-carimbo">
       <h3>Pontos Obtidos</h3>
-
       <table>
         <thead>
           <tr>
@@ -50,15 +26,6 @@
             <td data-label="Indicacao" th:text="${entrada.value['Indicacao']} ?: 0">0</td>
             <td data-label="Projetos" th:text="${entrada.value['Projetos']} ?: 0">0</td>
           </tr>
-          <!-- <tr>
-            <td data-label="Periodo">Janeiro 2026</td>
-            <td data-label="Treinamento"></td>
-            <td data-label="Desempenho"></td>
-            <td data-label="Metas"></td>
-            <td data-label="Engajamento"></td>
-            <td data-label="Indicacao"></td>
-            <td data-label="Projetos"></td>
-          </tr> -->
         </tbody>
         <tfoot>
           <tr>
@@ -69,12 +36,6 @@
             <td data-label="Engajamento" th:text="${totaisPorMotivo['Engajamento']}">0</td>
             <td data-label="Indicacao" th:text="${totaisPorMotivo['Indicacao']}">0</td>
             <td data-label="Projetos" th:text="${totaisPorMotivo['Projetos']}">0</td>
-            <!-- <td data-label="Treinamento"><strong>0</strong></td>
-            <td data-label="Desempenho"><strong>0</strong></td>
-            <td data-label="Metas"><strong>0</strong></td>
-            <td data-label="Engajamento"><strong>0</strong></td>
-            <td data-label="Indicacao"><strong>0</strong></td>
-            <td data-label="Projetos"><strong>0</strong></td> -->
           </tr>
         </tfoot>
       </table>
@@ -82,7 +43,6 @@
 
     <div class="container-resumo">
       <h3>Resumo por Categoria</h3>
-
       <table border="1">
         <thead>
           <tr>
@@ -93,27 +53,27 @@
         <tbody>
           <tr>
             <td data-label="Descrição">Treinamento</td>
-            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Treinamento']}">0 <strong>pontos</strong></td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Treinamento']}">0</td>
           </tr>
           <tr>
             <td data-label="Descrição">Desempenho</td>
-            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Desempenho']}">0 <strong>pontos</strong></td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Desempenho']}">0</td>
           </tr>
           <tr>
             <td data-label="Descrição">Metas</td>
-            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Metas']}">0 <strong>pontos</strong></td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Metas']}">0</td>
           </tr>
           <tr>
             <td data-label="Descrição">Engajamento</td>
-            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Engajamento']}">0 <strong>pontos</strong></td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Engajamento']}">0</td>
           </tr>
           <tr>
             <td data-label="Descrição">Indicacao</td>
-            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Indicacao']}">0 <strong>pontos</strong></td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Indicacao']}">0</td>
           </tr>
           <tr>
             <td data-label="Descrição">Projetos</td>
-            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Projetos']}">0 <strong>pontos</strong></td>
+            <td data-label="Total de pontos" th:text="${totaisPorMotivo['Projetos']}">0</td>
           </tr>
         </tbody>
         <tfoot>
@@ -124,10 +84,6 @@
         </tfoot>
       </table>
     </div>
-
-
-  </main>
-
-</body>
-
+  </div>
+</div>
 </html>

@@ -22,13 +22,14 @@ public class AuthController {
         return "login";
     }
     
-    @PostMapping("/") //metodo ruim apenas para testar o metodo post
+    @PostMapping("/") //metodo ruim apenas para testar o metodo post e redirecionamento vou melhorar posteriormente com spring security
     public String login(@RequestParam("usuario") String usuario, @RequestParam("senha") String senha){
         var func = funcService.retornarFuncionarioPeloId(Long.parseLong(usuario));
         System.out.println(func);
         if (func != null)
         if (func.getSenha().equals(senha))
-            return "redirect:/index";
+            if (func.getROLE().equalsIgnoreCase("colaborador")) return "redirect:/index";
+            else if (func.getROLE().equalsIgnoreCase("almoxarife")) return "redirect:/almoxarifado/index";
         return "redirect:";
     }
 }

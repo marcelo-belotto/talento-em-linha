@@ -17,7 +17,7 @@ public class Funcionario {
     private String senha;
     private int totalDePontos;
     private int pontosUtilizados;
-    // private String ROLE;
+    private String ROLE;
     private static int npControleTemp = 10000001;
 
     public static List<Funcionario> getFuncionariosMocados() {
@@ -28,6 +28,9 @@ public class Funcionario {
             tempf.setNp(npControleTemp);
             tempf.setSenha("123");
             tempf.totalDePontos = 0;
+            if (i % 3 == 0) tempf.setROLE("colaborador");
+            else if (i % 4 == 0) tempf.setROLE("almoxarife");
+            else tempf.setROLE("admin");
             temp.add(tempf);
             npControleTemp++;
         }

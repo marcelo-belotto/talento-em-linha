@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+  <header th:fragment="sidebar(activePage)" class="sidebar">
+    <nav class="navegacao">
+      <div class="container-logomarca">
+        <img src="/images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
+      </div>
+      <div class="nav-titulo">Almoxarifado</div>
+      <a th:classappend="${activePage == 'index'} ? 'active'" class="nav-item" href="/almoxarifado/index">Inicio</a>
+      <a th:classappend="${activePage == 'cadastro-produto'} ? 'active'" class="nav-item" href="/almoxarifado/cadastro-produto">Cadastro de Produtos</a>
+      <a th:classappend="${activePage == 'estoque'} ? 'active'" class="nav-item" href="/almoxarifado/estoque">Estoque</a>
+      <a th:classappend="${activePage == 'disponibilidade'} ? 'active'" class="nav-item" href="/almoxarifado/disponibilidade">Disponibilidade</a>
+      <a th:classappend="${activePage == 'reservas'} ? 'active'" class="nav-item" href="/almoxarifado/reservas">Reservas</a>
+      <a th:classappend="${activePage == 'retirada'} ? 'active'" class="nav-item" href="/almoxarifado/retirada">Retirada</a>
+    </nav>
+    <div class="sidebar-footer">Talento em Linha · v1.0</div>
+  </header>
+</body>
+</html>

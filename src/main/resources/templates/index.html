@@ -1,60 +1,30 @@
-<!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<div  layout:fragment="content">
+<div  class="container-conteudo">
+  <div class="saudacao">
+    <h2>Bem-vindo, Marcelo</h2>
+    <p>Confira abaixo um resumo dos seus pontos e atividades recentes.</p>
+  </div>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/styles.css">
-  <link rel="stylesheet" href="./css/index.css">
-  <title>Inicio — Talento em Linha</title>
-</head>
-
-<body>
-  <header class="sidebar">
-    <nav class="navegacao">
-      <div class="container-logomarca">
-        <img src="./images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
+  <div class="container-resumo">
+    <h3>Resumo de Pontos</h3>
+    <div class="container-cards-pontos">
+      <div class="card-ponto">
+        <p>Total de pontos disponiveis:</p>
+        <p id="pontos-disponiveis" th:text="${total - usados}"></p>
       </div>
-      <div class="nav-titulo">Menu</div>
-      <a class="nav-item active" href="index">Inicio</a>
-      <a class="nav-item" href="reserva">Brindes</a>
-      <a class="nav-item" href="pontos-categoria">Categorias</a>
-      <a class="nav-item" href="meus-dados">Meus Dados</a>
-    </nav>
-    <div class="sidebar-footer">Talento em Linha · v1.0</div>
-  </header>
-
-  <main class="container-conteudo">
-    <div class="saudacao">
-      <h2>Bem-vindo, Marcelo</h2>
-      <p>Confira abaixo um resumo dos seus pontos e atividades recentes.</p>
-    </div>
-    <div class="container-resumo">
-      <h3>Resumo de Pontos</h3>
-      <div class="container-cards-pontos">
-        <div class="card-ponto">
-          <p>
-            Total de pontos disponiveis:
-          </p>
-          <p id="pontos-disponiveis" th:text="${total - usados}"></p>
-        </div>
-        <div class="card-ponto">
-          <p>
-            Total de pontos gastos com brindes:
-          </p>
-          <p id="pontos-utilizados" th:text="${usados}"></p>
-        </div>
-        <div class="card-ponto">
-          <p>
-            Total de pontos acumulados desde o inicio: 
-          </p>
-          <p id="total-pontos-acumulados" th:text="${total}"></p>
-        </div>
+      <div class="card-ponto">
+        <p>Total de pontos gastos com brindes:</p>
+        <p id="pontos-utilizados" th:text="${usados}"></p>
+      </div>
+      <div class="card-ponto">
+        <p>Total de pontos acumulados desde o inicio:</p>
+        <p id="total-pontos-acumulados" th:text="${total}"></p>
       </div>
     </div>
-    
-    <div class="container-ultimos-pontos table-wrapper">
-       <h3>Ultimos Pontos Obtidos</h3>
+  </div>
+
+  <div class="container-ultimos-pontos table-wrapper">
+    <h3>Ultimos Pontos Obtidos</h3>
     <table>
       <thead>
         <tr>
@@ -71,24 +41,12 @@
           <td data-label="Categoria" th:text="${ponto.motivo}"></td>
           <td data-label="Pontos" th:text="${ponto.quantidade}"></td>
         </tr>
-        <!-- <tr>
-          <td data-label="Data">22/03/2026</td>
-          <td data-label="Descrição">Participacao em treinamento</td>
-          <td data-label="Categoria">Categoria 1</td>
-          <td data-label="Pontos">+40 pts</td>
-        </tr>
-        <tr>
-          <td data-label="Data">18/03/2026</td>
-          <td data-label="Descrição">Meta mensal atingida</td>
-          <td data-label="Categoria">Categoria 3</td>
-          <td data-label="Pontos">+30 pts</td>
-        </tr> -->
       </tbody>
     </table>
-    </div>
-   
-    <div class="table-wrapper">
-      <h3>Pontos Gastos com Brindes</h3>
+  </div>
+
+  <div class="table-wrapper">
+    <h3>Pontos Gastos com Brindes</h3>
     <table>
       <thead>
         <tr>
@@ -105,24 +63,14 @@
           <td data-label="Pontos debitados" th:text="${brinde.produto.pontos}"></td>
           <td data-label="Status" th:text="${brinde.status}"></td>
         </tr>
-        <!-- <tr>
-          <td data-label="Data">20/03/2026</td>
-          <td data-label="Brinde">Fone Bluetooth Pro</td>
-          <td data-label="Pontos debitados">-50 pts</td>
-        </tr> -->
-        
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="2" ><strong>Total gasto</strong></td>
+          <td colspan="2"><strong>Total gasto</strong></td>
           <td data-label="Total gasto"><strong th:text="${usados}"></strong></td>
         </tr>
       </tfoot>
     </table>
-    </div>
-   
-  </main>
-
-</body>
-
-</html>
+  </div>
+</div>
+</div>

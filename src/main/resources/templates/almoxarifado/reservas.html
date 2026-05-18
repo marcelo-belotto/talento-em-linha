@@ -1,43 +1,26 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/almoxarifado}">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/almo-styles.css">
-  <title>Consulta de Reservas — Almoxarifado</title>
+  <title>Consulta de Reservas</title>
 </head>
 <body>
-  <header class="sidebar">
-    <nav class="navegacao">
-      <div class="container-logomarca">
-        <img src="../images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
-      </div>
-      <div class="nav-titulo">Almoxarifado</div>
-      <a class="nav-item" href="index">Inicio</a>
-      <a class="nav-item" href="cadastro-produto">Cadastro de Produtos</a>
-      <a class="nav-item" href="estoque">Estoque</a>
-      <a class="nav-item" href="disponibilidade">Disponibilidade</a>
-      <a class="nav-item active" href="reservas">Reservas</a>
-      <a class="nav-item" href="retirada">Retirada</a>
-    </nav>
-    <div class="sidebar-footer">Talento em Linha · v1.0</div>
-  </header>
+  <th:block th:ref="activePage" th:with="activePage='reservas'"></th:block>
 
-  <main class="container-conteudo">
-
+  <main layout:fragment="content">
     <div class="page-header">
       <div class="page-header-left">
         <div class="page-title">Consulta de Reservas</div>
         <div class="page-subtitle">Visualize todas as reservas ou filtre por funcionário</div>
       </div>
-      <a href="retirada" class="btn btn-primary btn-sm">
+      <a href="/almoxarifado/retirada" class="btn btn-primary btn-sm">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 11 12 14 22 4"/></svg>
         Registrar Retirada
       </a>
     </div>
 
-    <!-- FILTROS -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Filtros de Consulta</span>
@@ -93,7 +76,6 @@
       </div>
     </div>
 
-    <!-- RESULTADO: GERAL -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Todas as Reservas — Maio 2026</span>
@@ -122,7 +104,7 @@
               <td style="font-family:'Space Mono',monospace;">50 pts</td>
               <td style="font-family:'Space Mono',monospace;font-size:0.8rem;">12/05/2026</td>
               <td><span class="badge badge-pendente">Pendente</span></td>
-              <td><a href="retirada" class="btn btn-ghost btn-sm">Registrar retirada</a></td>
+              <td><a href="/almoxarifado/retirada" class="btn btn-ghost btn-sm">Registrar retirada</a></td>
             </tr>
             <tr>
               <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">R-2026-030</td>
@@ -132,7 +114,7 @@
               <td style="font-family:'Space Mono',monospace;">20 pts</td>
               <td style="font-family:'Space Mono',monospace;font-size:0.8rem;">11/05/2026</td>
               <td><span class="badge badge-pendente">Pendente</span></td>
-              <td><a href="retirada" class="btn btn-ghost btn-sm">Registrar retirada</a></td>
+              <td><a href="/almoxarifado/retirada" class="btn btn-ghost btn-sm">Registrar retirada</a></td>
             </tr>
             <tr>
               <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">R-2026-029</td>
@@ -182,21 +164,18 @@
               <td style="font-family:'Space Mono',monospace;">38 pts</td>
               <td style="font-family:'Space Mono',monospace;font-size:0.8rem;">06/05/2026</td>
               <td><span class="badge badge-pendente">Pendente</span></td>
-              <td><a href="retirada" class="btn btn-ghost btn-sm">Registrar retirada</a></td>
+              <td><a href="/almoxarifado/retirada" class="btn btn-ghost btn-sm">Registrar retirada</a></td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- RESULTADO POR FUNCIONÁRIO (exemplo expandido) -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Exemplo: Reservas do Funcionário #00047</span>
         <span class="page-badge" style="color:var(--accent2);">Marcelo Belotto</span>
       </div>
-
-      <!-- Resumo do funcionário -->
       <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
         <div>
           <div style="font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-bottom:6px;">Funcionário</div>
@@ -216,7 +195,6 @@
           <div style="font-family:'Space Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--accent3);">60 pts</div>
         </div>
       </div>
-
       <div class="table-wrap">
         <table class="data-table">
           <thead>
@@ -250,9 +228,6 @@
         </table>
       </div>
     </div>
-
   </main>
-
-
 </body>
 </html>

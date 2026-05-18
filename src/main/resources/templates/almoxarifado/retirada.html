@@ -1,40 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/almoxarifado}">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/almo-styles.css">
-  <title>Retirada de Reserva — Almoxarifado</title>
+  <title>Retirada de Reserva</title>
 </head>
 <body>
-  <header class="sidebar">
-    <nav class="navegacao">
-      <div class="container-logomarca">
-        <img src="../images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
-      </div>
-      <div class="nav-titulo">Almoxarifado</div>
-      <a class="nav-item" href="index">Inicio</a>
-      <a class="nav-item" href="cadastro-produto">Cadastro de Produtos</a>
-      <a class="nav-item" href="estoque">Estoque</a>
-      <a class="nav-item" href="disponibilidade">Disponibilidade</a>
-      <a class="nav-item" href="reservas">Reservas</a>
-      <a class="nav-item active" href="retirada">Retirada</a>
-    </nav>
-    <div class="sidebar-footer">Talento em Linha · v1.0</div>
-  </header>
+  <th:block th:ref="activePage" th:with="activePage='retirada'"></th:block>
 
-  <main class="container-conteudo">
-
+  <main layout:fragment="content">
     <div class="page-header">
       <div class="page-header-left">
         <div class="page-title">Retirada de Reserva</div>
         <div class="page-subtitle">Confirme a entrega do brinde ao funcionário</div>
       </div>
-      <a href="reservas.html" class="btn btn-ghost btn-sm">← Ver reservas</a>
+      <a href="/almoxarifado/reservas" class="btn btn-ghost btn-sm">← Ver reservas</a>
     </div>
 
-    <!-- STEP 1: BUSCA POR ID -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">
@@ -61,7 +44,6 @@
       </div>
     </div>
 
-    <!-- STEP 2: RESULTADO DA BUSCA (exemplo pré-preenchido) -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">
@@ -70,8 +52,6 @@
         </span>
         <span class="page-badge" style="color:var(--accent2);">Marcelo Belotto</span>
       </div>
-
-      <!-- Dados do funcionário -->
       <div style="padding:18px 24px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
         <div>
           <div style="font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted2);margin-bottom:5px;">Nome</div>
@@ -86,8 +66,6 @@
           <div style="color:var(--text);font-size:0.9rem;">Manutenção</div>
         </div>
       </div>
-
-      <!-- Reservas pendentes do funcionário -->
       <div class="table-wrap">
         <table class="data-table">
           <thead>
@@ -114,7 +92,6 @@
           </tbody>
         </table>
       </div>
-
       <div style="padding:16px 24px;border-top:1px solid var(--border);">
         <div class="alert alert-warning" style="margin-bottom:16px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -123,7 +100,6 @@
       </div>
     </div>
 
-    <!-- STEP 3: CONFIRMAR RETIRADA -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">
@@ -134,26 +110,20 @@
       <div class="panel-body">
         <form action="#" method="get">
           <div class="form-grid" style="gap:18px;">
-
             <div class="form-group">
               <label class="form-label" for="data-retirada">Data da Retirada *</label>
               <input type="date" class="form-input" id="data-retirada" name="data" required>
             </div>
-
             <div class="form-group">
               <label class="form-label" for="almoxarife">Almoxarife Responsável *</label>
               <input type="text" class="form-input" id="almoxarife" name="almoxarife" placeholder="Nome de quem está entregando" required>
             </div>
-
             <div class="form-group span-2">
               <label class="form-label" for="obs-retirada">Observações</label>
               <textarea class="form-textarea" id="obs-retirada" name="obs" placeholder="Alguma observação sobre a entrega..." style="min-height:70px;"></textarea>
             </div>
-
           </div>
-
           <div class="divider" style="margin-top:20px;"></div>
-
           <div class="form-actions" style="margin-top:20px;">
             <button type="submit" class="btn btn-primary">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -169,7 +139,6 @@
       </div>
     </div>
 
-    <!-- HISTÓRICO DE RETIRADAS -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Histórico de Retiradas Recentes</span>
@@ -224,8 +193,6 @@
         </table>
       </div>
     </div>
-
   </main>
-
 </body>
 </html>

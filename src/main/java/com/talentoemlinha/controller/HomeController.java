@@ -1,6 +1,7 @@
 package com.talentoemlinha.controller;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -34,14 +35,24 @@ public class HomeController {
         model.addAttribute("usados", pontoServ.retornarTotalDePontosUtilizados(NP));
         model.addAttribute("pontos", pontoServ.retornarPontosPeloNp(NP));
         model.addAttribute("brindes", reservaRepo.findByNpFuncionario(NP));
-        return "index";
+        model.addAttribute("activePage", "index");
+        model.addAttribute("content", "index.html");
+        model.addAttribute("pageProps", Map.of(
+                "title", " Início",
+                "pageCss", "./css/index.css"));
+        return "layout/main";
     }
 
     @GetMapping("/reserva")
     public String Reserva(Model model) {
         model.addAttribute("disponivel", pontoServ.retornarPontosDisponiveis(NP));
         model.addAttribute("listaEstoque", estoqueserv.consultarTodos());
-        return "reserva";
+        model.addAttribute("activePage", "reserva");
+        model.addAttribute("content", "reserva.html");
+        model.addAttribute("pageProps", Map.of(
+                "title", " Reserva",
+                "pageCss", "./css/reserva.css"));
+        return "layout/main";
     }
 
     @GetMapping("/pontos-categoria")
@@ -60,7 +71,7 @@ public class HomeController {
                     .computeIfAbsent(periodo, k -> new LinkedHashMap<>())
                     .merge(motivo, ponto.getQuantidade(), Integer::sum);
         }
-        
+
         Map<String, Integer> totaisPorMotivo = new LinkedHashMap<>();
         List<String> motivos = List.of("Treinamento", "Desempenho", "Metas", "Engajamento", "Indicacao", "Projetos");
 
@@ -73,12 +84,22 @@ public class HomeController {
 
         model.addAttribute("pontosPorPeriodo", pontosPorPeriodo);
         model.addAttribute("totaisPorMotivo", totaisPorMotivo);
-        return "pontos-categoria";
+        model.addAttribute("activePage", "pontos-categoria");
+        model.addAttribute("content", "pontos-categoria.html");
+        model.addAttribute("pageProps", Map.of(
+                "title", " Categoria",
+                "pageCss", "./css/categoria.css"));
+        return "layout/main";
     }
 
     @GetMapping("/meus-dados")
     public String Dados(Model model) {
-        return "meus-dados";
+        model.addAttribute("activePage", "meus-dados");
+        model.addAttribute("content", "meus-dados.html");
+        model.addAttribute("pageProps", Map.of(
+                "title", " Perfil",
+                "pageCss", "./css/meus-dados.css"));
+        return "layout/main";
     }
 
 }

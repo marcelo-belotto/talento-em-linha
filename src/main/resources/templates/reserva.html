@@ -1,65 +1,36 @@
-<!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/styles.css">
-  <link rel="stylesheet" href="./css/reserva.css">
-  <title>Brindes — Talento em Linha</title>
-</head>
-
-<body>
-  <header class="sidebar">
-    <nav class="navegacao">
-      <div class="container-logomarca">
-        <img src="./images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
-      </div>
-      <div class="nav-titulo">Menu</div>
-      <a class="nav-item" href="index">Inicio</a>
-      <a class="nav-item active" href="reserva">Brindes</a>
-      <a class="nav-item" href="pontos-categoria">Categorias</a>
-      <a class="nav-item" href="meus-dados">Meus Dados</a>
-    </nav>
-    <div class="sidebar-footer">Talento em Linha · v1.0</div>
-  </header>
-
-  <main class="container-conteudo">
-
+<div layout:fragment="content">
+  <div class="container-conteudo">
     <div class="container-cabecalho">
       <h2>Catalogo de Brindes</h2>
       <p>Seu saldo atual: <strong th:text="${disponivel}"></strong> Pontos</p>
       <p>Selecione os brindes desejados clicando em <em>Reservar</em>.</p>
     </div>
-    
+
     <div class="container-brindes table-wrapper">
-        <h3>Brindes Disponiveis</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Brinde</th>
-              <th>Descricao</th>
-              <th>Pontos</th>
-              <th>Estoque</th>
-              <th>Reservar</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="estoque : ${listaEstoque}">
-              <td data-label="Brinde" th:text="${estoque.produto.nome}"></td>
-              <td data-label="Descrição" th:text="${estoque.produto.descricao}"></td>
-              <td data-label="Pontos" th:text="${estoque.produto.pontos}"></td>
-              <td data-label="Estoque" th:text="${estoque.quantidadeDisponivel}"></td>
-              <td><input type="button" value="Reservar" name="sel_fone" id="sel_fone"></td>
-            </tr>
-            
-          </tbody>
-        </table>
+      <h3>Brindes Disponiveis</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Brinde</th>
+            <th>Descricao</th>
+            <th>Pontos</th>
+            <th>Estoque</th>
+            <th>Reservar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="estoque : ${listaEstoque}">
+            <td data-label="Brinde" th:text="${estoque.produto.nome}"></td>
+            <td data-label="Descrição" th:text="${estoque.produto.descricao}"></td>
+            <td data-label="Pontos" th:text="${estoque.produto.pontos}"></td>
+            <td data-label="Estoque" th:text="${estoque.quantidadeDisponivel}"></td>
+            <td><input type="button" value="Reservar" name="sel_fone" id="sel_fone"></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    
-    
-    
-    <form action="index" method="get" class="table-wrapper">
+
+    <form action="/index" method="get" class="table-wrapper">
       <h3>Carrinho de Reserva</h3>
       <p>Após selecionar os brindes clique em <em>Confirmar Reserva</em>.</p>
       <table>
@@ -86,13 +57,7 @@
           </tr>
         </tfoot>
       </table>
-
       <button type="submit" class="button-reserva">Confirmar Reserva</button>
-
     </form>
-
-  </main>
-
-</body>
-
-</html>
+  </div>
+</div>

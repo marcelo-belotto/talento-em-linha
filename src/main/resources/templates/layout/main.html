@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (content, pageTitle)">
+
+<head th:replace="~{partials/header-funcionario :: header(${pageProps})}"></head>
+
+<body>
+  <th:block th:replace="~{partials/sidebar-funcionario :: sidebar(${activePage})}"></th:block>
+
+  <main th:replace="~{${content}}">
+  </main>
+</body>
+
+</html>

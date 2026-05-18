@@ -1,40 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/almoxarifado}">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/almo-styles.css">
-  <title>Entrada de Estoque — Almoxarifado</title>
+  <title>Entrada de Estoque</title>
 </head>
 <body>
-  <header class="sidebar">
-    <nav class="navegacao">
-      <div class="container-logomarca">
-        <img src="../images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
-      </div>
-      <div class="nav-titulo">Almoxarifado</div>
-      <a class="nav-item" href="index">Inicio</a>
-      <a class="nav-item" href="cadastro-produto">Cadastro de Produtos</a>
-      <a class="nav-item active" href="estoque">Estoque</a>
-      <a class="nav-item" href="disponibilidade">Disponibilidade</a>
-      <a class="nav-item" href="reservas">Reservas</a>
-      <a class="nav-item" href="retirada">Retirada</a>
-    </nav>
-    <div class="sidebar-footer">Talento em Linha · v1.0</div>
-  </header>
+  <th:block th:ref="activePage" th:with="activePage='estoque'"></th:block>
 
-  <main class="container-conteudo">
-
+  <main layout:fragment="content">
     <div class="page-header">
       <div class="page-header-left">
         <div class="page-title">Entrada de Estoque</div>
         <div class="page-subtitle">Adicione unidades a produtos já cadastrados</div>
       </div>
-      <a href="index" class="btn btn-ghost btn-sm">← Voltar ao painel</a>
+      <a href="/almoxarifado/index" class="btn btn-ghost btn-sm">← Voltar ao painel</a>
     </div>
 
-    <!-- ENTRADA FORM -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Registrar Entrada</span>
@@ -42,7 +25,6 @@
       <div class="panel-body">
         <form action="#" method="get">
           <div class="form-grid" style="gap:18px;">
-
             <div class="form-group">
               <label class="form-label" for="produto-sel">Produto *</label>
               <select class="form-select" id="produto-sel" name="produto" required>
@@ -56,31 +38,24 @@
                 <option value="007">007 — Vale Refeição (estoque: 50)</option>
               </select>
             </div>
-
             <div class="form-group">
               <label class="form-label" for="qtd-entrada">Quantidade a Adicionar *</label>
               <input type="number" class="form-input" id="qtd-entrada" name="quantidade" min="1" placeholder="Ex: 20" required>
             </div>
-
             <div class="form-group">
               <label class="form-label" for="data-entrada">Data da Entrada</label>
               <input type="date" class="form-input" id="data-entrada" name="data">
             </div>
-
             <div class="form-group">
               <label class="form-label" for="responsavel">Responsável pelo Recebimento</label>
               <input type="text" class="form-input" id="responsavel" name="responsavel" placeholder="Nome do almoxarife">
             </div>
-
             <div class="form-group span-2">
               <label class="form-label" for="obs-entrada">Observações</label>
               <textarea class="form-textarea" id="obs-entrada" name="obs" placeholder="Nota fiscal, fornecedor, lote..." style="min-height:70px;"></textarea>
             </div>
-
           </div>
-
           <div class="divider" style="margin-top:24px;"></div>
-
           <div class="form-actions" style="margin-top:20px;">
             <button type="submit" class="btn btn-success">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
@@ -92,7 +67,6 @@
       </div>
     </div>
 
-    <!-- HISTÓRICO DE ENTRADAS -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Histórico de Entradas</span>
@@ -155,8 +129,6 @@
         </table>
       </div>
     </div>
-
   </main>
-
 </body>
 </html>
