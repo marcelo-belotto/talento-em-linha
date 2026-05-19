@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-BR"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/almoxarifado}">
-<head>
-  <title>Cadastro de Produto</title>
-</head>
-<body>
-  <th:block th:ref="activePage" th:with="activePage='cadastro-produto'"></th:block>
-
-  <main layout:fragment="content">
+<div layout:fragment="content">
+  <div class="container-conteudo">
     <div class="page-header">
       <div class="page-header-left">
         <div class="page-title">Cadastro de Produto</div>
@@ -164,6 +154,5 @@
         </table>
       </div>
     </div>
-  </main>
-</body>
-</html>
+  </div>
+</div>

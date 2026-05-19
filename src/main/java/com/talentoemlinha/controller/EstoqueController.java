@@ -37,7 +37,10 @@ public class EstoqueController {
 
     @PostMapping("/estoque/entrada")
     public ResponseEntity<Movimentacao> postEstoqueEntrada(@RequestBody EstoqueDto estoqueDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(estServ.entrada(estoqueDto.getIdProduto(), estoqueDto.getQuantidade()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(estServ.entrada(
+            estoqueDto.getIdProduto(), 
+            estoqueDto.getQuantidade(),
+            estoqueDto.getEstoqueMinimo()));
     }
 
     // @PostMapping("/estoque/retirada")

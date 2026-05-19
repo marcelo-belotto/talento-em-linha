@@ -22,10 +22,11 @@ public class EstoqueService {
     @Autowired
     private MovimentacaoRepository movRepo;
 
-    public Movimentacao entrada(long produtoId, int quantidade) {
+    public Movimentacao entrada(long produtoId, int quantidade, int estoqueMinimo) {
         Estoque estoque = buscarOuCriarEstoque(produtoId);
 
         estoque.setQuantidadeDisponivel(estoque.getQuantidadeDisponivel() + quantidade);
+        estoque.setEstoqueMinimo(estoqueMinimo);
         estoqueRepo.save(estoque);
 
         return registrarMovimentacao(estoque.getProduto(), "ENTRADA", quantidade);
@@ -62,7 +63,7 @@ public class EstoqueService {
             .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
         return estoqueRepo.findByProduto(produto)
-            .orElseGet(() -> estoqueRepo.save(new Estoque(0,produto, 0,0)));
+            .orElseGet(() -> estoqueRepo.save(new Estoque(0,produto, 0,0,0)));
     }
 
     private Movimentacao registrarMovimentacao(Produto produto, String tipo, int quantidade) {

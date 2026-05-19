@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-BR"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/almoxarifado}">
-<head>
-  <title>Painel</title>
-</head>
-<body>
-  <th:block th:ref="activePage" th:with="activePage='index'"></th:block>
-
-  <main layout:fragment="content">
+<div layout:fragment="content">
+  <div class="container-conteudo">
     <div class="page-header">
       <div class="page-header-left">
         <div class="page-title">Painel</div>
@@ -21,22 +11,22 @@
     <div class="stats-grid">
       <div class="stat-card teal">
         <div class="stat-label">Produtos Cadastrados</div>
-        <div class="stat-value">07</div>
+        <div class="stat-value" th:text="${itensCadastrados}">0</div>
         <div class="stat-footer">itens no catálogo</div>
       </div>
       <div class="stat-card green">
         <div class="stat-label">Em Estoque</div>
-        <div class="stat-value">127</div>
+        <div class="stat-value" th:text="${unidadesDisponiveis}">0</div>
         <div class="stat-footer">unidades disponíveis</div>
       </div>
       <div class="stat-card gray">
         <div class="stat-label">Reservas Abertas</div>
-        <div class="stat-value">14</div>
+        <div class="stat-value" th:text="${aguardandoRetirada}">0</div>
         <div class="stat-footer">aguardando retirada</div>
       </div>
       <div class="stat-card red">
         <div class="stat-label">Estoque Baixo</div>
-        <div class="stat-value">02</div>
+        <div class="stat-value" th:text="${estoqueBaixo}">0</div>
         <div class="stat-footer">produtos críticos</div>
       </div>
     </div>
@@ -58,35 +48,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><span style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">#00047</span><br>Marcelo Belotto</td>
-                <td>Fone Bluetooth Pro</td>
-                <td><span style="font-family:'Space Mono',monospace;font-size:0.78rem;">12/05/2026</span></td>
-                <td><span class="badge badge-pendente">Pendente</span></td>
-              </tr>
-              <tr>
-                <td><span style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">#00031</span><br>Ana Lima</td>
-                <td>Kit Café Especial</td>
-                <td><span style="font-family:'Space Mono',monospace;font-size:0.78rem;">11/05/2026</span></td>
-                <td><span class="badge badge-pendente">Pendente</span></td>
-              </tr>
-              <tr>
-                <td><span style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">#00012</span><br>Carlos Souza</td>
-                <td>Voucher Livraria</td>
-                <td><span style="font-family:'Space Mono',monospace;font-size:0.78rem;">10/05/2026</span></td>
-                <td><span class="badge badge-retirado">Retirado</span></td>
-              </tr>
-              <tr>
-                <td><span style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">#00055</span><br>Fernanda Rocha</td>
-                <td>Camiseta Exclusiva</td>
-                <td><span style="font-family:'Space Mono',monospace;font-size:0.78rem;">09/05/2026</span></td>
-                <td><span class="badge badge-retirado">Retirado</span></td>
-              </tr>
-              <tr>
-                <td><span style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">#00089</span><br>Ricardo Teles</td>
-                <td>Gift Card Games</td>
-                <td><span style="font-family:'Space Mono',monospace;font-size:0.78rem;">08/05/2026</span></td>
-                <td><span class="badge badge-cancelado">Cancelado</span></td>
+              <tr th:each="reserva : ${listaReservas}">
+                <td><span
+                    style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${reserva.npFuncionario}">ID</span>
+                    <br th:text="${funcionarios.retornarFuncionarioPeloId(reserva.npFuncionario).getNome()}"></td>
+                <td th:text="${reserva.produto.nome}">PRODUTO</td>
+                <td><span style="font-family:'Space Mono',monospace;font-size:0.78rem;" th:text="${reserva.dataExpiracao.toLocalDate()}">DATA</span></td>
+                <td><span th:classappend="${reserva.status == 'EXPIRADO' ? 'badge-cancelado' : reserva.status == 'RESERVADO' ? 'badge-pendente' : 'badge-retirado'}"
+                  class="badge badge-pendente" 
+                  th:text="${reserva.status}">STATUS</span></td>
               </tr>
             </tbody>
           </table>
@@ -110,11 +80,13 @@
               <tbody>
                 <tr>
                   <td>Gift Card Games</td>
-                  <td><span style="font-family:'Space Mono',monospace;color:var(--accent3);font-weight:700;">3</span></td>
+                  <td><span style="font-family:'Space Mono',monospace;color:var(--accent3);font-weight:700;">3</span>
+                  </td>
                 </tr>
                 <tr>
                   <td>Camiseta Exclusiva</td>
-                  <td><span style="font-family:'Space Mono',monospace;color:var(--accent);font-weight:700;">4</span></td>
+                  <td><span style="font-family:'Space Mono',monospace;color:var(--accent);font-weight:700;">4</span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -127,21 +99,30 @@
           </div>
           <div class="panel-body" style="padding:16px;gap:10px;">
             <a href="/almoxarifado/cadastro-produto" class="btn btn-ghost" style="justify-content:flex-start;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="16" />
+                <line x1="8" y1="12" x2="16" y2="12" />
+              </svg>
               Cadastrar Produto
             </a>
             <a href="/almoxarifado/estoque" class="btn btn-ghost" style="justify-content:flex-start;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <polyline points="19 12 12 19 5 12" />
+              </svg>
               Entrada de Estoque
             </a>
             <a href="/almoxarifado/retirada" class="btn btn-ghost" style="justify-content:flex-start;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted2)" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted2)" stroke-width="2">
+                <polyline points="9 11 12 14 22 4" />
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+              </svg>
               Registrar Retirada
             </a>
           </div>
         </div>
       </div>
     </div>
-  </main>
-</body>
-</html>
+  </div>
+</div>

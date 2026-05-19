@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-BR"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/almoxarifado}">
-<head>
-  <title>Disponibilidade</title>
-</head>
-<body>
-  <th:block th:ref="activePage" th:with="activePage='disponibilidade'"></th:block>
-
-  <main layout:fragment="content">
+<div layout:fragment="content">
+  <div class="container-conteudo">
     <div class="page-header">
       <div class="page-header-left">
         <div class="page-title">Disponibilidade de Produtos</div>
@@ -179,6 +169,5 @@
         <span style="font-size:0.78rem;color:var(--muted2);"><span class="badge badge-esgotado" style="margin-right:6px;">Crítico</span> Repor com urgência</span>
       </div>
     </div>
-  </main>
-</body>
-</html>
+  </div>
+</div>

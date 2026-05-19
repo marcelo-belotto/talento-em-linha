@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-BR"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/almoxarifado}">
-<head>
-  <title>Entrada de Estoque</title>
-</head>
-<body>
-  <th:block th:ref="activePage" th:with="activePage='estoque'"></th:block>
-
-  <main layout:fragment="content">
+<div layout:fragment="content">
+  <div class="container-conteudo">
     <div class="page-header">
       <div class="page-header-left">
         <div class="page-title">Entrada de Estoque</div>
@@ -129,6 +119,5 @@
         </table>
       </div>
     </div>
-  </main>
-</body>
-</html>
+  </div>
+</div>

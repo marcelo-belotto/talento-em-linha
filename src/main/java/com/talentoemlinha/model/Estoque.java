@@ -17,4 +17,5 @@ public class Estoque {
     private Produto produto;
     private int quantidadeDisponivel;
     private int quantidadeReservada;  
+    private int estoqueMinimo;
 }

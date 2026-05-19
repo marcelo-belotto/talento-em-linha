@@ -39,7 +39,7 @@ public class HomeController {
         model.addAttribute("content", "index.html");
         model.addAttribute("pageProps", Map.of(
                 "title", " Início",
-                "pageCss", "./css/index.css"));
+                "pageCss", "../css/index.css"));
         return "layout/main";
     }
 
@@ -51,7 +51,7 @@ public class HomeController {
         model.addAttribute("content", "reserva.html");
         model.addAttribute("pageProps", Map.of(
                 "title", " Reserva",
-                "pageCss", "./css/reserva.css"));
+                "pageCss", "../css/reserva.css"));
         return "layout/main";
     }
 
@@ -88,7 +88,7 @@ public class HomeController {
         model.addAttribute("content", "pontos-categoria.html");
         model.addAttribute("pageProps", Map.of(
                 "title", " Categoria",
-                "pageCss", "./css/categoria.css"));
+                "pageCss", "../css/categoria.css"));
         return "layout/main";
     }
 
@@ -98,7 +98,7 @@ public class HomeController {
         model.addAttribute("content", "meus-dados.html");
         model.addAttribute("pageProps", Map.of(
                 "title", " Perfil",
-                "pageCss", "./css/meus-dados.css"));
+                "pageCss", "../css/meus-dados.css"));
         return "layout/main";
     }
 

@@ -6,4 +6,5 @@ import lombok.Data;
 public class EstoqueDto {
     private long idProduto;
     private int quantidade;
+    private int estoqueMinimo;
 }
