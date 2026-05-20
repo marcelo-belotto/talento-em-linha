@@ -37,7 +37,7 @@
           <span class="panel-title">Últimas Reservas</span>
           <a href="/almoxarifado/reservas" class="btn btn-ghost btn-sm">ver todas →</a>
         </div>
-        <div class="table-wrap">
+        <div class="table-wrapper">
           <table class="data-table">
             <thead>
               <tr>
@@ -55,7 +55,7 @@
                 <td th:text="${reserva.produto.nome}">PRODUTO</td>
                 <td><span style="font-family:'Space Mono',monospace;font-size:0.78rem;" th:text="${reserva.dataExpiracao.toLocalDate()}">DATA</span></td>
                 <td><span th:classappend="${reserva.status == 'EXPIRADO' ? 'badge-cancelado' : reserva.status == 'RESERVADO' ? 'badge-pendente' : 'badge-retirado'}"
-                  class="badge badge-pendente" 
+                  class="badge" 
                   th:text="${reserva.status}">STATUS</span></td>
               </tr>
             </tbody>
@@ -79,13 +79,13 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Gift Card Games</td>
-                  <td><span style="font-family:'Space Mono',monospace;color:var(--accent3);font-weight:700;">3</span>
+                  <td data-label="Produto">Gift Card Games</td>
+                  <td data-label="Quantidade"><span style="font-family:'Space Mono',monospace;color:var(--accent3);font-weight:700;">3</span>
                   </td>
                 </tr>
                 <tr>
-                  <td>Camiseta Exclusiva</td>
-                  <td><span style="font-family:'Space Mono',monospace;color:var(--accent);font-weight:700;">4</span>
+                  <td data-label="Produto">Camiseta Exclusiva</td>
+                  <td data-label="Quantidade"><span style="font-family:'Space Mono',monospace;color:var(--accent);font-weight:700;">4</span>
                   </td>
                 </tr>
               </tbody>

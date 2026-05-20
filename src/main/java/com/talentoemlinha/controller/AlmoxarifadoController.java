@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.talentoemlinha.service.EstoqueService;
 import com.talentoemlinha.service.FuncionarioService;
+import com.talentoemlinha.service.ProdutoService;
 import com.talentoemlinha.service.ReservaService;
 
 @Controller
@@ -56,6 +57,7 @@ public class AlmoxarifadoController {
         model.addAttribute("pageProps", Map.of(
                 "title", " Cadastro de Produto",
                 "pageCss", "../css/almo-styles.css"));
+        model.addAttribute("listaEstoque", estoqueSer.consultarTodos());
         return "layout/almoxarifado";
     }
 

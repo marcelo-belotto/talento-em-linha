@@ -71,7 +71,7 @@
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Produtos Cadastrados</span>
-        <span class="page-badge">7 itens</span>
+        <span class="page-badge" th:text="${listaEstoque.size()} + ' itens'">7 itens</span>
       </div>
       <div class="table-wrap">
         <table class="data-table">
@@ -79,7 +79,7 @@
             <tr>
               <th>#</th>
               <th>Nome</th>
-              <th>Categoria</th>
+              <!-- <th>Categoria</th> -->
               <th>Custo (pts)</th>
               <th>Est. Mínimo</th>
               <th>Estoque</th>
@@ -87,7 +87,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr th:each="estoque : ${listaEstoque}">
+              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${estoque.produto.id}">ID</td>
+              <td><strong th:text="${estoque.produto.nome}">Produto</strong><br>
+                <span style="font-size:0.78rem;color:var(--muted2);" th:text="${estoque.produto.descricao}">Descrição</span></td>
+              <!-- <td>Descrição</td> -->
+              <td><span style="font-family:'Space Mono',monospace;" th:text="${estoque.produto.pontos}">CUSTO pts</span></td>
+              <td><span style="font-family:'Space Mono',monospace;" th:text="${estoque.estoqueMinimo}">ESTOQUE MIN</span></td>
+              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);" th:text="${estoque.quantidadeDisponivel}">ESTOQUE ATUAL</span></td>
+              <td><span class="badge badge-ok"
+                th:classappend="${estoque.quantidadeDisponivel < estoque.estoqueMinimo ? 'badge-low' : 'badge-ok'}"
+                th:text="${estoque.quantidadeDisponivel < estoque.estoqueMinimo ? 'Baixo' : 'Ok'}"
+                >STATUS</span></td>
+            </tr>
+            <!-- <tr>
               <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">001</td>
               <td><strong>Fone Bluetooth Pro</strong><br><span style="font-size:0.78rem;color:var(--muted2);">Fone over-ear, cancelamento de ruído</span></td>
               <td>Eletrônicos</td>
@@ -149,7 +162,7 @@
               <td><span style="font-family:'Space Mono',monospace;">10</span></td>
               <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">50</span></td>
               <td><span class="badge badge-ok">Ok</span></td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
