@@ -18,13 +18,14 @@
             <th>Reservar</th>
           </tr>
         </thead>
-        <tbody>
-          <tr th:each="estoque : ${listaEstoque}">
+        <tbody id="produtosDisponiveis">
+          <tr th:each="estoque : ${listaEstoque}" th:id="'prod' + ${estoque.id}">
             <td data-label="Brinde" th:text="${estoque.produto.nome}"></td>
             <td data-label="Descrição" th:text="${estoque.produto.descricao}"></td>
             <td data-label="Pontos" th:text="${estoque.produto.pontos}"></td>
             <td data-label="Estoque" th:text="${estoque.quantidadeDisponivel}"></td>
-            <td><input type="button" value="Reservar" name="sel_fone" id="sel_fone"></td>
+            <td><input type="button" value="Reservar" th:id="${estoque.id}" 
+              onclick="reservarItem(document.querySelector(`#prod${this.id}`))"></td>
           </tr>
         </tbody>
       </table>
@@ -36,28 +37,27 @@
       <table>
         <thead>
           <tr>
+            <th># ID</th>
             <th>Brinde</th>
-            <th>Quantidade</th>
             <th>Pontos</th>
+            <th>Remover</th>
           </tr>
         </thead>
-        <tbody>
-          <td data-label="Brinde"></td>
-          <td data-label="Quantidade"></td>
-          <td data-label="Pontos"></td>
+        <tbody id="carrinhoReservas">
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="2"><strong>Total a debitar</strong></td>
-            <td><strong>0 pts</strong></td>
+            <td colspan="3"><strong>Total a debitar</strong></td>
+            <td><strong id="totalPontos">0</strong> pts</td>
           </tr>
           <tr>
-            <td colspan="2">Saldo apos reserva</td>
-            <td>0 pts</td>
+            <td colspan="3">Saldo apos reserva</td>
+            <td><strong id="saldoFinal">0</strong> pts</td>
           </tr>
         </tfoot>
       </table>
       <button type="submit" class="button-reserva">Confirmar Reserva</button>
     </form>
   </div>
+  <script src="./js/user-reserva.js"></script>
 </div>
