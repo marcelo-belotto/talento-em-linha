@@ -42,9 +42,4 @@ public class EstoqueController {
             estoqueDto.getQuantidade(),
             estoqueDto.getEstoqueMinimo()));
     }
-
-    // @PostMapping("/estoque/retirada")
-    // public RespoMovimentacao postEstoqueRetirada(@RequestBody EstoqueDto estoqueDto) {
-    //     return estServ.retirada(estoqueDto.getIdProduto(), estoqueDto.getQuantidade());
-    // }
 }

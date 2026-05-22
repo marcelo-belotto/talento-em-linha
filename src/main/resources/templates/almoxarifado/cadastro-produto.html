@@ -18,7 +18,7 @@
         <span class="panel-title">Dados do Produto</span>
       </div>
       <div class="panel-body">
-        <form action="#" method="get">
+        <form id="formProdutoNovo" action="#" method="get">
           <div class="form-grid" style="gap:18px;">
             <div class="form-group span-2">
               <label class="form-label" for="nome-produto">Nome do Produto *</label>
@@ -47,12 +47,12 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="estoque-inicial">Estoque Inicial</label>
-              <input type="number" class="form-input" id="estoque-inicial" name="estoque" min="0" value="0">
+              <input type="number" class="form-input" id="estoqueInicial" name="estoqueInicial" min="0" value="0">
               <span class="form-hint">Unidades já disponíveis no momento do cadastro.</span>
             </div>
             <div class="form-group">
               <label class="form-label" for="estoque-minimo">Estoque Mínimo</label>
-              <input type="number" class="form-input" id="estoque-minimo" name="estoque_min" min="0" value="5">
+              <input type="number" class="form-input" id="estoqueMinimo" name="estoqueMinimo" min="0" value="5">
               <span class="form-hint">Alertas serão gerados abaixo deste valor.</span>
             </div>
           </div>
@@ -168,4 +168,5 @@
       </div>
     </div>
   </div>
+  <script src="../js/cadastro-produto.js"></script>
 </div>

@@ -3,10 +3,14 @@ package com.talentoemlinha.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Produto {
     @EqualsAndHashCode.Include
@@ -15,17 +19,4 @@ public class Produto {
     private String nome;
     private String descricao;
     private int pontos;
-
-    public static List<Produto> produtosMocados() {
-        List<Produto> produtos = new ArrayList<>();
-        for (int i = 1; i < 11; i++) {
-            Produto protudoTemp = new Produto();
-            protudoTemp.setId(i);
-            protudoTemp.setNome("Produto " + i);
-            protudoTemp.setDescricao("Descrição do Produto " + i);
-            protudoTemp.setPontos(i * 10);
-            produtos.add(protudoTemp);
-        }
-        return produtos;
-    }
 }

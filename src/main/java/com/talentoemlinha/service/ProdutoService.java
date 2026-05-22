@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.talentoemlinha.dto.ProdutoDto;
 import com.talentoemlinha.model.Produto;
 import com.talentoemlinha.repository.ProdutoRepository;
 
@@ -30,5 +31,9 @@ public class ProdutoService {
     public Produto removerProduto(long produtoId){
         Produto produto = prodRepo.delete(produtoId);
         return produto;
+    }
+
+    public Produto produtoMapper(ProdutoDto produtoDto){
+        return new Produto(0,produtoDto.getNome(),produtoDto.getDescricao(),produtoDto.getPontos());
     }
 }

@@ -1,5 +1,6 @@
 package com.talentoemlinha.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +11,7 @@ import com.talentoemlinha.model.Produto;
 @Repository
 public class ProdutoRepository {
 
-    private List<Produto> listaProdutos = Produto.produtosMocados();
+    private List<Produto> listaProdutos = new ArrayList<Produto>();
 
     public List<Produto> findAll() {
         return listaProdutos;
