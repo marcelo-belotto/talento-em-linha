@@ -25,13 +25,13 @@
             <td data-label="Pontos" th:text="${estoque.produto.pontos}"></td>
             <td data-label="Estoque" th:text="${estoque.quantidadeDisponivel}"></td>
             <td><input type="button" value="Reservar" th:id="${estoque.id}" 
-              onclick="reservarItem(document.querySelector(`#prod${this.id}`))"></td>
+              onclick="reservarItem(document.querySelector(`tr#prod${this.id}`))"></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <form action="/index" method="get" class="table-wrapper">
+    <form action="/index" method="get" class="container-brindes table-wrapper">
       <h3>Carrinho de Reserva</h3>
       <p>Após selecionar os brindes clique em <em>Confirmar Reserva</em>.</p>
       <table>
