@@ -1,14 +1,14 @@
-const formulario = document.getElementById("formProdutoNovo");
+const formulario = document.getElementById("formAdicionarEstoque");
 
 formulario.addEventListener("submit", async (event) => {
   event.preventDefault(); // Impede o recarregamento da página
 
   const formData = new FormData(formulario); // Captura os dados do formulário
   const dadosObjeto = Object.fromEntries(formData.entries());
-  
+
   try {
-    const resposta = await fetch("http://localhost:8080/api/v1/produto", {
-      method: "POST",
+    const resposta = await fetch("http://localhost:8080/api/v1/estoque", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },

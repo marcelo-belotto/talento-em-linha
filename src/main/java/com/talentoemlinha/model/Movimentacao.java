@@ -13,6 +13,7 @@ public class Movimentacao {
     private long id;
     private Produto produto;
     private String tipoMovimentacao;
+    private String observacao;
     private int quantidade;
     private LocalDateTime dataHora = LocalDateTime.now();
     

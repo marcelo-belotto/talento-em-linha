@@ -13,19 +13,14 @@
         <span class="panel-title">Registrar Entrada</span>
       </div>
       <div class="panel-body">
-        <form action="#" method="get">
+        <form action="#" method="get" id="formAdicionarEstoque">
           <div class="form-grid" style="gap:18px;">
             <div class="form-group">
               <label class="form-label" for="produto-sel">Produto *</label>
-              <select class="form-select" id="produto-sel" name="produto" required>
-                <option value="">— Selecione o produto —</option>
-                <option value="001">001 — Fone Bluetooth Pro (estoque: 12)</option>
-                <option value="002">002 — Kit Café Especial (estoque: 30)</option>
-                <option value="003">003 — Camiseta Exclusiva (estoque: 4) ⚠ Baixo</option>
-                <option value="004">004 — Voucher Livraria (estoque: 20)</option>
-                <option value="005">005 — Mouse Sem Fio (estoque: 8)</option>
-                <option value="006">006 — Gift Card Games (estoque: 3) ⚠ Crítico</option>
-                <option value="007">007 — Vale Refeição (estoque: 50)</option>
+              <select class="form-select" id="produto-sel" name="idProduto" required >
+                <option value="0">— Selecione o produto —</option>
+                <option th:each="estoque : ${listaEstoque}" th:value="${estoque.id}" th:text="${#numbers.formatInteger(estoque.id,4)} + ' - ' +${estoque.produto.nome}"></option>
+
               </select>
             </div>
             <div class="form-group">
@@ -36,19 +31,18 @@
               <label class="form-label" for="data-entrada">Data da Entrada</label>
               <input type="date" class="form-input" id="data-entrada" name="data">
             </div>
-            <div class="form-group">
-              <label class="form-label" for="responsavel">Responsável pelo Recebimento</label>
-              <input type="text" class="form-input" id="responsavel" name="responsavel" placeholder="Nome do almoxarife">
-            </div>
             <div class="form-group span-2">
               <label class="form-label" for="obs-entrada">Observações</label>
-              <textarea class="form-textarea" id="obs-entrada" name="obs" placeholder="Nota fiscal, fornecedor, lote..." style="min-height:70px;"></textarea>
+              <textarea class="form-textarea" id="obs-entrada" name="observacao" placeholder="Nota fiscal, fornecedor, lote..." style="min-height:70px;"></textarea>
             </div>
           </div>
           <div class="divider" style="margin-top:24px;"></div>
           <div class="form-actions" style="margin-top:20px;">
             <button type="submit" class="btn btn-success">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <polyline points="19 12 12 19 5 12"/>
+              </svg>
               Confirmar Entrada
             </button>
             <button type="reset" class="btn btn-ghost">Limpar</button>
@@ -69,13 +63,17 @@
               <th>Data</th>
               <th>Produto</th>
               <th>Qtd. Adicionada</th>
-              <th>Estoque Após</th>
-              <th>Responsável</th>
               <th>Observações</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr th:each="movimentacao : ${listaMovimentacao}">
+              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;" th:text="${movimentacao.dataHora.toLocalDate()}"></span></td>
+              <td th:text="${movimentacao.produto.nome}"></td>
+              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);" th:text="'+' + ${movimentacao.quantidade}"></span></td>
+              <td style="color:var(--muted2);font-size:0.8rem;" th:text="${movimentacao.observacao}"></td>
+            </tr>
+            <!-- <tr>
               <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">05/05/2026</span></td>
               <td>Vale Refeição</td>
               <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+30</span></td>
@@ -114,10 +112,11 @@
               <td><span style="font-family:'Space Mono',monospace;">12</span></td>
               <td>Maria Oliveira</td>
               <td style="color:var(--muted2);font-size:0.8rem;">NF 00341 — AudioPlus</td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
     </div>
   </div>
+  <script src="../js/estoque.js"></script>
 </div>

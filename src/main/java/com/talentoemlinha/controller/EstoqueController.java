@@ -1,5 +1,6 @@
 package com.talentoemlinha.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.talentoemlinha.service.EstoqueService;
-import com.talentoemlinha.dto.EstoqueDto;
+import com.talentoemlinha.dto.Estoque.AtualizarEstoqueDto;
+import com.talentoemlinha.dto.Estoque.NovoEstoqueDto;
 import com.talentoemlinha.model.Estoque;
 import com.talentoemlinha.model.Movimentacao;
 
@@ -36,10 +39,20 @@ public class EstoqueController {
     }
 
     @PostMapping("/estoque/entrada")
-    public ResponseEntity<Movimentacao> postEstoqueEntrada(@RequestBody EstoqueDto estoqueDto) {
+    public ResponseEntity<Movimentacao> postEstoqueEntrada(@RequestBody NovoEstoqueDto estoqueDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(estServ.entrada(
-            estoqueDto.getIdProduto(), 
-            estoqueDto.getQuantidade(),
-            estoqueDto.getEstoqueMinimo()));
+                estoqueDto.getIdProduto(),
+                estoqueDto.getQuantidade(),
+                estoqueDto.getEstoqueMinimo()));
+    }
+
+    @PutMapping("/estoque")
+    public ResponseEntity<Movimentacao> putAtualizarEstoque(@RequestBody AtualizarEstoqueDto estoqueDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                estServ.adicionarAoEstoqueExistente(
+                        estoqueDto.getIdProduto(),
+                        estoqueDto.getQuantidade(),
+                        estoqueDto.getObservacao(),
+                        LocalDateTime.now()));
     }
 }

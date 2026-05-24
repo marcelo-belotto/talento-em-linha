@@ -8,9 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.talentoemlinha.repository.MovimentacaoRepository;
 import com.talentoemlinha.service.EstoqueService;
 import com.talentoemlinha.service.FuncionarioService;
-import com.talentoemlinha.service.ProdutoService;
 import com.talentoemlinha.service.ReservaService;
 
 @Controller
@@ -23,6 +23,8 @@ public class AlmoxarifadoController {
     private ReservaService reservaServ;
     @Autowired
     private FuncionarioService funcServ;
+    @Autowired
+    private MovimentacaoRepository movRepo;
 
     @GetMapping("/index")
     public String Homepage(Model model) {
@@ -68,6 +70,8 @@ public class AlmoxarifadoController {
         model.addAttribute("pageProps", Map.of(
                 "title", " Estoque",
                 "pageCss", "../css/almo-styles.css"));
+        model.addAttribute("listaEstoque",estoqueSer.consultarTodos());
+        model.addAttribute("listaMovimentacao",movRepo.findAll().stream().filter(x -> x.getTipoMovimentacao().equalsIgnoreCase("ENTRADA")));
         return "layout/almoxarifado";
     }
 

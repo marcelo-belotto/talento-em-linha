@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <body>
   <header th:fragment="sidebar(activePage)" class="sidebar">
     <nav class="navegacao">
@@ -9,10 +10,23 @@
       <div class="nav-titulo">Menu</div>
       <a th:classappend="${activePage == 'index'} ? 'active'" class="nav-item" href="/index">Inicio</a>
       <a th:classappend="${activePage == 'reserva'} ? 'active'" class="nav-item" href="/reserva">Brindes</a>
-      <a th:classappend="${activePage == 'pontos-categoria'} ? 'active'" class="nav-item" href="/pontos-categoria">Categorias</a>
+      <a th:classappend="${activePage == 'pontos-categoria'} ? 'active'" class="nav-item"
+        href="/pontos-categoria">Categorias</a>
       <a th:classappend="${activePage == 'meus-dados'} ? 'active'" class="nav-item" href="/meus-dados">Meus Dados</a>
     </nav>
-    <div class="sidebar-footer">Talento em Linha · v1.0</div>
+
+    <div class="sidebar-footer">
+      <a class="nav-item" href="/" style="border-radius: 10px;display: flex;justify-content: space-between;"><strong>Sair</strong>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+          <polyline points="10 17 15 12 10 7"></polyline>
+          <line x1="15" y1="12" x2="3" y2="12"></line>
+        </svg>
+      </a>
+      Talento em Linha · v1.0
+    </div>
   </header>
 </body>
+
 </html>

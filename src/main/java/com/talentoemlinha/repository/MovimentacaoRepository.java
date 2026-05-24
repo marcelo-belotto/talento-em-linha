@@ -18,4 +18,7 @@ public class MovimentacaoRepository {
         return movimentacao;
     }
 
+    public List<Movimentacao> findAll(){
+        return listaMovimentacoes;
+    }
 }

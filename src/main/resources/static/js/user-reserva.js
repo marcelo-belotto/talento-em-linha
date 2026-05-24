@@ -1,23 +1,3 @@
-// const carrinhoReservas = document.querySelector("#carrinhoReservas");
-// const produtosDisponiveis = document.querySelector("#produtosDisponiveis");
-
-// function reservarItem(item) {
-//   let id = item.cells[4].children[0].id;
-//   carrinhoReservas.innerHTML += `<tr id=${item.id}>
-//         <td data-label="# ID">${id}</td>
-//         <td data-label="Brinde">${item.cells[0].innerHTML}</td>
-//         <td data-label="Pontos">${item.cells[2].innerHTML}</td>
-//         <td data-label="Remover"><input type="button" value="Remover" 
-//         onclick="removerItem(${item.id})"></td>
-//     </tr>`;
-//     console.log(item);
-//     produtosDisponiveis.removeChild(item);
-// }
-
-// function removerItem(itemARemover) {
-// //    carrinhoReservas.removeChild(itemARemover);
-//    console.log(itemARemover);
-// }
 /**
  * user-reserva.js
  * Gerencia o catálogo de brindes e o carrinho de reservas.
@@ -31,8 +11,7 @@
 
   /** Lê o saldo disponível exibido na página (elemento <strong> dentro do <p> de saldo). */
   function getSaldoDisponivel() {
-    const el = document.querySelector('.container-cabecalho p strong');
-    return el ? parseInt(el.textContent.replace(/\D/g, ''), 10) || 0 : 0;
+    return parseInt(document.getElementById('totalDisponivel').textContent,10) || 0;
   }
 
   /** Lê o total de pontos já no carrinho. */
@@ -163,6 +142,14 @@
     // Reduz estoque visível (1 unidade reservada)
     cells[3].textContent = estoque - 1;
 
+    // Desativa o botão de reserva enquanto o item estiver no carrinho
+    if (btn) {
+      btn.disabled = true;
+      btn.style.opacity = '0.4';
+      btn.style.cursor  = 'not-allowed';
+      btn.title = 'Este brinde já está no seu carrinho';
+    }
+
     atualizarTotais();
   };
 
@@ -179,13 +166,21 @@
     const pontos   = parseInt(trCarrinho.dataset.pontos, 10)     || 0;
     const quantidade = parseInt(trCarrinho.dataset.quantidade, 10) || 1;
 
-    // Devolve estoque na tabela de produtos
+    // Devolve estoque e reativa botão na tabela de produtos
     const trProduto = document.querySelector(`tr#prod${id}`);
     if (trProduto) {
       const tdEstoque = trProduto.querySelectorAll('td')[3];
       if (tdEstoque) {
         const estoqueAtual = parseInt(tdEstoque.textContent, 10) || 0;
         tdEstoque.textContent = estoqueAtual + quantidade;
+      }
+
+      const btnProd = trProduto.querySelector('input[type="button"]');
+      if (btnProd) {
+        btnProd.disabled = false;
+        btnProd.style.opacity = '';
+        btnProd.style.cursor  = '';
+        btnProd.title = '';
       }
     }
 

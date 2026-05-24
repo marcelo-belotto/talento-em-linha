@@ -10,7 +10,9 @@
 
     <div class="alert alert-info">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      O campo <strong>Estoque Inicial</strong> permite registrar unidades disponíveis já no momento do cadastro. Caso o produto ainda não tenha estoque, deixe como 0 e utilize a página <a href="/almoxarifado/estoque">Entrada de Estoque</a> quando necessário.
+      O campo <strong>Estoque Inicial</strong> 
+      permite registrar unidades disponíveis já no momento do cadastro. Caso o produto ainda não tenha estoque, deixe como 0 e utilize a página 
+      <a href="/almoxarifado/estoque">Entrada de Estoque</a> quando necessário.
     </div>
 
     <div class="panel">
@@ -35,7 +37,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="categoria">Categoria</label>
-              <select class="form-select" id="categoria" name="categoria">
+              <select class="form-select" id="categoria" name="categoria" required>
                 <option value="">— Selecione —</option>
                 <option value="eletronicos">Eletrônicos</option>
                 <option value="alimentacao">Alimentação</option>
@@ -46,13 +48,13 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label" for="estoque-inicial">Estoque Inicial</label>
-              <input type="number" class="form-input" id="estoqueInicial" name="estoqueInicial" min="0" value="0">
+              <label class="form-label" for="estoqueInicial">Estoque Inicial</label>
+              <input type="number" class="form-input" id="estoqueInicial" name="estoqueInicial" min="0" value="0" required>
               <span class="form-hint">Unidades já disponíveis no momento do cadastro.</span>
             </div>
             <div class="form-group">
-              <label class="form-label" for="estoque-minimo">Estoque Mínimo</label>
-              <input type="number" class="form-input" id="estoqueMinimo" name="estoqueMinimo" min="0" value="5">
+              <label class="form-label" for="estoqueMinimo">Estoque Mínimo</label>
+              <input type="number" class="form-input" id="estoqueMinimo" name="estoqueMinimo" min="0" value="5" required>
               <span class="form-hint">Alertas serão gerados abaixo deste valor.</span>
             </div>
           </div>
@@ -79,7 +81,6 @@
             <tr>
               <th>#</th>
               <th>Nome</th>
-              <!-- <th>Categoria</th> -->
               <th>Custo (pts)</th>
               <th>Est. Mínimo</th>
               <th>Estoque</th>
@@ -91,79 +92,15 @@
               <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${estoque.produto.id}">ID</td>
               <td><strong th:text="${estoque.produto.nome}">Produto</strong><br>
                 <span style="font-size:0.78rem;color:var(--muted2);" th:text="${estoque.produto.descricao}">Descrição</span></td>
-              <!-- <td>Descrição</td> -->
               <td><span style="font-family:'Space Mono',monospace;" th:text="${estoque.produto.pontos}">CUSTO pts</span></td>
               <td><span style="font-family:'Space Mono',monospace;" th:text="${estoque.estoqueMinimo}">ESTOQUE MIN</span></td>
               <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);" th:text="${estoque.quantidadeDisponivel}">ESTOQUE ATUAL</span></td>
               <td><span class="badge badge-ok"
-                th:classappend="${estoque.quantidadeDisponivel < estoque.estoqueMinimo ? 'badge-low' : 'badge-ok'}"
-                th:text="${estoque.quantidadeDisponivel < estoque.estoqueMinimo ? 'Baixo' : 'Ok'}"
+                th:classappend="${estoque.quantidadeDisponivel == 0 ? 'badge-esgotado' : estoque.quantidadeDisponivel < estoque.estoqueMinimo ? 'badge-low' : 'badge-ok'}"
+                th:text="${estoque.quantidadeDisponivel == 0 ? 'Esgotado' : estoque.quantidadeDisponivel < estoque.estoqueMinimo ? 'Baixo' : 'Ok'}"
                 >STATUS</span></td>
             </tr>
-            <!-- <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">001</td>
-              <td><strong>Fone Bluetooth Pro</strong><br><span style="font-size:0.78rem;color:var(--muted2);">Fone over-ear, cancelamento de ruído</span></td>
-              <td>Eletrônicos</td>
-              <td><span style="font-family:'Space Mono',monospace;">50 pts</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">5</span></td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">12</span></td>
-              <td><span class="badge badge-ok">Ok</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">002</td>
-              <td><strong>Kit Café Especial</strong><br><span style="font-size:0.78rem;color:var(--muted2);">3 pacotes + caneca + coador</span></td>
-              <td>Alimentação</td>
-              <td><span style="font-family:'Space Mono',monospace;">20 pts</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">10</span></td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">30</span></td>
-              <td><span class="badge badge-ok">Ok</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">003</td>
-              <td><strong>Camiseta Exclusiva</strong><br><span style="font-size:0.78rem;color:var(--muted2);">100% algodão, bordado exclusivo</span></td>
-              <td>Vestuário</td>
-              <td><span style="font-family:'Space Mono',monospace;">15 pts</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">5</span></td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent);">4</span></td>
-              <td><span class="badge badge-low">Baixo</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">004</td>
-              <td><strong>Voucher Livraria</strong><br><span style="font-size:0.78rem;color:var(--muted2);">Crédito R$50 em livrarias parceiras</span></td>
-              <td>Voucher</td>
-              <td><span style="font-family:'Space Mono',monospace;">30 pts</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">5</span></td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">20</span></td>
-              <td><span class="badge badge-ok">Ok</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">005</td>
-              <td><strong>Mouse Sem Fio</strong><br><span style="font-size:0.78rem;color:var(--muted2);">Ergonômico wireless, receptor USB nano</span></td>
-              <td>Eletrônicos</td>
-              <td><span style="font-family:'Space Mono',monospace;">38 pts</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">5</span></td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">8</span></td>
-              <td><span class="badge badge-ok">Ok</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">006</td>
-              <td><strong>Gift Card Games</strong><br><span style="font-size:0.78rem;color:var(--muted2);">R$30 em plataformas digitais de jogos</span></td>
-              <td>Voucher</td>
-              <td><span style="font-family:'Space Mono',monospace;">15 pts</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">5</span></td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent3);">3</span></td>
-              <td><span class="badge badge-esgotado">Crítico</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">007</td>
-              <td><strong>Vale Refeição</strong><br><span style="font-size:0.78rem;color:var(--muted2);">Voucher R$30 em restaurantes parceiros</span></td>
-              <td>Alimentação</td>
-              <td><span style="font-family:'Space Mono',monospace;">10 pts</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">10</span></td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">50</span></td>
-              <td><span class="badge badge-ok">Ok</span></td>
-            </tr> -->
-          </tbody>
+           </tbody>
         </table>
       </div>
     </div>

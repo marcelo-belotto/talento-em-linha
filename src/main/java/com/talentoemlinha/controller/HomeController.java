@@ -1,7 +1,6 @@
 package com.talentoemlinha.controller;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -81,7 +80,7 @@ public class HomeController {
                     .sum();
             totaisPorMotivo.put(motivo, total);
         }
-
+        model.addAttribute("totalDePontos", pontoServ.retornarTotalDePontos(NP));
         model.addAttribute("pontosPorPeriodo", pontosPorPeriodo);
         model.addAttribute("totaisPorMotivo", totaisPorMotivo);
         model.addAttribute("activePage", "pontos-categoria");
