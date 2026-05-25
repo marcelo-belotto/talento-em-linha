@@ -1,6 +1,8 @@
 package com.talentoemlinha.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +31,15 @@ public class EstoqueService {
         estoque.setEstoqueMinimo(estoqueMinimo);
         estoqueRepo.save(estoque);
 
-        return registrarMovimentacao(estoque.getProduto(), "ENTRADA"," - ", quantidade, LocalDateTime.now());
+        return registrarMovimentacao(estoque.getProduto(), "ENTRADA","Produto Novo", quantidade, LocalDateTime.now());
     }
-    public Movimentacao adicionarAoEstoqueExistente(long produtoId, int quantidade, String observacao, LocalDateTime data) {
+    public Movimentacao adicionarAoEstoqueExistente(long produtoId, int quantidade, String observacao, LocalDate data) {
         Estoque estoque = buscarOuCriarEstoque(produtoId);
 
         estoque.setQuantidadeDisponivel(estoque.getQuantidadeDisponivel() + quantidade);
         estoqueRepo.save(estoque);
 
-        return registrarMovimentacao(estoque.getProduto(),"ENTRADA", observacao, quantidade, data);
+        return registrarMovimentacao(estoque.getProduto(),"ENTRADA", observacao, quantidade, converterParaDateTime(data));
     }
 
     public Movimentacao reservar(long idProduto,int quantidade){
@@ -46,7 +48,7 @@ public class EstoqueService {
         estoque.setQuantidadeDisponivel(estoque.getQuantidadeDisponivel() - quantidade);
         estoque.setQuantidadeReservada(estoque.getQuantidadeReservada() + quantidade);
         estoqueRepo.save(estoque);
-        return registrarMovimentacao(estoque.getProduto(), "RESERVADO"," - ", quantidade, LocalDateTime.now());
+        return registrarMovimentacao(estoque.getProduto(), "RESERVADO","Reserva de produto", quantidade, LocalDateTime.now());
     }
 
     public Movimentacao retirada(long produtoId, int quantidade) {
@@ -55,7 +57,7 @@ public class EstoqueService {
         estoque.setQuantidadeReservada(estoque.getQuantidadeReservada() - quantidade);
         estoqueRepo.save(estoque);
 
-        return registrarMovimentacao(estoque.getProduto(), "RETIRADO"," - ", quantidade, LocalDateTime.now());
+        return registrarMovimentacao(estoque.getProduto(), "RETIRADO","Retirada de Produto", quantidade, LocalDateTime.now());
     }
 
     public List<Estoque> consultarTodos(){
@@ -76,5 +78,9 @@ public class EstoqueService {
 
     private Movimentacao registrarMovimentacao(Produto produto, String tipo, String observacao, int quantidade, LocalDateTime hora) {
         return movRepo.save(new Movimentacao(0, produto, tipo,observacao, quantidade, hora));
+    }
+
+    private LocalDateTime converterParaDateTime(LocalDate date){
+        return date.atStartOfDay();
     }
 }

@@ -71,7 +71,9 @@ public class AlmoxarifadoController {
                 "title", " Estoque",
                 "pageCss", "../css/almo-styles.css"));
         model.addAttribute("listaEstoque",estoqueSer.consultarTodos());
-        model.addAttribute("listaMovimentacao",movRepo.findAll().stream().filter(x -> x.getTipoMovimentacao().equalsIgnoreCase("ENTRADA")));
+        var listaDeMovimentacoes = movRepo.findAll().stream().filter(x -> x.getTipoMovimentacao().equalsIgnoreCase("ENTRADA")).toList();
+        model.addAttribute("listaMovimentacao",listaDeMovimentacoes);
+        model.addAttribute("listaDeMeses",listaDeMovimentacoes.stream().map(x -> x.getDataHora().getMonth()).toList());
         return "layout/almoxarifado";
     }
 
@@ -82,6 +84,7 @@ public class AlmoxarifadoController {
         model.addAttribute("pageProps", Map.of(
                 "title", " Disponibilidade",
                 "pageCss", "../css/almo-styles.css"));
+        model.addAttribute("listaProdutos",estoqueSer.consultarTodos());
         return "layout/almoxarifado";
     }
 

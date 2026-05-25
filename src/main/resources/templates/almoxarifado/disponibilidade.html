@@ -75,15 +75,24 @@
               <th>Produto</th>
               <th>Categoria</th>
               <th>Custo (pts)</th>
-              <th>Em Estoque</th>
-              <th>Reservado</th>
               <th>Disponível</th>
+              <th>Reservado</th>
               <th>Mínimo</th>
               <th>Situação</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr th:each="estoque : ${listaEstoque}">
+              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${estoque.produto.id}">001</td>
+              <td><strong th:text="${estoque.produto.nome}">Fone Bluetooth Pro</strong></td>
+              <td>Eletrônicos</td>
+              <td style="font-family:'Space Mono',monospace;" th:text="${estoque.produto.pontos}">50 pts</td>
+              <td style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;" th:text="${estoque.quantidadeDisponivel}">11</td>
+              <td style="font-family:'Space Mono',monospace;color:var(--muted2);" th:text="${estoque.quantidadeReservada}">1</td>
+              <td style="font-family:'Space Mono',monospace;color:var(--muted2);" th:text="${estoque.estoqueMinimo}">5</td>
+              <td><span class="badge badge-ok" >Ok</span></td>
+            </tr>
+            <!-- <tr>
               <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">001</td>
               <td><strong>Fone Bluetooth Pro</strong></td>
               <td>Eletrônicos</td>
@@ -159,7 +168,7 @@
               <td style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;">42</td>
               <td style="font-family:'Space Mono',monospace;color:var(--muted2);">10</td>
               <td><span class="badge badge-ok">Ok</span></td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>

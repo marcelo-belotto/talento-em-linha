@@ -53,8 +53,8 @@
 
     <div class="panel">
       <div class="panel-header">
-        <span class="panel-title">Histórico de Entradas</span>
-        <span class="page-badge">Maio 2026</span>
+        <span class="panel-title"></span>Histórico de Entradas</span>
+        <span class="page-badge">Maio 2026 (FILTRAR)</span>
       </div>
       <div class="table-wrap">
         <table class="data-table">
@@ -68,51 +68,11 @@
           </thead>
           <tbody>
             <tr th:each="movimentacao : ${listaMovimentacao}">
-              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;" th:text="${movimentacao.dataHora.toLocalDate()}"></span></td>
-              <td th:text="${movimentacao.produto.nome}"></td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);" th:text="'+' + ${movimentacao.quantidade}"></span></td>
-              <td style="color:var(--muted2);font-size:0.8rem;" th:text="${movimentacao.observacao}"></td>
+              <td data-label="Data"><span style="font-family:'Space Mono',monospace;font-size:0.8rem;" th:text="${movimentacao.dataHora.toLocalDate()}"></span></td>
+              <td data-label="Produto" th:text="${movimentacao.produto.nome}"></td>
+              <td data-label="Qtd. Adicionada"><span style="font-family:'Space Mono',monospace;color:var(--accent2);" th:text="'+' + ${movimentacao.quantidade}"></span></td>
+              <td data-label="Observações" style="color:var(--muted2);font-size:0.8rem;" th:text="${movimentacao.observacao}"></td>
             </tr>
-            <!-- <tr>
-              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">05/05/2026</span></td>
-              <td>Vale Refeição</td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+30</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">50</span></td>
-              <td>João Ferreira</td>
-              <td style="color:var(--muted2);font-size:0.8rem;">NF 00412 — Voucher Express</td>
-            </tr>
-            <tr>
-              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">02/05/2026</span></td>
-              <td>Kit Café Especial</td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+20</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">30</span></td>
-              <td>João Ferreira</td>
-              <td style="color:var(--muted2);font-size:0.8rem;">Reposição mensal</td>
-            </tr>
-            <tr>
-              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">28/04/2026</span></td>
-              <td>Mouse Sem Fio</td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+10</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">8</span></td>
-              <td>Maria Oliveira</td>
-              <td style="color:var(--muted2);font-size:0.8rem;">NF 00389 — TechStore</td>
-            </tr>
-            <tr>
-              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">20/04/2026</span></td>
-              <td>Voucher Livraria</td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+20</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">20</span></td>
-              <td>João Ferreira</td>
-              <td style="color:var(--muted2);font-size:0.8rem;">—</td>
-            </tr>
-            <tr>
-              <td><span style="font-family:'Space Mono',monospace;font-size:0.8rem;">15/04/2026</span></td>
-              <td>Fone Bluetooth Pro</td>
-              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);">+5</span></td>
-              <td><span style="font-family:'Space Mono',monospace;">12</span></td>
-              <td>Maria Oliveira</td>
-              <td style="color:var(--muted2);font-size:0.8rem;">NF 00341 — AudioPlus</td>
-            </tr> -->
           </tbody>
         </table>
       </div>
