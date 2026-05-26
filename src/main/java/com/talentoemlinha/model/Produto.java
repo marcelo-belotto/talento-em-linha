@@ -15,5 +15,6 @@ public class Produto {
     @EqualsAndHashCode.Include
     private String nome;
     private String descricao;
+    private String categoria;
     private int pontos;
 }

@@ -14,6 +14,7 @@ public class Reserva {
     private Produto produto;
     private long npFuncionario;
     private int quantidade;
+    private LocalDateTime dataReserva;
     private LocalDateTime dataExpiracao;
     private String status; //Ativa, Retirada, Expirada (Futuramente);
 }

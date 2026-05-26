@@ -34,6 +34,6 @@ public class ProdutoService {
     }
 
     public Produto produtoMapper(ProdutoDto produtoDto){
-        return new Produto(0,produtoDto.getNome(),produtoDto.getDescricao(),produtoDto.getPontos());
+        return new Produto(0,produtoDto.getNome(),produtoDto.getDescricao(),produtoDto.getCategoria(),produtoDto.getPontos());
     }
 }

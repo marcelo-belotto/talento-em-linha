@@ -11,22 +11,22 @@
     <div class="stats-grid">
       <div class="stat-card teal">
         <div class="stat-label">Disponíveis</div>
-        <div class="stat-value">05</div>
+        <div class="stat-value" th:text="${estoqueOk}">05</div>
         <div class="stat-footer">produtos com estoque ok</div>
       </div>
       <div class="stat-card green">
         <div class="stat-label">Total de Unidades</div>
-        <div class="stat-value">127</div>
+        <div class="stat-value" th:text="${unidadesDisponiveis}">127</div>
         <div class="stat-footer">em estoque agora</div>
       </div>
       <div class="stat-card gray">
         <div class="stat-label">Estoque Baixo</div>
-        <div class="stat-value">01</div>
+        <div class="stat-value" th:text="${estoqueBaixo}">01</div>
         <div class="stat-footer">abaixo do mínimo</div>
       </div>
       <div class="stat-card red">
         <div class="stat-label">Crítico</div>
-        <div class="stat-value">01</div>
+        <div class="stat-value" th:text="${estoqueZerado}">01</div>
         <div class="stat-footer">repor com urgência</div>
       </div>
     </div>
@@ -51,10 +51,12 @@
               <option value="ok">Disponível</option>
               <option value="low">Estoque Baixo</option>
               <option value="critico">Crítico</option>
-              <option value="esgotado">Esgotado</option>
             </select>
             <button type="submit" class="btn btn-primary">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
               Buscar
             </button>
           </div>
@@ -65,7 +67,7 @@
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Situação do Estoque</span>
-        <span class="page-badge">7 produtos</span>
+        <span class="page-badge" th:text="${listaEstoque.size() + ' Produtos'}">7 produtos</span>
       </div>
       <div class="table-wrap">
         <table class="data-table">
@@ -83,99 +85,33 @@
           </thead>
           <tbody>
             <tr th:each="estoque : ${listaEstoque}">
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${estoque.produto.id}">001</td>
+              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);"
+                th:text="${#numbers.formatInteger(estoque.id,4)}">001</td>
               <td><strong th:text="${estoque.produto.nome}">Fone Bluetooth Pro</strong></td>
-              <td>Eletrônicos</td>
+              <td th:text="${estoque.produto.categoria}">Eletrônicos</td>
               <td style="font-family:'Space Mono',monospace;" th:text="${estoque.produto.pontos}">50 pts</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;" th:text="${estoque.quantidadeDisponivel}">11</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);" th:text="${estoque.quantidadeReservada}">1</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);" th:text="${estoque.estoqueMinimo}">5</td>
-              <td><span class="badge badge-ok" >Ok</span></td>
+              <td style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;"
+                th:text="${estoque.quantidadeDisponivel}">11</td>
+              <td style="font-family:'Space Mono',monospace;color:var(--muted2);"
+                th:text="${estoque.quantidadeReservada}">1</td>
+              <td style="font-family:'Space Mono',monospace;color:var(--muted2);" th:text="${estoque.estoqueMinimo}">5
+              </td>
+              <td><span class="badge"
+                  th:classAppend="${estoque.quantidadeDisponivel >= estoque.estoqueMinimo ? 'badge-ok' : estoque.quantidadeDisponivel == 0 ? 'badge-esgotado' : 'badge-low'}"
+                  th:text="${estoque.quantidadeDisponivel >= estoque.estoqueMinimo ? 'OK' : estoque.quantidadeDisponivel == 0 ? 'CRÍTICO' : 'BAIXO'}"
+                  >Ok</span>
+              </td>
             </tr>
-            <!-- <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">001</td>
-              <td><strong>Fone Bluetooth Pro</strong></td>
-              <td>Eletrônicos</td>
-              <td style="font-family:'Space Mono',monospace;">50 pts</td>
-              <td style="font-family:'Space Mono',monospace;">12</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">1</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;">11</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">5</td>
-              <td><span class="badge badge-ok">Ok</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">002</td>
-              <td><strong>Kit Café Especial</strong></td>
-              <td>Alimentação</td>
-              <td style="font-family:'Space Mono',monospace;">20 pts</td>
-              <td style="font-family:'Space Mono',monospace;">30</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">1</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;">29</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">10</td>
-              <td><span class="badge badge-ok">Ok</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">003</td>
-              <td><strong>Camiseta Exclusiva</strong></td>
-              <td>Vestuário</td>
-              <td style="font-family:'Space Mono',monospace;">15 pts</td>
-              <td style="font-family:'Space Mono',monospace;">4</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">1</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--accent);font-weight:700;">3</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">5</td>
-              <td><span class="badge badge-low">Baixo</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">004</td>
-              <td><strong>Voucher Livraria</strong></td>
-              <td>Voucher</td>
-              <td style="font-family:'Space Mono',monospace;">30 pts</td>
-              <td style="font-family:'Space Mono',monospace;">20</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">0</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;">20</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">5</td>
-              <td><span class="badge badge-ok">Ok</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">005</td>
-              <td><strong>Mouse Sem Fio</strong></td>
-              <td>Eletrônicos</td>
-              <td style="font-family:'Space Mono',monospace;">38 pts</td>
-              <td style="font-family:'Space Mono',monospace;">8</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">0</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;">8</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">5</td>
-              <td><span class="badge badge-ok">Ok</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">006</td>
-              <td><strong>Gift Card Games</strong></td>
-              <td>Voucher</td>
-              <td style="font-family:'Space Mono',monospace;">15 pts</td>
-              <td style="font-family:'Space Mono',monospace;">3</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">1</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--accent3);font-weight:700;">2</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">5</td>
-              <td><span class="badge badge-esgotado">Crítico</span></td>
-            </tr>
-            <tr>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);">007</td>
-              <td><strong>Vale Refeição</strong></td>
-              <td>Alimentação</td>
-              <td style="font-family:'Space Mono',monospace;">10 pts</td>
-              <td style="font-family:'Space Mono',monospace;">50</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">8</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;">42</td>
-              <td style="font-family:'Space Mono',monospace;color:var(--muted2);">10</td>
-              <td><span class="badge badge-ok">Ok</span></td>
-            </tr> -->
           </tbody>
         </table>
       </div>
       <div style="padding:14px 24px;border-top:1px solid var(--border);display:flex;gap:20px;flex-wrap:wrap;">
-        <span style="font-size:0.78rem;color:var(--muted2);"><span class="badge badge-ok" style="margin-right:6px;">Ok</span> Acima do mínimo</span>
-        <span style="font-size:0.78rem;color:var(--muted2);"><span class="badge badge-low" style="margin-right:6px;">Baixo</span> Abaixo do mínimo</span>
-        <span style="font-size:0.78rem;color:var(--muted2);"><span class="badge badge-esgotado" style="margin-right:6px;">Crítico</span> Repor com urgência</span>
+        <span style="font-size:0.78rem;color:var(--muted2);"><span class="badge badge-ok"
+            style="margin-right:6px;">Ok</span> Acima do mínimo</span>
+        <span style="font-size:0.78rem;color:var(--muted2);"><span class="badge badge-low"
+            style="margin-right:6px;">Baixo</span> Abaixo do mínimo</span>
+        <span style="font-size:0.78rem;color:var(--muted2);"><span class="badge badge-esgotado"
+            style="margin-right:6px;">Crítico</span> Repor com urgência</span>
       </div>
     </div>
   </div>

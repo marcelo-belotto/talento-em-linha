@@ -26,6 +26,11 @@ public class ReservaController {
         return reservaServ.retornarReservas();
     }
 
+    @PostMapping("/{np}/reservas")
+    public List<Reserva> getReservaById(@PathVariable long np) {
+        return reservaServ.retornarPorNp(np);
+    }
+
     @PostMapping("/reserva/{np}")
     public List<Reserva> postReserva(@PathVariable long np,@RequestBody List<ReservaDto> reservaDto) {
         return reservaServ.reservar(np,reservaDto);

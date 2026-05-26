@@ -73,7 +73,6 @@ public class AlmoxarifadoController {
         model.addAttribute("listaEstoque",estoqueSer.consultarTodos());
         var listaDeMovimentacoes = movRepo.findAll().stream().filter(x -> x.getTipoMovimentacao().equalsIgnoreCase("ENTRADA")).toList();
         model.addAttribute("listaMovimentacao",listaDeMovimentacoes);
-        model.addAttribute("listaDeMeses",listaDeMovimentacoes.stream().map(x -> x.getDataHora().getMonth()).toList());
         return "layout/almoxarifado";
     }
 
@@ -84,7 +83,22 @@ public class AlmoxarifadoController {
         model.addAttribute("pageProps", Map.of(
                 "title", " Disponibilidade",
                 "pageCss", "../css/almo-styles.css"));
-        model.addAttribute("listaProdutos",estoqueSer.consultarTodos());
+                var listaEstoque = estoqueSer.consultarTodos();
+        model.addAttribute("listaEstoque",listaEstoque);
+        model.addAttribute("estoqueOk",listaEstoque.stream()
+                    .filter(x -> x.getQuantidadeDisponivel() >= x.getEstoqueMinimo())
+                    .toList().size());
+        model.addAttribute("unidadesDisponiveis",listaEstoque.stream()
+                    .filter(x -> x.getQuantidadeDisponivel() > 0)
+                    .mapToInt(x -> x.getQuantidadeDisponivel())
+                    .sum());
+        model.addAttribute("estoqueZerado",listaEstoque.stream()
+                    .filter(x -> x.getQuantidadeDisponivel() == 0)
+                    .toList().size());
+        model.addAttribute("estoqueBaixo",listaEstoque.stream()
+                    .filter(x -> x.getQuantidadeDisponivel() < x.getEstoqueMinimo())
+                    .filter(x -> x.getQuantidadeDisponivel() > 0)
+                    .toList().size());
         return "layout/almoxarifado";
     }
 

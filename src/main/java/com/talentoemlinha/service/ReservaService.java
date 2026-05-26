@@ -28,6 +28,10 @@ public class ReservaService {
         return reservaRepo.findAll();
     }
 
+    public List<Reserva> retornarPorNp(long np){
+        return reservaRepo.findByNpFuncionario(np);
+    }
+
     public List<Reserva> reservar(long np, List<ReservaDto> listaReservasDto) {
         List<Reserva> reservasConfirmadas = new ArrayList<>();
         for (ReservaDto reservaDto : listaReservasDto) {
@@ -41,6 +45,7 @@ public class ReservaService {
                 reserva.setQuantidade(reservaDto.getQuantidade());
                 reserva.setStatus("RESERVADO");
                 reserva.setProduto(produto);
+                reserva.setDataReserva(LocalDateTime.now());
                 reserva.setDataExpiracao(LocalDateTime.now().plusDays(8));
                 reservasConfirmadas.add(reserva);
                 reservaRepo.save(reserva);
