@@ -1,4 +1,4 @@
-package com.talentoemlinha.dto;
+package com.talentoemlinha.dto.Reserva;
 
 import lombok.Data;
 

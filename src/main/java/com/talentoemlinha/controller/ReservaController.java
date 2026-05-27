@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.talentoemlinha.dto.ReservaDto;
+import com.talentoemlinha.dto.Funcionario.ReservaFuncionarioResponse;
+import com.talentoemlinha.dto.Reserva.ReservaDto;
 import com.talentoemlinha.model.Reserva;
+import com.talentoemlinha.service.FuncionarioService;
 import com.talentoemlinha.service.ReservaService;
 
 @RestController
@@ -20,6 +22,8 @@ public class ReservaController {
 
     @Autowired
     private ReservaService reservaServ;
+    @Autowired
+    private FuncionarioService funcServ;
 
     @GetMapping("/reserva")
     public List<Reserva> getReserva() {
@@ -27,8 +31,10 @@ public class ReservaController {
     }
 
     @PostMapping("/{np}/reservas")
-    public List<Reserva> getReservaById(@PathVariable long np) {
-        return reservaServ.retornarPorNp(np);
+    public ReservaFuncionarioResponse getReservaById(@PathVariable long np) {
+        var funcionario = funcServ.retornarReservasPeloIdFuncionario(np);
+        funcionario.setReservas(reservaServ.retornarPorNp(np));
+        return funcionario;
     }
 
     @PostMapping("/reserva/{np}")

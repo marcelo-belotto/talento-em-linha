@@ -1,4 +1,4 @@
-// package com.talentoemlinha.dto;
+// package com.talentoemlinha.dto.Funcionario;
 
 // import java.util.List;
 

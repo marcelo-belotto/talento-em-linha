@@ -24,7 +24,7 @@ public class AuthController {
         var func = funcService.retornarFuncionarioPeloId(Long.parseLong(usuario));
         System.out.println(func);
         if (func != null)
-        if (func.getSenha().equals(senha))
+        if (func.getHash().equals(senha))
             if (func.getROLE().equalsIgnoreCase("colaborador")) return "redirect:/index";
             else if (func.getROLE().equalsIgnoreCase("almoxarife")) return "redirect:/almoxarifado/index";
         return "redirect:";

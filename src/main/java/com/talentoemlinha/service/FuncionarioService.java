@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.talentoemlinha.dto.Funcionario.ReservaFuncionarioResponse;
 import com.talentoemlinha.model.Funcionario;
 import com.talentoemlinha.repository.FuncionarioRepository;
 
@@ -20,6 +21,17 @@ public class FuncionarioService {
 
     public Funcionario retornarFuncionarioPeloId(long id) {
         return funcionarioRepo.findById(id);
+    }
+
+    public ReservaFuncionarioResponse retornarReservasPeloIdFuncionario(long id) {
+        var funcionario = retornarFuncionarioPeloId(id);
+        var funcResponse = new ReservaFuncionarioResponse();
+        funcResponse.setNp(funcionario.getNp());
+        funcResponse.setNome(funcionario.getNome());
+        funcResponse.setSetor(funcionario.getSetor());
+        funcResponse.setCargo(funcionario.getCargo());
+        funcResponse.setReservas(null);
+        return funcResponse;
     }
 
     public Funcionario adicionarFuncionario(Funcionario func) {

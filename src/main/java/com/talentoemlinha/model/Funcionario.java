@@ -14,9 +14,11 @@ public class Funcionario {
     @EqualsAndHashCode.Include
     private long np;
     private String nome;
-    private String senha;
+    private String hash;
     private int totalDePontos;
     private int pontosUtilizados;
+    private String cargo;
+    private String setor;
     private String ROLE;
     private static int npControleTemp = 10000001;
 
@@ -26,11 +28,22 @@ public class Funcionario {
             Funcionario tempf = new Funcionario();
             tempf.setNome("Funcionario-" + i);
             tempf.setNp(npControleTemp);
-            tempf.setSenha("123");
+            tempf.setHash("123");
             tempf.totalDePontos = 0;
-            if (i % 3 == 0) tempf.setROLE("colaborador");
-            else if (i % 4 == 0) tempf.setROLE("almoxarife");
-            else tempf.setROLE("admin");
+            if (i % 3 == 0){
+                tempf.setROLE("colaborador");
+                tempf.setCargo("Colaborador");
+                tempf.setSetor("Produção");
+            }else if (i % 4 == 0){
+                tempf.setROLE("almoxarife");
+
+                tempf.setCargo("Almoxarife");
+                tempf.setSetor("Almoxarifado");
+            }else{
+                tempf.setROLE("admin");
+                tempf.setCargo("Coordenador");
+                tempf.setSetor("Produção");
+            }
             temp.add(tempf);
             npControleTemp++;
         }

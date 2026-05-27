@@ -7,7 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.talentoemlinha.dto.ReservaDto;
+import com.talentoemlinha.dto.Reserva.ListaReservaFuncionario;
+import com.talentoemlinha.dto.Reserva.ReservaDto;
 import com.talentoemlinha.model.Produto;
 import com.talentoemlinha.model.Reserva;
 import com.talentoemlinha.repository.ReservaRepository;
@@ -28,8 +29,18 @@ public class ReservaService {
         return reservaRepo.findAll();
     }
 
-    public List<Reserva> retornarPorNp(long np){
-        return reservaRepo.findByNpFuncionario(np);
+    public List<ListaReservaFuncionario> retornarPorNp(long np){
+        var reservas =  reservaRepo.findByNpFuncionario(np);
+        var novaLista = new ArrayList<ListaReservaFuncionario>();
+        for (Reserva reserva : reservas) {
+            var tempReserva = new ListaReservaFuncionario();
+            tempReserva.setId(reserva.getId());
+            tempReserva.setDataReserva(reserva.getDataReserva());
+            tempReserva.setProduto(reserva.getProduto());
+            tempReserva.setStatus(reserva.getStatus());
+            novaLista.add(tempReserva);
+        }
+        return novaLista;
     }
 
     public List<Reserva> reservar(long np, List<ReservaDto> listaReservasDto) {
