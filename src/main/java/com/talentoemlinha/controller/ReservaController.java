@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.talentoemlinha.dto.Funcionario.ReservaFuncionarioResponse;
 import com.talentoemlinha.dto.Reserva.ReservaDto;
+import com.talentoemlinha.dto.Reserva.ReservaRetiradaDto;
 import com.talentoemlinha.model.Reserva;
 import com.talentoemlinha.service.FuncionarioService;
 import com.talentoemlinha.service.ReservaService;
@@ -33,7 +34,7 @@ public class ReservaController {
     @PostMapping("/{np}/reservas")
     public ReservaFuncionarioResponse getReservaById(@PathVariable long np) {
         var funcionario = funcServ.retornarReservasPeloIdFuncionario(np);
-        funcionario.setReservas(reservaServ.retornarPorNp(np));
+        funcionario.setReservas(reservaServ.retornarPorNp(np).stream().filter(x -> x.getStatus().equalsIgnoreCase("reservado")).toList());
         return funcionario;
     }
 
@@ -42,8 +43,8 @@ public class ReservaController {
         return reservaServ.reservar(np,reservaDto);
     }
 
-    @PostMapping("/reserva/retirar/{np}")
-    public List<Reserva> postRetirada(@PathVariable long np) {
-        return reservaServ.retirar(np);
+    @PostMapping("/reserva/retirar/")
+    public List<Reserva> postRetirada(@RequestBody ReservaRetiradaDto reservaDto) {
+        return reservaServ.retirar(reservaDto.getNpFuncionario(),reservaDto.getNpAlmoxarife());
     }
 }

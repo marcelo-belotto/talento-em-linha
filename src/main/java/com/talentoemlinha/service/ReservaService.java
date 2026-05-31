@@ -65,7 +65,7 @@ public class ReservaService {
         return reservasConfirmadas;
     }
 
-    public List<Reserva> retirar(long npFuncionario) {
+    public List<Reserva> retirar(long npFuncionario, long npResponsavel) {
         List<Reserva> reservas = reservaRepo.findByNpFuncionario(npFuncionario).stream()
                 .filter(x -> x.getStatus().equalsIgnoreCase("RESERVADO")).toList();
         if (reservas != null) {

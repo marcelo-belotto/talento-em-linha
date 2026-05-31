@@ -227,7 +227,7 @@
 
         // Sucesso: redireciona ou exibe confirmação
         // Descomente a linha abaixo para redirecionar após sucesso:
-        // window.location.href = '/index';
+        window.location.href = '/index';
 
         alert('Reserva confirmada com sucesso!');
         // Limpa carrinho após confirmação
