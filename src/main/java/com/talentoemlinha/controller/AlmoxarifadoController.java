@@ -119,6 +119,12 @@ public class AlmoxarifadoController {
         model.addAttribute("pageProps", Map.of(
                 "title", " Retiradas",
                 "pageCss", "../css/almo-styles.css"));
+        model.addAttribute("listaReservas",
+        reservaServ.retornarReservas()
+        .stream()
+        .filter(x -> x.getStatus().equalsIgnoreCase("retirado"))
+        .toList());
+                
         return "layout/almoxarifado";
     }
 

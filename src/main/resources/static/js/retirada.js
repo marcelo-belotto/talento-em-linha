@@ -18,7 +18,7 @@ formulario.addEventListener("submit", async (event) => {
 
     if (resposta.ok) {
       const dados = await resposta.json();
-      //   window.location.reload();
+
       painel.style.border = "1px solid var(--border)";
       painel.innerHTML = `
       <div class="panel-header">
@@ -79,7 +79,7 @@ formulario.addEventListener("submit", async (event) => {
           </tr>`;
         });
         painel.innerHTML += `
-        <div class="panel-header">
+        <div class="panel-header" style="display: flex; flex-direction: column; align-items: flex-start;">
         <span class="panel-title">
           Confirmar Entrega
         </span>
@@ -90,7 +90,7 @@ formulario.addEventListener("submit", async (event) => {
       </div>
       <div class="panel-body">
         <form action="#" method="get">
-          <div class="form-actions" style="margin-top:20px;">
+          <div class="form-actions">
             <button type="button" class="btn btn-primary" onclick="retirarItems(${dados.np})">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <polyline points="20 6 9 17 4 12" />
@@ -104,7 +104,7 @@ formulario.addEventListener("submit", async (event) => {
               </svg>
               Cancelar Reserva
             </button>
-            <button type="reset" class="btn btn-ghost">Limpar</button>
+            <button type="reset" class="btn btn-ghost" onclick="limparPesquisaFuncionario()">Limpar</button>
           </div>
         </form>
       </div>
@@ -123,14 +123,20 @@ formulario.addEventListener("submit", async (event) => {
 });
 
 async function retirarItems(npFuncionario){
+  const req = {
+    npFuncionario: npFuncionario,
+    npAlmoxarife : 10000004
+  };
+  
    try {
     const resposta = await fetch(
-      `http://localhost:8080/api/v1/reserva/retirar/${npFuncionario}`,
+      `http://localhost:8080/api/v1/reserva/retirar/`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(req)
       },
     );
 
@@ -145,4 +151,12 @@ async function retirarItems(npFuncionario){
     console.log("Erro de rede:" + erro);
   }
   window.location.href = "/almoxarifado/retirada"
+}
+
+function limparPesquisaFuncionario(){
+  const npFuncionario = document.getElementById("id-func");
+  const painel = document.getElementById("painelUsuario");
+  painel.style.border = "none";
+  npFuncionario.value = "";
+  painel.innerHTML = "";
 }
