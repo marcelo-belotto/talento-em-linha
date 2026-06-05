@@ -156,11 +156,11 @@
           </thead>
           <tbody>
             <tr th:each="reserva : ${listaReservas}">
-              <td style="font-family:'Space Mono',monospace;font-size:0.8rem;" th:text="${reserva.dataReserva.toLocalDate()}">10/05/2026</td>
-              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${reserva.id}">R-2026-029</td>
-              <td style="font-family:'Space Mono',monospace;font-size:0.8rem;" th:text="${reserva.npFuncionario}">#00012</td>
-              <td>Carlos Souza</td>
-              <td th:text="${reserva.produto.nome}">Voucher Livraria</td>
+              <td style="font-family:'Space Mono',monospace;font-size:0.8rem;" th:text="${reserva.dataReserva.toLocalDate()}"></td>
+              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${reserva.id}"></td>
+              <td style="font-family:'Space Mono',monospace;font-size:0.8rem;" th:text="${reserva.funcionario.np}"></td>
+              <td th:text="${reserva.funcionario.nome}"></td>
+              <td th:text="${reserva.produto.nome}"></td>
               <td style="color:var(--muted2);">João Ferreira</td>
             </tr>
             <!-- <tr>

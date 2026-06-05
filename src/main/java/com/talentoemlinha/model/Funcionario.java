@@ -19,7 +19,7 @@ public class Funcionario {
     private int pontosUtilizados;
     private String cargo;
     private String setor;
-    private String ROLE;
+    private String role;
     private static int npControleTemp = 10000001;
 
     public static List<Funcionario> getFuncionariosMocados() {
@@ -31,16 +31,16 @@ public class Funcionario {
             tempf.setHash("123");
             tempf.totalDePontos = 0;
             if (i % 3 == 0){
-                tempf.setROLE("colaborador");
+                tempf.setRole("USER");
                 tempf.setCargo("Colaborador");
                 tempf.setSetor("Produção");
             }else if (i % 4 == 0){
-                tempf.setROLE("almoxarife");
+                tempf.setRole("ALMOXARIFE");
 
                 tempf.setCargo("Almoxarife");
                 tempf.setSetor("Almoxarifado");
             }else{
-                tempf.setROLE("admin");
+                tempf.setRole("ADMIN");
                 tempf.setCargo("Coordenador");
                 tempf.setSetor("Produção");
             }

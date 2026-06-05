@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,14 +27,27 @@ public class HomeController {
     @Autowired
     private EstoqueService estoqueserv;
 
-    private long NP = 10000001; // Temporario Apenas teste
+    /**
+     * Utilitário: extrai o NP do funcionário logado a partir da sessão do Spring Security.
+     *
+     * O CustomUserDetailsService armazena o NP como username (String).
+     * Aqui convertemos de volta para long para usar nos serviços.
+     *
+     * PROBLEMA ANTERIOR: o NP estava fixo em código (private long NP = 10000001).
+     * Com isso todos os usuários viam os dados do mesmo funcionário.
+     */
+    private long getNpLogado(Authentication authentication) {
+        return Long.parseLong(authentication.getName());
+    }
 
     @GetMapping("/index")
-    public String Homepage(Model model) {
-        model.addAttribute("total", pontoServ.retornarTotalDePontos(NP));
-        model.addAttribute("usados", pontoServ.retornarTotalDePontosUtilizados(NP));
-        model.addAttribute("pontos", pontoServ.retornarPontosPeloNp(NP));
-        model.addAttribute("brindes", reservaRepo.findByNpFuncionario(NP));
+    public String Homepage(Model model, Authentication authentication) {
+        long np = getNpLogado(authentication);
+
+        model.addAttribute("total", pontoServ.retornarTotalDePontos(np));
+        model.addAttribute("usados", pontoServ.retornarTotalDePontosUtilizados(np));
+        model.addAttribute("pontos", pontoServ.retornarPontosPeloNp(np));
+        model.addAttribute("brindes", reservaRepo.findByNpFuncionario(np));
         model.addAttribute("activePage", "index");
         model.addAttribute("content", "index.html");
         model.addAttribute("pageProps", Map.of(
@@ -43,8 +57,10 @@ public class HomeController {
     }
 
     @GetMapping("/reserva")
-    public String Reserva(Model model) {
-        model.addAttribute("disponivel", pontoServ.retornarPontosDisponiveis(NP));
+    public String Reserva(Model model, Authentication authentication) {
+        long np = getNpLogado(authentication);
+
+        model.addAttribute("disponivel", pontoServ.retornarPontosDisponiveis(np));
         model.addAttribute("listaEstoque", estoqueserv.consultarTodos());
         model.addAttribute("activePage", "reserva");
         model.addAttribute("content", "reserva.html");
@@ -55,17 +71,16 @@ public class HomeController {
     }
 
     @GetMapping("/pontos-categoria")
-    public String Pontos(Model model) {
-        var pontos = pontoServ.retornarPontosPeloNp(NP);
-        // Agrupa por "MMMM yyyy" e dentro por motivo, somando quantidade
+    public String Pontos(Model model, Authentication authentication) {
+        long np = getNpLogado(authentication);
+
+        var pontos = pontoServ.retornarPontosPeloNp(np);
         Map<String, Map<String, Integer>> pontosPorPeriodo = new LinkedHashMap<>();
 
         for (Ponto ponto : pontos) {
             String periodo = ponto.getDataAtribuicao()
                     .format(DateTimeFormatter.ofPattern("MMMM yyyy", new Locale("pt", "BR"))).toUpperCase();
-
             String motivo = ponto.getMotivo();
-
             pontosPorPeriodo
                     .computeIfAbsent(periodo, k -> new LinkedHashMap<>())
                     .merge(motivo, ponto.getQuantidade(), Integer::sum);
@@ -80,7 +95,8 @@ public class HomeController {
                     .sum();
             totaisPorMotivo.put(motivo, total);
         }
-        model.addAttribute("totalDePontos", pontoServ.retornarTotalDePontos(NP));
+
+        model.addAttribute("totalDePontos", pontoServ.retornarTotalDePontos(np));
         model.addAttribute("pontosPorPeriodo", pontosPorPeriodo);
         model.addAttribute("totaisPorMotivo", totaisPorMotivo);
         model.addAttribute("activePage", "pontos-categoria");
@@ -92,7 +108,11 @@ public class HomeController {
     }
 
     @GetMapping("/meus-dados")
-    public String Dados(Model model) {
+    public String Dados(Model model, Authentication authentication) {
+        long np = getNpLogado(authentication);
+        // Se precisar exibir dados do funcionário logado no template:
+        // model.addAttribute("funcionario", funcServ.retornarFuncionarioPeloId(np));
+
         model.addAttribute("activePage", "meus-dados");
         model.addAttribute("content", "meus-dados.html");
         model.addAttribute("pageProps", Map.of(
@@ -100,5 +120,4 @@ public class HomeController {
                 "pageCss", "../css/meus-dados.css"));
         return "layout/main";
     }
-
 }

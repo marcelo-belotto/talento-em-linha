@@ -52,7 +52,7 @@ public class ReservaService {
                 estoqueService.reservar(reservaDto.getIdProduto(), reservaDto.getQuantidade());
         
                 Reserva reserva = new Reserva();
-                reserva.setNpFuncionario(np);
+                reserva.setFuncionario(funcionarioServ.retornarFuncionarioPeloId(np));
                 reserva.setQuantidade(reservaDto.getQuantidade());
                 reserva.setStatus("RESERVADO");
                 reserva.setProduto(produto);

@@ -31,6 +31,6 @@ public class ReservaRepository {
     }
 
     public List<Reserva> findByNpFuncionario(long np) {
-        return listaReservas.stream().filter(x -> x.getNpFuncionario() == np).toList();
+        return listaReservas.stream().filter(x -> x.getFuncionario().getNp() == np).toList();
     }
 }

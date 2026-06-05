@@ -1,32 +1,42 @@
 package com.talentoemlinha.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.talentoemlinha.service.FuncionarioService;
-
+/**
+ * Controller responsável apenas pela exibição da tela de login.
+ *
+ * IMPORTANTE: o POST de "/" NÃO passa por aqui.
+ * O Spring Security intercepta o POST para "/login-processing" (loginProcessingUrl)
+ * antes de qualquer controller. O AuthController só precisa servir o GET da tela.
+ *
+ * Se o usuário já estiver autenticado e tentar acessar "/", é redirecionado
+ * para a página inicial correspondente ao seu role.
+ */
 @Controller
 public class AuthController {
 
-    @Autowired
-    private FuncionarioService funcService;
-
     @GetMapping("/")
-    public String loginTela(){
+    public String loginTela(Authentication authentication) {
+        // Se já estiver logado, redireciona para evitar que veja a tela de login novamente
+        if (authentication != null && authentication.isAuthenticated()) {
+            boolean isAlmoxarife = authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ALMOXARIFE"));
+            boolean isAdmin = authentication.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+            if (isAdmin) return "redirect:/admin/index";
+            if (isAlmoxarife) return "redirect:/almoxarifado/index";
+            return "redirect:/index";
+        }
         return "login";
     }
-    
-    @PostMapping("/") //metodo ruim apenas para testar o metodo post e redirecionamento vou melhorar posteriormente com spring security
-    public String login(@RequestParam("usuario") String usuario, @RequestParam("senha") String senha){
-        var func = funcService.retornarFuncionarioPeloId(Long.parseLong(usuario));
-        System.out.println(func);
-        if (func != null)
-        if (func.getHash().equals(senha))
-            if (func.getROLE().equalsIgnoreCase("colaborador")) return "redirect:/index";
-            else if (func.getROLE().equalsIgnoreCase("almoxarife")) return "redirect:/almoxarifado/index";
-        return "redirect:";
+
+    @GetMapping("/logout-confirm")
+    public String logoutConfirm() {
+        // Página de confirmação de logout (opcional)
+        // O logout real é feito via POST /logout pelo Spring Security
+        return "redirect:/";
     }
 }

@@ -50,8 +50,8 @@
             <tbody>
               <tr th:each="reserva : ${listaReservas}">
                 <td><span
-                    style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${reserva.npFuncionario}">ID</span>
-                    <br th:text="${funcionarios.retornarFuncionarioPeloId(reserva.npFuncionario).getNome()}"></td>
+                    style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${reserva.funcionario.np}">ID</span>
+                    <br th:text="${reserva.funcionario.nome}"></td>
                 <td th:text="${reserva.produto.nome}">PRODUTO</td>
                 <td><span style="font-family:'Space Mono',monospace;font-size:0.78rem;" th:text="${reserva.dataExpiracao.toLocalDate()}">DATA</span></td>
                 <td><span th:classappend="${reserva.status == 'EXPIRADO' ? 'badge-cancelado' : reserva.status == 'RESERVADO' ? 'badge-pendente' : 'badge-retirado'}"

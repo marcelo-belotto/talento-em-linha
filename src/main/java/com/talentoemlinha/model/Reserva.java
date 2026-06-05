@@ -12,7 +12,7 @@ public class Reserva {
     private long id;
     @EqualsAndHashCode.Include
     private Produto produto;
-    private long npFuncionario;
+    private Funcionario funcionario;
     private int quantidade;
     private LocalDateTime dataReserva;
     private LocalDateTime dataExpiracao;

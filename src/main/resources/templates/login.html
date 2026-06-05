@@ -9,21 +9,39 @@
 </head>
 <body>
   <div class="cabecalho">
-    <img src="/images/talento-logo.png">
+    <img src="/images/talento-logo.png" alt="Talento em Linha">
   </div>
 
   <div class="loginContainerDireito">
     <h2>Acesse sua conta</h2>
+
+    <!-- Feedback de erro de autenticação -->
+    <div th:if="${param.erro}" class="alert alert-error">
+      Matrícula ou senha incorretos. Tente novamente.
+    </div>
+
+    <!-- Feedback de logout bem-sucedido -->
+    <div th:if="${param.logout}" class="alert alert-success">
+      Você saiu com segurança.
+    </div>
+
+    <!--
+      O form faz POST para "/", que é o loginProcessingUrl configurado no SecurityConfig.
+      O Spring Security intercepta esse POST antes de chegar ao AuthController.
+      Os campos "usuario" e "senha" correspondem ao usernameParameter e passwordParameter.
+    -->
     <form action="/" method="POST">
       <fieldset class="container-login-area">
         <legend>Credenciais de acesso</legend>
         <div>
           <label for="usuario">Matrícula</label><br>
-          <input type="text" class="input-box" id="usuario" name="usuario" placeholder="Ex: 00123" autocomplete="username" required>
+          <input type="text" class="input-box" id="usuario" name="usuario"
+                 placeholder="Ex: 10000001" autocomplete="username" required>
         </div>
         <div>
           <label for="senha">Senha</label><br>
-          <input type="password" class="input-box" id="senha" name="senha" placeholder="Digite sua senha" autocomplete="current-password" required>
+          <input type="password" class="input-box" id="senha" name="senha"
+                 placeholder="Digite sua senha" autocomplete="current-password" required>
         </div>
         <button type="submit" class="button-login">Entrar</button>
       </fieldset>
