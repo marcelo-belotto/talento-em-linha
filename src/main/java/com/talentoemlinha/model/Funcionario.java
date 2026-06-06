@@ -3,7 +3,6 @@ package com.talentoemlinha.model;
 import java.util.ArrayList;
 import java.util.List;
 
-// import com.talentoemlinha.dto.FuncionarioDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,8 +14,6 @@ public class Funcionario {
     private long np;
     private String nome;
     private String hash;
-    private int totalDePontos;
-    private int pontosUtilizados;
     private String cargo;
     private String setor;
     private String role;
@@ -29,7 +26,6 @@ public class Funcionario {
             tempf.setNome("Funcionario-" + i);
             tempf.setNp(npControleTemp);
             tempf.setHash("123");
-            tempf.totalDePontos = 0;
             if (i % 3 == 0){
                 tempf.setRole("USER");
                 tempf.setCargo("Colaborador");
@@ -50,7 +46,4 @@ public class Funcionario {
         return temp;
     }
 
-    // public FuncionarioDto toFuncionarioDto() {
-    //     return new FuncionarioDto(this.np, this.nome, this.pontos.stream().map(x -> x.toCategoriaDto()).toList());
-    // }
 }

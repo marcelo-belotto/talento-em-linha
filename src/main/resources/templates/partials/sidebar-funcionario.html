@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <body>
   <header th:fragment="sidebar(activePage)" class="sidebar">
@@ -7,16 +7,20 @@
       <div class="container-logomarca">
         <img src="/images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
       </div>
-      <div class="nav-titulo">Menu</div>
+      <div class="nav-titulo">Colaborador</div>
       <a th:classappend="${activePage == 'index'} ? 'active'" class="nav-item" href="/index">Inicio</a>
       <a th:classappend="${activePage == 'reserva'} ? 'active'" class="nav-item" href="/reserva">Brindes</a>
       <a th:classappend="${activePage == 'pontos-categoria'} ? 'active'" class="nav-item"
         href="/pontos-categoria">Categorias</a>
       <a th:classappend="${activePage == 'meus-dados'} ? 'active'" class="nav-item" href="/meus-dados">Meus Dados</a>
+      <div sec:authorize="hasRole('ROLE_ALMOXARIFE')">
+        <div class="nav-titulo">Almoxarifado</div>
+        <a class="nav-item" href="/almoxarifado/index">Inicio</a>
+      </div>
     </nav>
 
     <div class="sidebar-footer">
-      <a class="nav-item" href="/" style="border-radius: 10px;display: flex;justify-content: space-between;"><strong>Sair</strong>
+      <a class="nav-item" href="/logout" style="border-radius: 10px;display: flex;justify-content: space-between;"><strong>Sair</strong>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>

@@ -9,11 +9,14 @@ import com.talentoemlinha.dto.Funcionario.ReservaFuncionarioResponse;
 import com.talentoemlinha.model.Funcionario;
 import com.talentoemlinha.repository.FuncionarioRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class FuncionarioService {
 
-    @Autowired
-    private FuncionarioRepository funcionarioRepo;
+    private final FuncionarioRepository funcionarioRepo;
+    private final PontoService pontoServ;
 
     public List<Funcionario> retornarTodosFuncionarios() {
         return funcionarioRepo.findAll();
@@ -42,35 +45,35 @@ public class FuncionarioService {
         return funcionarioRepo.save(novoFunc);
     }
 
-    public boolean bonificarFuncionario(long np, int quantidade) {
-        Funcionario func = retornarFuncionarioPeloId(np);
-        if (func == null)
-            return false;
-        func.setTotalDePontos(func.getTotalDePontos() + quantidade);
-        funcionarioRepo.save(func);
-        return true;
-    }
+    // public boolean bonificarFuncionario(long np, int quantidade) {
+    //     Funcionario func = retornarFuncionarioPeloId(np);
+    //     if (func == null)
+    //         return false;
+    //     func.setTotalDePontos(func.getTotalDePontos() + quantidade);
+    //     funcionarioRepo.save(func);
+    //     return true;
+    // }
 
-    public boolean descontarPontosReserva(long np, int quantidade) {
-        Funcionario func = retornarFuncionarioPeloId(np);
-        if (func == null)
-            return false;
-        if (func.getTotalDePontos() < quantidade) return false;
-        func.setTotalDePontos(func.getTotalDePontos() - quantidade);
-        func.setPontosUtilizados(func.getPontosUtilizados() + quantidade);
-        funcionarioRepo.save(func);
-        return true;
-    }
+    // public boolean descontarPontosReserva(long np, int quantidade) {
+    //     Funcionario func = retornarFuncionarioPeloId(np);
+    //     if (func == null)
+    //         return false;
+    //     if (func.getTotalDePontos() < quantidade) return false;
+    //     func.setTotalDePontos(func.getTotalDePontos() - quantidade);
+    //     func.setPontosUtilizados(func.getPontosUtilizados() + quantidade);
+    //     funcionarioRepo.save(func);
+    //     return true;
+    // }
     
-    public boolean estornarPontosReserva(long np, int quantidade) {
-        Funcionario func = retornarFuncionarioPeloId(np);
-        if (func == null)
-            return false;
-        func.setTotalDePontos(func.getTotalDePontos() + quantidade);
-        func.setPontosUtilizados(func.getPontosUtilizados() - quantidade);
-        funcionarioRepo.save(func);
-        return true;
-    }
+    // public boolean estornarPontosReserva(long np, int quantidade) {
+    //     Funcionario func = retornarFuncionarioPeloId(np);
+    //     if (func == null)
+    //         return false;
+    //     func.setTotalDePontos(func.getTotalDePontos() + quantidade);
+    //     func.setPontosUtilizados(func.getPontosUtilizados() - quantidade);
+    //     funcionarioRepo.save(func);
+    //     return true;
+    // }
 
     public Funcionario deletarFuncionario(long id) {
         Funcionario temp = retornarFuncionarioPeloId(id);

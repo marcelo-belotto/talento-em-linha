@@ -9,7 +9,7 @@
       <tbody>
         <tr>
           <th scope="row">Nome completo</th>
-          <td>Marcelo Felipe Belotto</td>
+          <td th:text="${funcionario.nome}">Marcelo Felipe Belotto</td>
         </tr>
         <tr>
           <th scope="row">E-mail corporativo</th>
@@ -26,10 +26,6 @@
           <th scope="row">Telefone</th>
           <td>(11) 98765-4321</td>
         </tr>
-        <tr>
-          <th scope="row">Ramal</th>
-          <td>2047</td>
-        </tr>
       </tbody>
     </table>
 
@@ -38,15 +34,15 @@
       <tbody>
         <tr>
           <th scope="row">Numero de registro</th>
-          <td>00047-SP</td>
+          <td th:text="${funcionario.np}">00047-SP</td>
         </tr>
         <tr>
           <th scope="row">Cargo atual</th>
-          <td>Eletricista de Manutenção II</td>
+          <td th:text="${funcionario.cargo}">Eletricista de Manutenção II</td>
         </tr>
         <tr>
           <th scope="row">Setor</th>
-          <td>Manutenção</td>
+          <td th:text="${funcionario.setor}">Manutenção</td>
         </tr>
         <tr>
           <th scope="row">Data de admissao</th>
@@ -74,28 +70,9 @@
           <th scope="row">E-mail</th>
           <td>marcos.andrade@empresa.com.br</td>
         </tr>
-        <tr>
-          <th scope="row">Ramal</th>
-          <td>1024</td>
-        </tr>
       </tbody>
     </table>
 
-    <h3>Seguranca e Acesso</h3>
-    <table>
-      <tbody>
-        <tr>
-          <th scope="row">Ultimo acesso</th>
-          <td>22/03/2026 às 08:34</td>
-        </tr>
-        <tr>
-          <th scope="row">Status da conta</th>
-          <td>Ativa</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p><a href="/">Sair da conta</a></p>
   </div>
 </div>
 </html>

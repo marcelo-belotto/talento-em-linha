@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +26,6 @@ public class PontosController {
     @Autowired
     private PontoService pontoService;
 
-    @Autowired
-    private FuncionarioService funcService;
-
     @GetMapping("/pontos")
     public ResponseEntity<List<Ponto>> getPonto() {
         return ResponseEntity.status(HttpStatus.OK).body(pontoService.retornarTodosPontos());
@@ -41,9 +39,11 @@ public class PontosController {
 
     @PostMapping("/bonificar/{np}")
     public ResponseEntity<Ponto> postPonto(@PathVariable long np, @RequestBody PontoDto pontos) {
-        if (funcService.bonificarFuncionario(np, pontos.getQuantidade())) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(pontoService
-                    .adicionarPonto(new Ponto(0, np, pontos.getQuantidade(), pontos.getMotivo(),pontos.getDescricao(), LocalDateTime.now().toLocalDate())));
+        Ponto novo = pontoService.adicionarPonto(
+            new Ponto(0, np, pontos.getQuantidade(), pontos.getMotivo(),pontos.getDescricao(), LocalDateTime.now().toLocalDate()));
+        if (novo != null) 
+        {
+            return ResponseEntity.status(HttpStatus.CREATED).body(novo);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }

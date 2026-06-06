@@ -1,9 +1,6 @@
 package com.talentoemlinha.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.TextStyle;
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

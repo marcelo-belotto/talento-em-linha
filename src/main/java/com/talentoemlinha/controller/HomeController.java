@@ -6,26 +6,28 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.talentoemlinha.model.Funcionario;
 import com.talentoemlinha.model.Ponto;
 import com.talentoemlinha.repository.ReservaRepository;
 import com.talentoemlinha.service.EstoqueService;
+import com.talentoemlinha.service.FuncionarioService;
 import com.talentoemlinha.service.PontoService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 
-    @Autowired
-    private PontoService pontoServ;
-    @Autowired
-    private ReservaRepository reservaRepo;
-    @Autowired
-    private EstoqueService estoqueserv;
+    private final PontoService pontoServ;
+    private final ReservaRepository reservaRepo;
+    private final EstoqueService estoqueserv;
+    private final FuncionarioService funcServ;
 
     /**
      * Utilitário: extrai o NP do funcionário logado a partir da sessão do Spring Security.
@@ -40,10 +42,14 @@ public class HomeController {
         return Long.parseLong(authentication.getName());
     }
 
+    private Funcionario retornaFuncionario(Authentication authentication){
+        return funcServ.retornarFuncionarioPeloId(getNpLogado(authentication));
+    }
+
     @GetMapping("/index")
     public String Homepage(Model model, Authentication authentication) {
         long np = getNpLogado(authentication);
-
+        model.addAttribute("nomeFuncionario", retornaFuncionario(authentication).getNome());
         model.addAttribute("total", pontoServ.retornarTotalDePontos(np));
         model.addAttribute("usados", pontoServ.retornarTotalDePontosUtilizados(np));
         model.addAttribute("pontos", pontoServ.retornarPontosPeloNp(np));
@@ -111,13 +117,13 @@ public class HomeController {
     public String Dados(Model model, Authentication authentication) {
         long np = getNpLogado(authentication);
         // Se precisar exibir dados do funcionário logado no template:
-        // model.addAttribute("funcionario", funcServ.retornarFuncionarioPeloId(np));
-
+        
         model.addAttribute("activePage", "meus-dados");
         model.addAttribute("content", "meus-dados.html");
         model.addAttribute("pageProps", Map.of(
-                "title", " Perfil",
-                "pageCss", "../css/meus-dados.css"));
+            "title", " Perfil",
+            "pageCss", "../css/meus-dados.css"));
+        model.addAttribute("funcionario", retornaFuncionario(authentication));
         return "layout/main";
     }
 }

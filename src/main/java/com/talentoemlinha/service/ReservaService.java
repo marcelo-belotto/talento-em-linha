@@ -18,19 +18,18 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ReservaService {
-    @Autowired
-    private EstoqueService estoqueService;
-    @Autowired
-    private ReservaRepository reservaRepo;
-    @Autowired
-    private FuncionarioService funcionarioServ;
+
+    private final EstoqueService estoqueService;
+    private final ReservaRepository reservaRepo;
+    private final FuncionarioService funcionarioServ;
+    private final PontoService pontoServ;
 
     public List<Reserva> retornarReservas() {
         return reservaRepo.findAll();
     }
 
-    public List<ListaReservaFuncionario> retornarPorNp(long np){
-        var reservas =  reservaRepo.findByNpFuncionario(np);
+    public List<ListaReservaFuncionario> retornarPorNp(long np) {
+        var reservas = reservaRepo.findByNpFuncionario(np);
         var novaLista = new ArrayList<ListaReservaFuncionario>();
         for (Reserva reserva : reservas) {
             var tempReserva = new ListaReservaFuncionario();
@@ -44,23 +43,33 @@ public class ReservaService {
     }
 
     public List<Reserva> reservar(long np, List<ReservaDto> listaReservasDto) {
+
+        List<Produto> listaProdutos = new ArrayList<>();
+        for (ReservaDto reserva : listaReservasDto) {
+            listaProdutos.add(estoqueService.consultarSaldo(reserva.getIdProduto()).getProduto());
+        }
+
+        int totalNecessario = listaProdutos.stream()
+                .mapToInt(x -> x.getPontos())
+                .sum();
+
+        if (totalNecessario == 0 || pontoServ.retornarPontosDisponiveis(np) < totalNecessario) return null;
+
         List<Reserva> reservasConfirmadas = new ArrayList<>();
         for (ReservaDto reservaDto : listaReservasDto) {
             Produto produto = estoqueService.consultarSaldo(reservaDto.getIdProduto()).getProduto();
 
-            if (funcionarioServ.descontarPontosReserva(np,produto.getPontos() * reservaDto.getQuantidade())){
-                estoqueService.reservar(reservaDto.getIdProduto(), reservaDto.getQuantidade());
-        
-                Reserva reserva = new Reserva();
-                reserva.setFuncionario(funcionarioServ.retornarFuncionarioPeloId(np));
-                reserva.setQuantidade(reservaDto.getQuantidade());
-                reserva.setStatus("RESERVADO");
-                reserva.setProduto(produto);
-                reserva.setDataReserva(LocalDateTime.now());
-                reserva.setDataExpiracao(LocalDateTime.now().plusDays(8));
-                reservasConfirmadas.add(reserva);
-                reservaRepo.save(reserva);
-            }
+            estoqueService.reservar(reservaDto.getIdProduto(), reservaDto.getQuantidade());
+
+            Reserva reserva = new Reserva();
+            reserva.setFuncionario(funcionarioServ.retornarFuncionarioPeloId(np));
+            reserva.setQuantidade(reservaDto.getQuantidade());
+            reserva.setStatus("RESERVADO");
+            reserva.setProduto(produto);
+            reserva.setDataReserva(LocalDateTime.now());
+            reserva.setDataExpiracao(LocalDateTime.now().plusDays(8));
+            reservasConfirmadas.add(reserva);
+            reservaRepo.save(reserva);
         }
         return reservasConfirmadas;
     }
