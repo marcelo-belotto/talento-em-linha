@@ -1,0 +1,168 @@
+<div layout:fragment="content">
+  <div class="container-conteudo">
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="page-title">Cadastro de Funcionários</div>
+        <div class="page-subtitle">Registre novos colaboradores na plataforma</div>
+      </div>
+      <a href="/admin/index" class="btn btn-ghost btn-sm">← Voltar ao painel</a>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Dados do Funcionário</span>
+      </div>
+      <div class="panel-body">
+        <form id="formCadastroFuncionario" action="#" method="post">
+          <div class="form-grid" style="gap:18px;">
+
+            <div class="form-group">
+              <label class="form-label" for="nome">Nome Completo *</label>
+              <input type="text" class="form-input" id="nome" name="nome" placeholder="Ex: João da Silva" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="np">NP (Número de Pessoal) *</label>
+              <input type="text" class="form-input" id="np" name="np" placeholder="Ex: 00047" required>
+              <span class="form-hint">Identificador único do funcionário no sistema.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">E-mail corporativo *</label>
+              <input type="email" class="form-input" id="email" name="email" placeholder="Ex: joao.silva@empresa.com" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">Telefone *</label>
+              <input type="tel" class="form-input" id="telefone" name="telefone" placeholder="(99) 99999-9999" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="departamento">Departamento *</label>
+              <select class="form-select" id="departamento" name="setor" required>
+                <option value="">— Selecione —</option>
+                <option value="TI">Tecnologia da Informação</option>
+                <option value="RH">Recursos Humanos</option>
+                <option value="Financeiro">Financeiro</option>
+                <option value="Comercial">Comercial</option>
+                <option value="Operações">Operações</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Produção">Produção</option>
+                <option value="Outros">Outros</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cargo">Cargo *</label>
+              <input type="text" class="form-input" id="cargo" name="cargo" placeholder="Ex: Analista de Sistemas" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="perfil">Perfil de Acesso *</label>
+              <select class="form-select" id="perfil" name="role" required>
+                <option value="">— Selecione —</option>
+                <option value="USER">Colaborador</option>
+                <option value="ALMOXARIFE">Almoxarife</option>
+                <option value="ADMIN">Administrador</option>
+              </select>
+              <span class="form-hint">Define as permissões do funcionário no sistema.</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="dataAdmissao">Data de Admissão *</label>
+              <input type="date" class="form-input" id="dataAdmissao" name="dataAdmissao" required>
+            </div>
+
+          </div>
+          <div class="divider" style="margin-top:24px;"></div>
+          <div class="form-actions" style="margin-top:20px;">
+            <button type="submit" class="btn btn-primary">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+              Cadastrar Funcionário
+            </button>
+            <button type="reset" class="btn btn-ghost">Limpar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Funcionários cadastrados -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Funcionários Cadastrados</span>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <span class="page-badge" th:text="${listaFuncionarios.size()} + ' registros'">0 registros</span>
+          <form action="/api/v1/funcionario" method="get" style="display:flex;gap:8px;">
+            <input type="text" class="search-input" name="busca" th:value="${busca}" placeholder="Buscar por nome ou NP…" style="min-width:180px;">
+            <button type="submit" class="btn btn-ghost btn-sm">Buscar</button>
+          </form>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>NP</th>
+              <th>Nome</th>
+              <th>Departamento</th>
+              <th>Cargo</th>
+              <th>Perfil</th>
+              <th>Admissão</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="func : ${listaFuncionarios}">
+              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${func.np}">NP</td>
+              <td>
+                <strong th:text="${func.nome}">Nome</strong><br>
+                <span style="font-size:0.78rem;color:var(--muted2);" th:text="${func.detalhes.email}">email</span>
+              </td>
+              <td th:text="${func.setor}">—</td>
+              <td th:text="${func.cargo}">—</td>
+              <td>
+                <!-- <span class="badge"
+                th:classappend="${func.role == 'ADMIN'} ? 'badge-cancelado' : ${func.role == 'ALMOXARIFE'} ? 'badge-pendente' : 'badge-ok'"
+                th:text="${func.role == 'ADMIN'} ? 'Admin' : ${func.role == 'ALMOXARIFE'} ? 'Almoxarife' : 'Colaborador'"> -->
+                <span class="badge"></span>
+                  Perfil
+                </span>
+              </td>
+              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;" th:text="${func.detalhes.dataAdmissao}">—</td>
+              <td>
+                <!-- <span class="badge"
+                  th:classappend="${func.ativo} ? 'badge-ok' : 'badge-cancelado'"
+                  th:text="${func.ativo} ? 'Ativo' : 'Inativo'">
+                  Status
+                </span> -->
+              </td>
+              <td>
+                <div style="display:flex;gap:6px;">
+                  <!-- <a th:href="@{/administrador/editar-funcionario/{id}(id=${func.id})}" class="btn btn-ghost btn-sm">Editar</a>
+                  <a th:href="@{/administrador/desativar-funcionario/{id}(id=${func.id})}"
+                     class="btn btn-sm"
+                     th:classappend="${func.ativo} ? 'btn-danger' : 'btn-success'"
+                     th:text="${func.ativo} ? 'Desativar' : 'Reativar'"
+                     onclick="return confirm('Confirmar esta ação?')">
+                    Ação
+                  </a> -->
+                </div>
+              </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(listaFuncionarios)}">
+              <td colspan="8">
+                <div class="empty-state">
+                  <span class="empty-icon">👤</span>
+                  Nenhum funcionário encontrado.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/cadastro-funcionario.js"></script>
+</div>

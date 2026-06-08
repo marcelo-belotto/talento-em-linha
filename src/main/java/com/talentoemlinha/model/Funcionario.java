@@ -1,13 +1,17 @@
 package com.talentoemlinha.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Funcionario {
     @EqualsAndHashCode.Include
@@ -17,6 +21,8 @@ public class Funcionario {
     private String cargo;
     private String setor;
     private String role;
+    private Funcionario gestor;
+    private DetalhesFuncionario detalhes;
     private static int npControleTemp = 10000001;
 
     public static List<Funcionario> getFuncionariosMocados() {
@@ -26,6 +32,7 @@ public class Funcionario {
             tempf.setNome("Funcionario-" + i);
             tempf.setNp(npControleTemp);
             tempf.setHash("123");
+            tempf.setDetalhes(new DetalhesFuncionario(LocalDateTime.now(),"funcionario"+i+"@empresa.com","(10) 98765-543"+i));
             if (i % 3 == 0){
                 tempf.setRole("USER");
                 tempf.setCargo("Colaborador");
@@ -40,6 +47,8 @@ public class Funcionario {
                 tempf.setCargo("Coordenador");
                 tempf.setSetor("Produção");
             }
+            tempf.setGestor(null);
+            if (i > 2) tempf.setGestor(temp.stream().filter(x -> x.getNp()== 10000001).findFirst().orElse(null));
             temp.add(tempf);
             npControleTemp++;
         }

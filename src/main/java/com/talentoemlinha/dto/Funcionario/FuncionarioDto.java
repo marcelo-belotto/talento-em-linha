@@ -1,11 +1,21 @@
-// package com.talentoemlinha.dto.Funcionario;
+package com.talentoemlinha.dto.Funcionario;
 
-// import java.util.List;
+import java.time.LocalDate;
 
-// public record FuncionarioDto(
-//         int np,
-//         String nome,
-//         List<CategoriaDto> pontos
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-// ) {
-// }
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class FuncionarioDto {
+    private long np;
+    private String nome;
+    private String setor;
+    private String cargo;
+    private String role;
+    private LocalDate dataAdmissao;
+    private String email;
+    private String telefone;
+}

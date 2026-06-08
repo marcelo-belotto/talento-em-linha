@@ -1,0 +1,233 @@
+<div layout:fragment="content">
+  <div class="container-conteudo">
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="page-title">Relatório de Pontos</div>
+        <div class="page-subtitle">Consulte o saldo, movimentações e histórico de pontos dos colaboradores</div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <a href="/admin/relatorio-pontos/exportar" class="btn btn-ghost btn-sm">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Exportar CSV
+        </a>
+        <a href="/admin/index" class="btn btn-ghost btn-sm">← Voltar ao painel</a>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="stats-grid">
+      <div class="stat-card teal">
+        <div class="stat-label">Total Distribuído</div>
+        <div class="stat-value" th:text="${totalDistribuido}">0</div>
+        <div class="stat-footer">pontos no período</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-label">Total Resgatado</div>
+        <div class="stat-value" th:text="${totalResgatado}">0</div>
+        <div class="stat-footer">via brindes</div>
+      </div>
+      <div class="stat-card gray">
+        <div class="stat-label">Saldo Circulante</div>
+        <div class="stat-value" th:text="${saldoCirculante}">0</div>
+        <div class="stat-footer">em posse dos colaboradores</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-label">Expirados</div>
+        <div class="stat-value" th:text="${totalExpirados}">0</div>
+        <div class="stat-footer">pontos vencidos</div>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Filtros de Consulta</span>
+      </div>
+      <div class="panel-body" style="padding:20px 24px;">
+        <form action="/admin/relatorio-pontos" method="get">
+          <div class="form-grid cols-3" style="gap:14px;">
+            <div class="form-group">
+              <label class="form-label" for="filtro-np">NP do Funcionário</label>
+              <input type="text" class="form-input" id="filtro-np" name="np" th:value="${filtroNp}" placeholder="Ex: 00047">
+              <span class="form-hint">Deixe vazio para todos.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="filtro-nome">Nome</label>
+              <input type="text" class="form-input" id="filtro-nome" name="nome" th:value="${filtroNome}" placeholder="Ex: João">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="filtro-dept">Departamento</label>
+              <select class="form-select" id="filtro-dept" name="departamento">
+                <option value="">Todos</option>
+                <option value="TI" th:selected="${filtroDept == 'TI'}">Tecnologia da Informação</option>
+                <option value="RH" th:selected="${filtroDept == 'RH'}">Recursos Humanos</option>
+                <option value="Financeiro" th:selected="${filtroDept == 'Financeiro'}">Financeiro</option>
+                <option value="Comercial" th:selected="${filtroDept == 'Comercial'}">Comercial</option>
+                <option value="Operações" th:selected="${filtroDept == 'Operações'}">Operações</option>
+                <option value="Marketing" th:selected="${filtroDept == 'Marketing'}">Marketing</option>
+                <option value="Jurídico" th:selected="${filtroDept == 'Jurídico'}">Jurídico</option>
+                <option value="Outros" th:selected="${filtroDept == 'Outros'}">Outros</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="filtro-periodo">Período</label>
+              <select class="form-select" id="filtro-periodo" name="periodo">
+                <option value="">Todos os períodos</option>
+                <option value="mes_atual" th:selected="${filtroPeriodo == 'mes_atual'}">Mês Atual</option>
+                <option value="mes_anterior" th:selected="${filtroPeriodo == 'mes_anterior'}">Mês Anterior</option>
+                <option value="trimestre" th:selected="${filtroPeriodo == 'trimestre'}">Últimos 3 Meses</option>
+                <option value="semestre" th:selected="${filtroPeriodo == 'semestre'}">Últimos 6 Meses</option>
+                <option value="ano" th:selected="${filtroPeriodo == 'ano'}">Este Ano</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="filtro-tipo">Tipo de Movimentação</label>
+              <select class="form-select" id="filtro-tipo" name="tipo">
+                <option value="">Todos</option>
+                <option value="BONIFICACAO" th:selected="${filtroTipo == 'BONIFICACAO'}">Bonificação</option>
+                <option value="RESGATE" th:selected="${filtroTipo == 'RESGATE'}">Resgate</option>
+                <option value="EXPIRACAO" th:selected="${filtroTipo == 'EXPIRACAO'}">Expiração</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="filtro-ordenar">Ordenar por</label>
+              <select class="form-select" id="filtro-ordenar" name="ordenar">
+                <option value="pontos_desc" th:selected="${filtroOrdenar == 'pontos_desc'}">Maior Saldo</option>
+                <option value="pontos_asc" th:selected="${filtroOrdenar == 'pontos_asc'}">Menor Saldo</option>
+                <option value="nome" th:selected="${filtroOrdenar == 'nome'}">Nome (A-Z)</option>
+                <option value="data_desc" th:selected="${filtroOrdenar == 'data_desc'}">Data (Recente)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-actions" style="margin-top:16px;">
+            <button type="submit" class="btn btn-primary">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Consultar
+            </button>
+            <a href="/admin/relatorio-pontos" class="btn btn-ghost">Limpar Filtros</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Saldo por Funcionário -->
+    <!-- <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Saldo por Funcionário</span>
+        <span class="page-badge" th:text="${listaRelatorio.size()} + ' registros'">0 registros</span>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>NP</th>
+              <th>Funcionário</th>
+              <th>Departamento</th>
+              <th>Distribuídos</th>
+              <th>Resgatados</th>
+              <th>Expirados</th>
+              <th>Saldo Atual</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="rel : ${listaRelatorio}">
+              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${rel.np}">NP</td>
+              <td>
+                <strong th:text="${rel.nome}">Nome</strong><br>
+                <span style="font-size:0.78rem;color:var(--muted2);" th:text="${rel.cargo}">Cargo</span>
+              </td>
+              <td th:text="${rel.departamento}">—</td>
+              <td>
+                <span style="font-family:'Space Mono',monospace;color:var(--accent2);" th:text="${rel.pontosDistribuidos}">0</span>
+              </td>
+              <td>
+                <span style="font-family:'Space Mono',monospace;color:var(--muted2);" th:text="${rel.pontosResgatados}">0</span>
+              </td>
+              <td>
+                <span style="font-family:'Space Mono',monospace;color:var(--accent3);" th:text="${rel.pontosExpirados}">0</span>
+              </td>
+              <td>
+                <span style="font-family:'Space Mono',monospace;font-weight:700;font-size:1rem;"
+                  th:classappend="${rel.saldo > 0} ? 'cor-positivo' : 'cor-zero'"
+                  th:text="${rel.saldo}">0</span>
+              </td>
+              <td>
+                <button class="btn btn-ghost btn-sm"
+                  th:onclick="'verMovimentacoes(' + ${rel.id} + ', \'' + ${rel.nome} + '\')'">
+                  Detalhes
+                </button>
+              </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(listaRelatorio)}">
+              <td colspan="8">
+                <div class="empty-state">
+                  <span class="empty-icon">📊</span>
+                  Nenhum resultado para os filtros aplicados.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> -->
+
+    <!-- Histórico de Movimentações -->
+    <!-- <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Movimentações Detalhadas</span>
+        <span class="page-badge" th:text="${listaMovimentacoes.size()} + ' lançamentos'">0 lançamentos</span>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>NP</th>
+              <th>Funcionário</th>
+              <th>Tipo</th>
+              <th>Categoria</th>
+              <th>Pontos</th>
+              <th>Saldo Pós</th>
+              <th>Registrado por</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="mov : ${listaMovimentacoes}">
+              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;" th:text="${mov.data}">—</td>
+              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${mov.funcionario.np}">NP</td>
+              <td th:text="${mov.funcionario.nome}">Nome</td>
+              <td>
+                <span class="badge"
+                  th:classappend="${mov.tipo == 'BONIFICACAO'} ? 'badge-ok' : ${mov.tipo == 'RESGATE'} ? 'badge-pendente' : 'badge-cancelado'"
+                  th:text="${mov.tipo}">TIPO</span>
+              </td>
+              <td style="font-size:0.82rem;color:var(--muted2);" th:text="${mov.categoria}">—</td>
+              <td>
+                <span style="font-family:'Space Mono',monospace;font-weight:700;"
+                  th:classappend="${mov.tipo == 'BONIFICACAO'} ? 'cor-positivo' : 'cor-negativo'"
+                  th:text="${mov.tipo == 'BONIFICACAO'} ? '+' + ${mov.pontos} : '-' + ${mov.pontos}">0</span>
+              </td>
+              <td style="font-family:'Space Mono',monospace;" th:text="${mov.saldoApos}">0</td>
+              <td style="font-size:0.82rem;color:var(--muted2);" th:text="${mov.registradoPor}">—</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(listaMovimentacoes)}">
+              <td colspan="8">
+                <div class="empty-state">
+                  <span class="empty-icon">📋</span>
+                  Nenhuma movimentação encontrada.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> -->
+  </div>
+
+  <script>
+    // function verMovimentacoes(id, nome) {
+    //   window.location.href = '/administrador/relatorio-pontos?funcionarioId=' + id + '&nome=' + encodeURIComponent(nome);
+    // }
+  </script>
+</div>

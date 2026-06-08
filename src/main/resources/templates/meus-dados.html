@@ -9,22 +9,22 @@
       <tbody>
         <tr>
           <th scope="row">Nome completo</th>
-          <td th:text="${funcionario.nome}">Marcelo Felipe Belotto</td>
+          <td th:text="${funcionario.nome}">Nome Colaborador</td>
         </tr>
         <tr>
           <th scope="row">E-mail corporativo</th>
-          <td>marcelo.belotto@empresa.com.br</td>
+          <td th:text="${funcionario.detalhes.email}">email@empresa.com.br</td>
         </tr>
         <tr>
           <th scope="row">Senha</th>
           <td>
             ********
-            <a href="#">Alterar senha</a>
+            <a href="#">Alterar senha - IMPLEMENTAR!!!</a>
           </td>
         </tr>
         <tr>
           <th scope="row">Telefone</th>
-          <td>(11) 98765-4321</td>
+          <td th:text="${funcionario.detalhes.telefone}">(11) 98765-4321</td>
         </tr>
       </tbody>
     </table>
@@ -34,19 +34,19 @@
       <tbody>
         <tr>
           <th scope="row">Numero de registro</th>
-          <td th:text="${funcionario.np}">00047-SP</td>
+          <td th:text="${funcionario.np}">Numero Pessoal</td>
         </tr>
         <tr>
           <th scope="row">Cargo atual</th>
-          <td th:text="${funcionario.cargo}">Eletricista de Manutenção II</td>
+          <td th:text="${funcionario.cargo}">Cargo</td>
         </tr>
         <tr>
           <th scope="row">Setor</th>
-          <td th:text="${funcionario.setor}">Manutenção</td>
+          <td th:text="${funcionario.setor}">Setor</td>
         </tr>
         <tr>
           <th scope="row">Data de admissao</th>
-          <td>14/03/2022</td>
+          <td th:text="${funcionario.detalhes.dataAdmissao.toLocalDate()}">14/03/2022</td>
         </tr>
         <tr>
           <th scope="row">Tempo de casa</th>
@@ -56,19 +56,19 @@
     </table>
 
     <h3>Gestor Imediato</h3>
-    <table>
+    <table th:if="${funcionario.gestor != null}">
       <tbody>
         <tr>
           <th scope="row">Nome</th>
-          <td>Marcos Roberto de Andrade</td>
+          <td th:text="${funcionario.gestor.nome}">Nome do Gestor</td>
         </tr>
         <tr>
           <th scope="row">Cargo</th>
-          <td>Gerente de Operacoes</td>
+          <td th:text="${funcionario.gestor.cargo}">Cargo do gestor</td>
         </tr>
         <tr>
           <th scope="row">E-mail</th>
-          <td>marcos.andrade@empresa.com.br</td>
+          <td th:text="${funcionario.gestor.detalhes.email}">email@empresa.com.br</td>
         </tr>
       </tbody>
     </table>

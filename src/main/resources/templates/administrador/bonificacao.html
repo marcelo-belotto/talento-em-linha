@@ -1,0 +1,339 @@
+<div layout:fragment="content">
+  <div class="container-conteudo">
+    <div class="page-header">
+      <div class="page-header-left">
+        <div class="page-title">Bonificação de Funcionários</div>
+        <div class="page-subtitle">Conceda pontos individuais ou em lote para colaboradores</div>
+      </div>
+      <a href="/admin/index" class="btn btn-ghost btn-sm">← Voltar ao painel</a>
+    </div>
+
+    <!-- Feedback -->
+    <div class="alert alert-info" th:if="${mensagemSucesso}">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      <span th:text="${mensagemSucesso}">Bonificação registrada com sucesso.</span>
+    </div>
+    <div class="alert alert-danger" th:if="${mensagemErro}">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+      <span th:text="${mensagemErro}">Erro ao registrar bonificação.</span>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" id="tab-individual" onclick="switchTab('individual')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Individual
+      </button>
+      <button class="tab-btn" id="tab-lote" onclick="switchTab('lote')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Em Lote
+      </button>
+    </div>
+
+    <!-- Individual -->
+    <div id="painel-individual">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Bonificação Individual</span>
+        </div>
+        <div class="panel-body">
+          <form id="formBonifIndividual" th:action="@{/administrador/bonificacao/individual}" method="post">
+            <div class="form-grid" style="gap:18px;">
+
+              <div class="form-group">
+                <label class="form-label" for="npFuncionario">NP do Funcionário *</label>
+                <div style="display:flex;gap:8px;">
+                  <input type="text" class="form-input" id="npFuncionario" name="np" placeholder="Ex: 00047" required>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="buscarFuncionario()" style="white-space:nowrap;">Buscar</button>
+                </div>
+                <span class="form-hint">Informe o NP para localizar o colaborador.</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Funcionário Localizado</label>
+                <div id="info-funcionario" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;font-size:0.88rem;color:var(--muted2);min-height:42px;">
+                  <span id="nome-funcionario-display">Aguardando busca…</span>
+                </div>
+              </div>
+              <!-- Hidden field populated by JS -->
+              <input type="hidden" id="funcionarioId" name="funcionarioId">
+
+              <div class="form-group">
+                <label class="form-label" for="pontos">Quantidade de Pontos *</label>
+                <input type="number" class="form-input" id="pontos" name="pontos" min="1" placeholder="Ex: 100" required>
+                <span class="form-hint">Pontos serão adicionados ao saldo atual do funcionário.</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="categoria">Categoria *</label>
+                <select class="form-select" id="categoria" name="categoria" required>
+                  <option value="">— Selecione —</option>
+                  <option value="DESEMPENHO">Desempenho</option>
+                  <option value="ANIVERSARIO">Aniversário</option>
+                  <option value="TEMPO_EMPRESA">Tempo de Empresa</option>
+                  <option value="META_ATINGIDA">Meta Atingida</option>
+                  <option value="RECONHECIMENTO">Reconhecimento</option>
+                  <option value="OUTRO">Outro</option>
+                </select>
+              </div>
+
+              <div class="form-group span-2">
+                <label class="form-label" for="motivo">Motivo / Observação</label>
+                <textarea class="form-textarea" id="motivo" name="motivo" placeholder="Descreva o motivo da bonificação…"></textarea>
+              </div>
+
+            </div>
+            <div class="divider" style="margin-top:24px;"></div>
+            <div class="form-actions" style="margin-top:20px;">
+              <button type="submit" class="btn btn-primary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Confirmar Bonificação
+              </button>
+              <button type="reset" class="btn btn-ghost" onclick="document.getElementById('nome-funcionario-display').textContent='Aguardando busca…'">Limpar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Em Lote -->
+    <div id="painel-lote" style="display:none;">
+      <div class="alert alert-warning">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        A bonificação em lote aplicará os pontos a <strong>todos os funcionários selecionados</strong>. Revise cuidadosamente antes de confirmar.
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Bonificação em Lote</span>
+        </div>
+        <div class="panel-body">
+          <form id="formBonifLote" th:action="@{/administrador/bonificacao/lote}" method="post">
+
+            <div class="form-grid cols-3" style="gap:18px;">
+              <div class="form-group">
+                <label class="form-label" for="pontosLote">Pontos por Funcionário *</label>
+                <input type="number" class="form-input" id="pontosLote" name="pontos" min="1" placeholder="Ex: 50" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="categoriaLote">Categoria *</label>
+                <select class="form-select" id="categoriaLote" name="categoria" required>
+                  <option value="">— Selecione —</option>
+                  <option value="DESEMPENHO">Desempenho</option>
+                  <option value="ANIVERSARIO">Aniversário</option>
+                  <option value="TEMPO_EMPRESA">Tempo de Empresa</option>
+                  <option value="META_ATINGIDA">Meta Atingida</option>
+                  <option value="RECONHECIMENTO">Reconhecimento</option>
+                  <option value="OUTRO">Outro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="filtroDept">Filtrar por Departamento</label>
+                <select class="form-select" id="filtroDept" name="departamento">
+                  <option value="">Todos os departamentos</option>
+                  <option value="TI">Tecnologia da Informação</option>
+                  <option value="RH">Recursos Humanos</option>
+                  <option value="Financeiro">Financeiro</option>
+                  <option value="Comercial">Comercial</option>
+                  <option value="Operações">Operações</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Jurídico">Jurídico</option>
+                  <option value="Outros">Outros</option>
+                </select>
+              </div>
+              <div class="form-group span-3">
+                <label class="form-label" for="motivoLote">Motivo / Observação</label>
+                <textarea class="form-textarea" id="motivoLote" name="motivo" placeholder="Descreva o motivo da bonificação em lote…"></textarea>
+              </div>
+            </div>
+
+            <div class="divider" style="margin:20px 0;"></div>
+
+            <!-- Seleção de funcionários -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
+              <span style="font-family:'Space Mono',monospace;font-size:0.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);">
+                Selecionar Funcionários
+              </span>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="text" class="search-input" id="buscaLote" placeholder="Filtrar por nome ou NP…" style="min-width:180px;" oninput="filtrarTabelaLote(this.value)">
+                <button type="button" class="btn btn-ghost btn-sm" onclick="toggleTodos(true)">Selecionar Todos</button>
+                <button type="button" class="btn btn-ghost btn-sm" onclick="toggleTodos(false)">Limpar</button>
+              </div>
+            </div>
+
+            <div class="table-wrap" style="max-height:380px;overflow-y:auto;border:1px solid var(--border);border-radius:6px;">
+              <table class="data-table" id="tabelaLote">
+                <thead style="position:sticky;top:0;background:var(--surface);z-index:1;">
+                  <tr>
+                    <th style="width:40px;">
+                      <input type="checkbox" id="checkTodos" onchange="toggleTodos(this.checked)" style="cursor:pointer;accent-color:var(--accent);">
+                    </th>
+                    <th>NP</th>
+                    <th>Nome</th>
+                    <th>Departamento</th>
+                    <th>Saldo Atual</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="func : ${listaFuncionariosAtivos}" class="linha-funcionario">
+                    <td>
+                      <input type="checkbox" name="funcionarioIds" th:value="${func.id}" class="check-func" style="cursor:pointer;accent-color:var(--accent);">
+                    </td>
+                    <td style="font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted2);" th:text="${func.np}" class="col-np">NP</td>
+                    <td th:text="${func.nome}" class="col-nome">Nome</td>
+                    <td th:text="${func.departamento}" class="col-dept">—</td>
+                    <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;" th:text="${func.pontos}">0</span></td>
+                  </tr>
+                  <tr th:if="${#lists.isEmpty(listaFuncionariosAtivos)}">
+                    <td colspan="5">
+                      <div class="empty-state"><span class="empty-icon">👥</span>Nenhum funcionário ativo encontrado.</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div id="resumo-lote" style="display:none;margin-top:16px;" class="alert alert-info">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span id="texto-resumo-lote">0 funcionários selecionados · 0 pontos totais.</span>
+            </div>
+
+            <div class="form-actions" style="margin-top:20px;">
+              <button type="submit" class="btn btn-primary" onclick="return confirmarLote()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Aplicar Bonificação em Lote
+              </button>
+              <button type="reset" class="btn btn-ghost" onclick="toggleTodos(false)">Limpar Seleção</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Histórico -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Histórico de Bonificações</span>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <span class="page-badge" th:text="${totalBonificacoes} + ' registros'">0 registros</span>
+          <a href="/administrador/relatorio-pontos" class="btn btn-ghost btn-sm">relatório completo →</a>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Funcionário</th>
+              <th>Pontos</th>
+              <th>Categoria</th>
+              <th>Motivo</th>
+              <th>Tipo</th>
+              <th>Data</th>
+              <th>Registrado por</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="bon : ${listaBonificacoes}">
+              <td style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted2);" th:text="${bon.id}">ID</td>
+              <td>
+                <span style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted2);" th:text="${bon.funcionario.np}">NP</span><br>
+                <span th:text="${bon.funcionario.nome}">Nome</span>
+              </td>
+              <td><span style="font-family:'Space Mono',monospace;color:var(--accent2);font-weight:700;" th:text="'+' + ${bon.pontos}">+0</span></td>
+              <td><span class="badge badge-pendente" th:text="${bon.categoria}">—</span></td>
+              <td style="max-width:200px;font-size:0.82rem;color:var(--muted2);" th:text="${bon.motivo}">—</td>
+              <td>
+                <span class="badge"
+                  th:classappend="${bon.tipo == 'LOTE'} ? 'badge-ok' : 'badge-retirado'"
+                  th:text="${bon.tipo}">Individual</span>
+              </td>
+              <td style="font-family:'Space Mono',monospace;font-size:0.75rem;" th:text="${bon.data}">—</td>
+              <td style="font-size:0.82rem;color:var(--muted2);" th:text="${bon.admin.nome}">—</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(listaBonificacoes)}">
+              <td colspan="8">
+                <div class="empty-state">
+                  <span class="empty-icon">★</span>
+                  Nenhuma bonificação registrada.
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      document.getElementById('painel-individual').style.display = tab === 'individual' ? 'block' : 'none';
+      document.getElementById('painel-lote').style.display = tab === 'lote' ? 'block' : 'none';
+      document.getElementById('tab-individual').classList.toggle('active', tab === 'individual');
+      document.getElementById('tab-lote').classList.toggle('active', tab === 'lote');
+    }
+
+    function buscarFuncionario() {
+      const np = document.getElementById('npFuncionario').value.trim();
+      if (!np) { alert('Informe o NP do funcionário.'); return; }
+      fetch('/administrador/api/funcionario?np=' + encodeURIComponent(np))
+        .then(r => r.json())
+        .then(data => {
+          if (data && data.nome) {
+            document.getElementById('nome-funcionario-display').textContent = data.nome + ' · ' + data.departamento;
+            document.getElementById('nome-funcionario-display').style.color = 'var(--text)';
+            document.getElementById('funcionarioId').value = data.id;
+          } else {
+            document.getElementById('nome-funcionario-display').textContent = 'Funcionário não encontrado.';
+            document.getElementById('nome-funcionario-display').style.color = 'var(--accent3)';
+            document.getElementById('funcionarioId').value = '';
+          }
+        })
+        .catch(() => {
+          document.getElementById('nome-funcionario-display').textContent = 'Erro ao buscar.';
+          document.getElementById('funcionarioId').value = '';
+        });
+    }
+
+    function toggleTodos(estado) {
+      document.querySelectorAll('.check-func').forEach(c => c.checked = estado);
+      document.getElementById('checkTodos').checked = estado;
+      atualizarResumo();
+    }
+
+    document.addEventListener('change', function(e) {
+      if (e.target.classList.contains('check-func')) atualizarResumo();
+    });
+
+    function atualizarResumo() {
+      const selecionados = document.querySelectorAll('.check-func:checked').length;
+      const pts = parseInt(document.getElementById('pontosLote').value) || 0;
+      const resumo = document.getElementById('resumo-lote');
+      if (selecionados > 0) {
+        resumo.style.display = 'flex';
+        document.getElementById('texto-resumo-lote').textContent =
+          selecionados + ' funcionário(s) selecionado(s) · ' + (selecionados * pts) + ' pontos no total.';
+      } else {
+        resumo.style.display = 'none';
+      }
+    }
+
+    document.getElementById('pontosLote').addEventListener('input', atualizarResumo);
+
+    function filtrarTabelaLote(busca) {
+      const termo = busca.toLowerCase();
+      document.querySelectorAll('#tabelaLote tbody tr.linha-funcionario').forEach(tr => {
+        const np = tr.querySelector('.col-np')?.textContent.toLowerCase() || '';
+        const nome = tr.querySelector('.col-nome')?.textContent.toLowerCase() || '';
+        tr.style.display = (np.includes(termo) || nome.includes(termo)) ? '' : 'none';
+      });
+    }
+
+    function confirmarLote() {
+      const selecionados = document.querySelectorAll('.check-func:checked').length;
+      if (selecionados === 0) { alert('Selecione pelo menos um funcionário.'); return false; }
+      const pts = document.getElementById('pontosLote').value;
+      return confirm('Confirmar bonificação de ' + pts + ' pontos para ' + selecionados + ' funcionário(s)?');
+    }
+  </script>
+</div>

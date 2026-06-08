@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+  <header th:fragment="sidebar(activePage)" class="sidebar">
+    <nav class="navegacao">
+      <div class="container-logomarca">
+        <img src="/images/talento-logo-imagem.png" alt="logomarca do website" class="logomarca">
+      </div>
+      <div class="nav-titulo">Administrador</div>
+      <a th:classappend="${activePage == 'index'} ? 'active'" class="nav-item" href="/admin/index">
+        Painel
+      </a>
+      <a th:classappend="${activePage == 'cadastro-funcionario'} ? 'active'" class="nav-item" href="/admin/cadastro-funcionario">
+        Cadastro de Funcionários
+      </a>
+      <a th:classappend="${activePage == 'bonificacao'} ? 'active'" class="nav-item" href="/admin/bonificacao">
+        Bonificação
+      </a>
+      <a th:classappend="${activePage == 'relatorio-pontos'} ? 'active'" class="nav-item" href="/admin/relatorio-pontos">
+        Relatórios de Pontos
+      </a>
+      <div class="divider" style="margin: 8px 0;"></div>
+      <div class="nav-titulo">Colaborador</div>
+      <a class="nav-item" href="/index">
+        Inicio
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-item" href="/logout" style="border-radius: 10px;display: flex;justify-content: space-between;"><strong>Sair</strong>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+          <polyline points="10 17 15 12 10 7"></polyline>
+          <line x1="15" y1="12" x2="3" y2="12"></line>
+        </svg>
+      </a>
+      Talento em Linha · v1.0
+    </div>
+  </header>
+</body>
+
+</html>

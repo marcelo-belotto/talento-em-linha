@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.talentoemlinha.dto.Funcionario.FuncionarioDto;
+import com.talentoemlinha.model.DetalhesFuncionario;
 import com.talentoemlinha.model.Funcionario;
 import com.talentoemlinha.service.FuncionarioService;
 
@@ -38,7 +41,17 @@ public class FuncionarioController {
     }
 
     @PostMapping("/funcionario")
-    public ResponseEntity<Funcionario> postFuncionario(@RequestBody Funcionario func) {
+    public ResponseEntity<Funcionario> postFuncionario(@RequestBody FuncionarioDto funcDto, Authentication authentication) {
+        Funcionario func = new Funcionario(
+            funcDto.getNp(),
+            funcDto.getNome(),
+            funcDto.getNome()+funcDto.getNp(),
+            funcDto.getCargo(),
+            funcDto.getSetor(),
+            funcDto.getRole(),
+            funcService.retornarFuncionarioPeloId(Long.parseLong(authentication.getName())),
+            new DetalhesFuncionario(funcDto.getDataAdmissao().atStartOfDay(),funcDto.getEmail(),funcDto.getTelefone())
+        );
         Funcionario responseFunc = funcService.adicionarFuncionario(func);
         if (responseFunc == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -46,7 +59,7 @@ public class FuncionarioController {
     }
 
     @PutMapping("/funcionario/{id}")
-    public ResponseEntity<Funcionario> putFuncionario(@PathVariable long id, @RequestBody Funcionario func) {
+    public ResponseEntity<Funcionario> putFuncionario(@PathVariable long id, @RequestBody Funcionario func, Authentication authentication) {
         Funcionario resposeFunc = funcService.alterarFuncionario(id, func);
         if (resposeFunc == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -54,7 +67,7 @@ public class FuncionarioController {
     }
 
     @DeleteMapping("/funcionario/{id}")
-    public ResponseEntity<Funcionario> deleteFuncionario(@PathVariable long id) {
+    public ResponseEntity<Funcionario> deleteFuncionario(@PathVariable long id, Authentication authentication) {
         if (funcService.deletarFuncionario(id) == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);

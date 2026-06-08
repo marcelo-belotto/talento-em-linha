@@ -32,7 +32,7 @@ public class AlmoxarifadoController {
         model.addAttribute("content", "/almoxarifado/index.html");
         model.addAttribute("pageProps", Map.of(
                 "title", " Início",
-                "pageCss", "../css/almo-styles.css"));
+                "pageCss", "../css/pages-styles.css"));
         var listaEstoque = estoqueSer.consultarTodos();
         var listaReserva = reservaServ.retornarReservas();
         model.addAttribute("itensCadastrados",listaEstoque.size());
@@ -58,7 +58,7 @@ public class AlmoxarifadoController {
         model.addAttribute("content", "/almoxarifado/cadastro-produto.html");
         model.addAttribute("pageProps", Map.of(
                 "title", " Cadastro de Produto",
-                "pageCss", "../css/almo-styles.css"));
+                "pageCss", "../css/pages-styles.css"));
         model.addAttribute("listaEstoque", estoqueSer.consultarTodos());
         return "layout/almoxarifado";
     }
@@ -69,7 +69,7 @@ public class AlmoxarifadoController {
         model.addAttribute("content", "/almoxarifado/estoque.html");
         model.addAttribute("pageProps", Map.of(
                 "title", " Estoque",
-                "pageCss", "../css/almo-styles.css"));
+                "pageCss", "../css/pages-styles.css"));
         model.addAttribute("listaEstoque",estoqueSer.consultarTodos());
         var listaDeMovimentacoes = movRepo.findAll().stream().filter(x -> x.getTipoMovimentacao().equalsIgnoreCase("ENTRADA")).toList();
         model.addAttribute("listaMovimentacao",listaDeMovimentacoes);
@@ -82,7 +82,7 @@ public class AlmoxarifadoController {
         model.addAttribute("content", "/almoxarifado/disponibilidade.html");
         model.addAttribute("pageProps", Map.of(
                 "title", " Disponibilidade",
-                "pageCss", "../css/almo-styles.css"));
+                "pageCss", "../css/pages-styles.css"));
                 var listaEstoque = estoqueSer.consultarTodos();
         model.addAttribute("listaEstoque",listaEstoque);
         model.addAttribute("estoqueOk",listaEstoque.stream()
@@ -108,7 +108,7 @@ public class AlmoxarifadoController {
         model.addAttribute("content", "/almoxarifado/reservas.html");
         model.addAttribute("pageProps", Map.of(
                 "title", " Reservas",
-                "pageCss", "../css/almo-styles.css"));
+                "pageCss", "../css/pages-styles.css"));
         return "layout/almoxarifado";
     }
 
@@ -118,7 +118,7 @@ public class AlmoxarifadoController {
         model.addAttribute("content", "/almoxarifado/retirada.html");
         model.addAttribute("pageProps", Map.of(
                 "title", " Retiradas",
-                "pageCss", "../css/almo-styles.css"));
+                "pageCss", "../css/pages-styles.css"));
         model.addAttribute("listaReservas",
         reservaServ.retornarReservas()
         .stream()

@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 public class FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepo;
-    private final PontoService pontoServ;
 
     public List<Funcionario> retornarTodosFuncionarios() {
         return funcionarioRepo.findAll();
