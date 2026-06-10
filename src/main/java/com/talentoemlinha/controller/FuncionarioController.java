@@ -18,14 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.talentoemlinha.dto.Funcionario.FuncionarioDto;
 import com.talentoemlinha.model.DetalhesFuncionario;
 import com.talentoemlinha.model.Funcionario;
+import com.talentoemlinha.repository.DetalhesFuncionarioRepository;
 import com.talentoemlinha.service.FuncionarioService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class FuncionarioController {
 
-    @Autowired
-    private FuncionarioService funcService;
+    private final FuncionarioService funcService;
+    private final DetalhesFuncionarioRepository detalhesRepo;
 
     @GetMapping("/funcionario")
     public ResponseEntity<List<Funcionario>> getFuncionario() {
@@ -45,14 +49,16 @@ public class FuncionarioController {
         Funcionario func = new Funcionario(
             funcDto.getNp(),
             funcDto.getNome(),
-            funcDto.getNome()+funcDto.getNp(),
+            "123",
             funcDto.getCargo(),
             funcDto.getSetor(),
             funcDto.getRole(),
             funcService.retornarFuncionarioPeloId(Long.parseLong(authentication.getName())),
-            new DetalhesFuncionario(funcDto.getDataAdmissao().atStartOfDay(),funcDto.getEmail(),funcDto.getTelefone())
+            null
         );
+        
         Funcionario responseFunc = funcService.adicionarFuncionario(func);
+        detalhesRepo.save(new DetalhesFuncionario(null,func,funcDto.getDataAdmissao().atStartOfDay(),funcDto.getEmail(),funcDto.getTelefone()));
         if (responseFunc == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         return ResponseEntity.status(HttpStatus.CREATED).body(func);

@@ -56,13 +56,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
+
         http
                 // CSRF: desabilitado. Habilite em produção se não houver razão para manter
                 // desabilitado.
                 // Para formulários Thymeleaf, o CSRF pode ser habilitado facilmente com
                 // th:action.
                 .csrf(csrf -> csrf.disable())
-
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 // Registra o provider customizado
                 .authenticationProvider(authenticationProvider())
 
@@ -70,9 +73,10 @@ public class SecurityConfig {
                         // Recursos públicos
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
                         // API interna (endpoints REST utilizados pelo frontend JS)
-                        .requestMatchers("/api/v1/**").permitAll()
+                        .requestMatchers("/api/v1/**", "/h2-console/**").permitAll()
                         // A página de login é pública
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/almoxarifado/**", "/api/v1/estoque/**", "/api/v1/produto/**")
                         .hasRole("ALMOXARIFE")
                         // Tudo mais exige autenticação

@@ -37,7 +37,7 @@
           <span class="panel-title">Bonificação Individual</span>
         </div>
         <div class="panel-body">
-          <form id="formBonifIndividual" th:action="@{/administrador/bonificacao/individual}" method="post">
+          <form id="formBonifIndividual" th:action="@{http://localhost:8080/api/v1/funcionario}" method="post">
             <div class="form-grid" style="gap:18px;">
 
               <div class="form-group">
@@ -70,8 +70,8 @@
                   <option value="">— Selecione —</option>
                   <option value="DESEMPENHO">Desempenho</option>
                   <option value="ANIVERSARIO">Aniversário</option>
-                  <option value="TEMPO_EMPRESA">Tempo de Empresa</option>
-                  <option value="META_ATINGIDA">Meta Atingida</option>
+                  <option value="TEMPO EMPRESA">Tempo de Empresa</option>
+                  <option value="META ATINGIDA">Meta Atingida</option>
                   <option value="RECONHECIMENTO">Reconhecimento</option>
                   <option value="OUTRO">Outro</option>
                 </select>
@@ -79,7 +79,7 @@
 
               <div class="form-group span-2">
                 <label class="form-label" for="motivo">Motivo / Observação</label>
-                <textarea class="form-textarea" id="motivo" name="motivo" placeholder="Descreva o motivo da bonificação…"></textarea>
+                <textarea class="form-textarea" id="motivo" name="descricao" placeholder="Descreva o motivo da bonificação…"></textarea>
               </div>
 
             </div>
@@ -275,14 +275,17 @@
 
     function buscarFuncionario() {
       const np = document.getElementById('npFuncionario').value.trim();
-      if (!np) { alert('Informe o NP do funcionário.'); return; }
-      fetch('/administrador/api/funcionario?np=' + encodeURIComponent(np))
+      if (!np) { 
+        alert('Informe o NP do funcionário.'); 
+        return; 
+      }
+      fetch('/api/v1/funcionario/'+np)
         .then(r => r.json())
         .then(data => {
           if (data && data.nome) {
-            document.getElementById('nome-funcionario-display').textContent = data.nome + ' · ' + data.departamento;
+            document.getElementById('nome-funcionario-display').textContent = data.nome + ' · ' + data.setor;
             document.getElementById('nome-funcionario-display').style.color = 'var(--text)';
-            document.getElementById('funcionarioId').value = data.id;
+            document.getElementById('funcionarioId').value = data.np;
           } else {
             document.getElementById('nome-funcionario-display').textContent = 'Funcionário não encontrado.';
             document.getElementById('nome-funcionario-display').style.color = 'var(--accent3)';

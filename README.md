@@ -95,11 +95,11 @@ A documentação Swagger estará em `http://localhost:8080/api/v1/swagger-ui.htm
 ## Roadmap
 
 ### MVP (em andamento)
-- [ ] Estrutura base do projeto
+- [x] Estrutura base do projeto
 - [ ] Modelagem e migrations iniciais
 - [ ] CRUD dos recursos principais
-- [ ] Autenticação e autorização
-- [ ] Interface web
+- [x] Autenticação e autorização
+- [x] Interface web
 
 ---
 

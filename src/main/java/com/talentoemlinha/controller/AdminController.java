@@ -46,14 +46,13 @@ public class AdminController {
         model.addAttribute("pageProps", Map.of(
                 "title", " Cadastro de Funcionários",
                 "pageCss", "../css/pages-styles.css"));
+
         model.addAttribute("listaFuncionarios", funcServ.retornarTodosFuncionarios()
         .stream().filter(x -> !x.getRole().equalsIgnoreCase("admin"))
         .filter(x -> x.getSetor().equalsIgnoreCase(
             funcServ.retornarFuncionarioPeloId(
-                Long.parseLong(authentication.getName())
-            ).getSetor())
-        )
-        .toList());
+                Long.parseLong(authentication.getName())).getSetor())).toList());
+
         return "layout/administrador";
     }
 
