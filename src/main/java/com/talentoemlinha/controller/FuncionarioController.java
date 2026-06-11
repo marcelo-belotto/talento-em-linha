@@ -2,7 +2,6 @@ package com.talentoemlinha.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -37,11 +36,11 @@ public class FuncionarioController {
     }
 
     @GetMapping("/funcionario/{id}")
-    public ResponseEntity<Funcionario> getFuncionario(@PathVariable long id) {
+    public ResponseEntity<FuncionarioDto> getFuncionario(@PathVariable long id) {
         Funcionario responseFunc = funcService.retornarFuncionarioPeloId(id);
         if (responseFunc == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        return ResponseEntity.status(HttpStatus.OK).body(responseFunc);
+        return ResponseEntity.status(HttpStatus.OK).body(funcionarioParaDto(responseFunc));
     }
 
     @PostMapping("/funcionario")
@@ -77,6 +76,19 @@ public class FuncionarioController {
         if (funcService.deletarFuncionario(id) == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
+    }
+
+    private FuncionarioDto funcionarioParaDto(Funcionario func){
+        FuncionarioDto dto = new FuncionarioDto();
+        dto.setNp(func.getNp());
+        dto.setNome(func.getNome());
+        dto.setSetor(func.getSetor());
+        dto.setCargo(func.getCargo());
+        dto.setRole(func.getRole());
+        dto.setDataAdmissao(func.getDetalhes().getDataAdmissao().toLocalDate());
+        dto.setEmail(func.getDetalhes().getEmail());
+        dto.setTelefone(func.getDetalhes().getTelefone());
+        return dto;
     }
 
 }

@@ -2,12 +2,10 @@ package com.talentoemlinha.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.talentoemlinha.dto.Funcionario.ReservaFuncionarioResponse;
 import com.talentoemlinha.model.Funcionario;
-import com.talentoemlinha.repository.DetalhesFuncionarioRepository;
 import com.talentoemlinha.repository.FuncionarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 public class FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepo;
-    private final DetalhesFuncionarioRepository detalhesRepo;
 
     public List<Funcionario> retornarTodosFuncionarios() {
         return funcionarioRepo.findAll();

@@ -37,7 +37,7 @@
           <span class="panel-title">Bonificação Individual</span>
         </div>
         <div class="panel-body">
-          <form id="formBonifIndividual" th:action="@{http://localhost:8080/api/v1/funcionario}" method="post">
+          <form id="formBonifIndividual" action="" method="post">
             <div class="form-grid" style="gap:18px;">
 
               <div class="form-group">
@@ -60,13 +60,13 @@
 
               <div class="form-group">
                 <label class="form-label" for="pontos">Quantidade de Pontos *</label>
-                <input type="number" class="form-input" id="pontos" name="pontos" min="1" placeholder="Ex: 100" required>
+                <input type="number" class="form-input" id="pontos" name="quantidade" min="1" placeholder="Ex: 100" required>
                 <span class="form-hint">Pontos serão adicionados ao saldo atual do funcionário.</span>
               </div>
 
               <div class="form-group">
                 <label class="form-label" for="categoria">Categoria *</label>
-                <select class="form-select" id="categoria" name="categoria" required>
+                <select class="form-select" id="categoria" name="motivo" required>
                   <option value="">— Selecione —</option>
                   <option value="DESEMPENHO">Desempenho</option>
                   <option value="ANIVERSARIO">Aniversário</option>
@@ -216,7 +216,7 @@
         <span class="panel-title">Histórico de Bonificações</span>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
           <span class="page-badge" th:text="${totalBonificacoes} + ' registros'">0 registros</span>
-          <a href="/administrador/relatorio-pontos" class="btn btn-ghost btn-sm">relatório completo →</a>
+          <a href="/admin/relatorio-pontos" class="btn btn-ghost btn-sm">relatório completo →</a>
         </div>
       </div>
       <div class="table-wrap">
@@ -265,78 +265,5 @@
     </div>
   </div>
 
-  <script>
-    function switchTab(tab) {
-      document.getElementById('painel-individual').style.display = tab === 'individual' ? 'block' : 'none';
-      document.getElementById('painel-lote').style.display = tab === 'lote' ? 'block' : 'none';
-      document.getElementById('tab-individual').classList.toggle('active', tab === 'individual');
-      document.getElementById('tab-lote').classList.toggle('active', tab === 'lote');
-    }
-
-    function buscarFuncionario() {
-      const np = document.getElementById('npFuncionario').value.trim();
-      if (!np) { 
-        alert('Informe o NP do funcionário.'); 
-        return; 
-      }
-      fetch('/api/v1/funcionario/'+np)
-        .then(r => r.json())
-        .then(data => {
-          if (data && data.nome) {
-            document.getElementById('nome-funcionario-display').textContent = data.nome + ' · ' + data.setor;
-            document.getElementById('nome-funcionario-display').style.color = 'var(--text)';
-            document.getElementById('funcionarioId').value = data.np;
-          } else {
-            document.getElementById('nome-funcionario-display').textContent = 'Funcionário não encontrado.';
-            document.getElementById('nome-funcionario-display').style.color = 'var(--accent3)';
-            document.getElementById('funcionarioId').value = '';
-          }
-        })
-        .catch(() => {
-          document.getElementById('nome-funcionario-display').textContent = 'Erro ao buscar.';
-          document.getElementById('funcionarioId').value = '';
-        });
-    }
-
-    function toggleTodos(estado) {
-      document.querySelectorAll('.check-func').forEach(c => c.checked = estado);
-      document.getElementById('checkTodos').checked = estado;
-      atualizarResumo();
-    }
-
-    document.addEventListener('change', function(e) {
-      if (e.target.classList.contains('check-func')) atualizarResumo();
-    });
-
-    function atualizarResumo() {
-      const selecionados = document.querySelectorAll('.check-func:checked').length;
-      const pts = parseInt(document.getElementById('pontosLote').value) || 0;
-      const resumo = document.getElementById('resumo-lote');
-      if (selecionados > 0) {
-        resumo.style.display = 'flex';
-        document.getElementById('texto-resumo-lote').textContent =
-          selecionados + ' funcionário(s) selecionado(s) · ' + (selecionados * pts) + ' pontos no total.';
-      } else {
-        resumo.style.display = 'none';
-      }
-    }
-
-    document.getElementById('pontosLote').addEventListener('input', atualizarResumo);
-
-    function filtrarTabelaLote(busca) {
-      const termo = busca.toLowerCase();
-      document.querySelectorAll('#tabelaLote tbody tr.linha-funcionario').forEach(tr => {
-        const np = tr.querySelector('.col-np')?.textContent.toLowerCase() || '';
-        const nome = tr.querySelector('.col-nome')?.textContent.toLowerCase() || '';
-        tr.style.display = (np.includes(termo) || nome.includes(termo)) ? '' : 'none';
-      });
-    }
-
-    function confirmarLote() {
-      const selecionados = document.querySelectorAll('.check-func:checked').length;
-      if (selecionados === 0) { alert('Selecione pelo menos um funcionário.'); return false; }
-      const pts = document.getElementById('pontosLote').value;
-      return confirm('Confirmar bonificação de ' + pts + ' pontos para ' + selecionados + ' funcionário(s)?');
-    }
-  </script>
+  <script src="../js/bonificacao.js"></script>
 </div>
