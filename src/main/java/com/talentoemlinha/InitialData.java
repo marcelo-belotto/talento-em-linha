@@ -21,21 +21,21 @@ public class InitialData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Funcionario func = new Funcionario();
-		func.setNp(123456L);
-		func.setNome("Admin");
-		func.setHash("123");
-		func.setRole("ADMIN");
-        funcServ.adicionarFuncionario(func);
-        
-        DetalhesFuncionario detalhes = new DetalhesFuncionario();
-        detalhes.setDataAdmissao(LocalDateTime.now());
-        detalhes.setEmail("ADMIN@ADMIN.com");
-        detalhes.setTelefone("(12) 99999-9999");
-        detalhes.setFuncionario(func);
-
-        detalhesRepo.save(detalhes);
-
-    }
+        if (funcServ.retornarFuncionarioPeloId(123456L) == null){
+            Funcionario func = new Funcionario();
+            func.setNp(123456L);
+            func.setNome("Admin");
+            func.setHash("123");
+            func.setRole("ADMIN");
+            funcServ.adicionarFuncionario(func);
+            
+            DetalhesFuncionario detalhes = new DetalhesFuncionario();
+            detalhes.setDataAdmissao(LocalDateTime.now());
+            detalhes.setEmail("ADMIN@ADMIN.com");
+            detalhes.setTelefone("(12) 99999-9999");
+            detalhes.setFuncionario(func);
     
+            detalhesRepo.save(detalhes);
+        }
+    }
 }

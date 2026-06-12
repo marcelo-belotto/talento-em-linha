@@ -214,7 +214,7 @@
       btnConfirmar.textContent = 'Enviando…';
 
       try {
-        const response = await fetch('/api/v1/reserva/10000001', {   // ← ajuste a URL conforme sua API
+        const response = await fetch('/api/v1/reserva', {   // ← ajuste a URL conforme sua API
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),

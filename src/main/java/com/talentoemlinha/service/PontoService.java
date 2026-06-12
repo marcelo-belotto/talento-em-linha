@@ -1,29 +1,29 @@
 package com.talentoemlinha.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.talentoemlinha.model.Ponto;
 import com.talentoemlinha.model.Reserva;
+import com.talentoemlinha.repository.PontoRepository;
 import com.talentoemlinha.repository.ReservaRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class PontoService {
 
-    private List<Ponto> pontos = new ArrayList<Ponto>();
-
-    @Autowired
-    private ReservaRepository reservaRepo;
+    private final PontoRepository pontoRepo;
+    private final ReservaRepository reservaRepo;
 
     public List<Ponto> retornarTodosPontos(){
-        return pontos;
+        return pontoRepo.findAll();
     }
 
     public List<Ponto> retornarPontosPeloNp(long np){
-        return pontos.stream().filter(x -> x.getNpFuncionario() == np).toList();
+        return pontoRepo.findByNp(np);
     }
 
     public int retornarPontosDisponiveis(long np){
@@ -49,8 +49,6 @@ public class PontoService {
     }
 
     public Ponto adicionarPonto(Ponto ponto){
-        ponto.setId(pontos.size()+1);
-        pontos.add(ponto);
-        return ponto;
+        return pontoRepo.save(ponto);
     }
 }

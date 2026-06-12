@@ -7,7 +7,7 @@ formulario.addEventListener("submit", async (event) => {
 
   try {
     const resposta = await fetch(
-      `http://localhost:8080/api/v1/${npFuncionario}/reservas`,
+      `http://localhost:8080/api/v1/reservas`,
       {
         method: "POST",
         headers: {
@@ -143,14 +143,13 @@ async function retirarItems(npFuncionario){
     if (resposta.ok) {
       const dados = await resposta.json();
       alert("Items retirados com sucesso!");
-
+      window.location.href = "/almoxarifado/retirada";
     } else {
       console.log("Erro no envio:" + resposta.status);
     }
   } catch (erro) {
     console.log("Erro de rede:" + erro);
   }
-  window.location.href = "/almoxarifado/retirada"
 }
 
 function limparPesquisaFuncionario(){

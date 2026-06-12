@@ -78,7 +78,7 @@ public class SecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/almoxarifado/**", "/api/v1/estoque/**", "/api/v1/produto/**")
-                        .hasRole("ALMOXARIFE")
+                        .hasAnyRole("ALMOXARIFE","ADMIN")
                         // Tudo mais exige autenticação
                         .anyRequest().authenticated())
 

@@ -1,24 +1,11 @@
 package com.talentoemlinha.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.talentoemlinha.model.Movimentacao;
 
 @Repository
-public class MovimentacaoRepository {
+public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long>{
 
-    private List<Movimentacao> listaMovimentacoes = new ArrayList<>();
-
-    public Movimentacao save(Movimentacao movimentacao) {
-        movimentacao.setId(listaMovimentacoes.size()+1);
-        listaMovimentacoes.add(movimentacao);
-        return movimentacao;
-    }
-
-    public List<Movimentacao> findAll(){
-        return listaMovimentacoes;
-    }
 }

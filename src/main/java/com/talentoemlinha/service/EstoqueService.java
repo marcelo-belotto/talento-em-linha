@@ -2,7 +2,6 @@ package com.talentoemlinha.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

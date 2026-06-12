@@ -7,13 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.talentoemlinha.model.Reserva;
+import com.talentoemlinha.model.Ponto;
 
 @Repository
-public interface ReservaRepository extends JpaRepository<Reserva, Long>{
-
-    @Query(value = "SELECT * FROM Reserva WHERE funcionario_np = :func", nativeQuery = true)
-    List<Reserva> findByNpFuncionario(@Param("func") Long func);
+public interface PontoRepository extends JpaRepository<Ponto,Long> {
     
+    @Query("SELECT u FROM Ponto u WHERE u.npFuncionario = :np")
+    List<Ponto> findByNp(@Param("np") Long np);
 }
-

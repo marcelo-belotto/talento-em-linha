@@ -14,10 +14,11 @@ formulario.addEventListener("submit", async (event) => {
       },
       body: JSON.stringify(dadosObjeto), // Envia os dados do formulário automaticamente formatados
     });
-
+    const dados = await resposta.json();
+    
     if (resposta.ok) {
-      const dados = await resposta.json();
       console.log("Dados enviados com sucesso!", dados);
+      alert("Funcionário cadastrado com sucesso!");
       window.location.reload();
     } else {
       console.log("Erro no envio:"+ resposta.status);

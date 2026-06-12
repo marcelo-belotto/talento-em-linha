@@ -29,7 +29,8 @@ public class ProdutoService {
     }
 
     public Produto removerProduto(long produtoId){
-        Produto produto = prodRepo.delete(produtoId);
+        Produto produto = prodRepo.findById(produtoId).orElse(null);
+        prodRepo.delete(produto);
         return produto;
     }
 
