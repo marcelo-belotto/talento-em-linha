@@ -44,7 +44,7 @@ public class FuncionarioController {
     }
 
     @PostMapping("/funcionario")
-    public ResponseEntity<Funcionario> postFuncionario(@RequestBody FuncionarioDto funcDto, Authentication authentication) {
+    public ResponseEntity<FuncionarioDto> postFuncionario(@RequestBody FuncionarioDto funcDto, Authentication authentication) {
         Funcionario func = new Funcionario(
             funcDto.getNp(),
             funcDto.getNome(),
@@ -55,12 +55,12 @@ public class FuncionarioController {
             funcService.retornarFuncionarioPeloId(Long.parseLong(authentication.getName())),
             null
         );
-        
         Funcionario responseFunc = funcService.adicionarFuncionario(func);
-        detalhesRepo.save(new DetalhesFuncionario(null,func,funcDto.getDataAdmissao().atStartOfDay(),funcDto.getEmail(),funcDto.getTelefone()));
         if (responseFunc == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        return ResponseEntity.status(HttpStatus.CREATED).body(func);
+        var detalhes = detalhesRepo.save(new DetalhesFuncionario(null,func,funcDto.getDataAdmissao().atStartOfDay(),funcDto.getEmail(),funcDto.getTelefone()));
+        responseFunc.setDetalhes(detalhes);
+        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioParaDto(responseFunc));
     }
 
     @PutMapping("/funcionario/{id}")
