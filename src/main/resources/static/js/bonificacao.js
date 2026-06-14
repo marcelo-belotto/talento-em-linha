@@ -47,7 +47,7 @@ function buscarFuncionario() {
     alert("Informe o NP do funcionário.");
     return;
   }
-  fetch("/api/v1/funcionario/" + np)
+  fetch(`/api/v1/funcionario/${np}`)
     .then((r) => r.json())
     .then((data) => {
       if (data && data.nome) {

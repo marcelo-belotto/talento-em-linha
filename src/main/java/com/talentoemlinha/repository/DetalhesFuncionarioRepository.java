@@ -6,7 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.talentoemlinha.model.DetalhesFuncionario;
 
 @Repository
-public interface DetalhesFuncionarioRepository extends JpaRepository<DetalhesFuncionario,Long>  {
-
+public interface DetalhesFuncionarioRepository extends JpaRepository<DetalhesFuncionario, Long> {
 }
-

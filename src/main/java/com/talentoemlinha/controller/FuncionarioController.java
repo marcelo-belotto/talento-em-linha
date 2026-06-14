@@ -59,6 +59,8 @@ public class FuncionarioController {
         if (responseFunc == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         var detalhes = detalhesRepo.save(new DetalhesFuncionario(null,func,funcDto.getDataAdmissao().atStartOfDay(),funcDto.getEmail(),funcDto.getTelefone()));
+        if (detalhes == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         responseFunc.setDetalhes(detalhes);
         return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioParaDto(responseFunc));
     }
@@ -88,6 +90,7 @@ public class FuncionarioController {
         dto.setDataAdmissao(func.getDetalhes().getDataAdmissao().toLocalDate());
         dto.setEmail(func.getDetalhes().getEmail());
         dto.setTelefone(func.getDetalhes().getTelefone());
+        System.out.println(dto);
         return dto;
     }
 
