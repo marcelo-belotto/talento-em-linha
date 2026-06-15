@@ -5,12 +5,6 @@ table {
     width: 100%;
 }
 
-.container-conteudo > table,
-.container-conteudo > h3 {
-    /* wrap each section in its own surface */
-}
-
-/* Group each section visually */
 .container-conteudo h3 {
     margin-top: 8px;
 }
@@ -33,10 +27,177 @@ tbody tr:last-child th[scope="row"] {
     border-bottom: none;
 }
 
-.rodape {
-    margin-left: 0;
+.link-acao {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
 }
 
+.link-acao:hover {
+    border-bottom-color: var(--accent);
+    text-decoration: none;
+}
+
+/* ══════════════════════════════════════
+   MODAL — ALTERAR SENHA
+   ══════════════════════════════════════ */
+
+dialog.modal-senha {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0;
+    width: 100%;
+    max-width: 440px;
+    color: var(--text);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+dialog.modal-senha::backdrop {
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(3px);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 18px;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-titulo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text);
+}
+
+.modal-fechar {
+    background: none;
+    border: none;
+    color: var(--muted2);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+    line-height: 0;
+}
+
+.modal-fechar:hover {
+    color: var(--text);
+    background: var(--surface2);
+}
+
+.modal-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.modal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.modal-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted2);
+}
+
+.modal-hint {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+.modal-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2px 0;
+}
+
+.modal-footer {
+    padding: 18px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-modal-primary {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: var(--accent);
+    color: #0a0a0a;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: opacity 0.18s, transform 0.15s;
+}
+
+.btn-modal-primary:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+.btn-modal-ghost {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: border-color 0.18s, transform 0.15s;
+}
+
+.btn-modal-ghost:hover {
+    border-color: #444;
+    transform: translateY(-1px);
+}
+
+.input-box.input-error {
+    border-color: var(--accent3);
+}
+
+.input-box.input-error:focus {
+    border-color: var(--accent3);
+}
+
+/* ── RESPONSIVE ── */
 @media (max-width: 768px) {
     table { min-width: auto; width: 100%; }
 
@@ -71,4 +232,26 @@ tbody tr:last-child th[scope="row"] {
     }
 
     td::before { display: none; }
+
+    dialog.modal-senha {
+        max-width: calc(100vw - 32px);
+        margin: 16px;
+        top: auto;
+        left: auto;
+        transform: none;
+        position: fixed;
+        bottom: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom: none;
+    }
+
+    dialog.modal-senha[open] {
+        animation: slideUp 0.25s ease;
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(100%); opacity: 0; }
+        to   { transform: translateY(0);    opacity: 1; }
+    }
 }

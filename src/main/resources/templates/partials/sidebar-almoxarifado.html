@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <body>
   <header th:fragment="sidebar(activePage)" class="sidebar">
@@ -21,6 +21,10 @@
         href="/almoxarifado/retirada">Retirada</a>
       <div class="nav-titulo">Colaborador</div>
       <a class="nav-item" href="/index">Inicio</a>
+      <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="nav-titulo">Administrador</div>
+        <a class="nav-item" href="/admin/index">Inicio</a>
+      </div>
     </nav>
     <div class="sidebar-footer">
       <a class="nav-item" href="/logout" style="border-radius: 10px;display: flex;justify-content: space-between;"><strong>Sair</strong>

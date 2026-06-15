@@ -30,10 +30,10 @@ public class FuncionarioController {
     private final FuncionarioService funcService;
     private final DetalhesFuncionarioRepository detalhesRepo;
 
-    @GetMapping("/funcionario")
-    public ResponseEntity<List<Funcionario>> getFuncionario() {
-        return ResponseEntity.status(HttpStatus.OK).body(funcService.retornarTodosFuncionarios());
-    }
+    // @GetMapping("/funcionario")
+    // public ResponseEntity<List<Funcionario>> getFuncionario() {
+    //     return ResponseEntity.status(HttpStatus.OK).body(funcService.retornarTodosFuncionarios());
+    // }
 
     @GetMapping("/funcionario/{id}")
     public ResponseEntity<FuncionarioDto> getFuncionario(@PathVariable long id) {

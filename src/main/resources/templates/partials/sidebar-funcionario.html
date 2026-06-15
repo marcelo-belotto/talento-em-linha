@@ -13,9 +13,13 @@
       <a th:classappend="${activePage == 'pontos-categoria'} ? 'active'" class="nav-item"
         href="/pontos-categoria">Categorias</a>
       <a th:classappend="${activePage == 'meus-dados'} ? 'active'" class="nav-item" href="/meus-dados">Meus Dados</a>
-      <div sec:authorize="hasRole('ROLE_ALMOXARIFE')">
+      <div sec:authorize="hasRole('ROLE_ALMOXARIFE') || hasRole('ROLE_ADMIN')">
         <div class="nav-titulo">Almoxarifado</div>
         <a class="nav-item" href="/almoxarifado/index">Inicio</a>
+      </div>
+      <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="nav-titulo">Administrador</div>
+        <a class="nav-item" href="/admin/index">Inicio</a>
       </div>
     </nav>
 
